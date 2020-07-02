@@ -2,6 +2,8 @@ import React from "react";
 import { View, StyleSheet, Image } from "react-native";
 import { Button } from "react-native-elements";
 
+import Colors from "../../constants/colors";
+
 const IndexScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
@@ -35,18 +37,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#0298c8",
+    backgroundColor: Colors.primary,
     paddingTop: 40,
-  },
-  imgWrapper: {
-    overflow: "hidden",
   },
   imgWrapper: {
     width: 150,
     height: 150,
     padding: 20,
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     borderRadius: 75,
+    overflow: "hidden",
   },
   imgStyle: {
     width: "100%",
@@ -59,10 +59,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 30,
     borderRadius: 30,
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
   },
   btnTitle: {
-    color: "#0298c8",
+    color: Colors.primary,
   },
 });
 
