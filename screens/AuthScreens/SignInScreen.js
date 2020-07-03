@@ -3,8 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Input } from "react-native-elements";
 import { Button } from "react-native-elements";
 
-import { MaterialIcons } from "@expo/vector-icons";
-import { Octicons } from "@expo/vector-icons";
+import { MaterialIcons, Octicons } from "@expo/vector-icons";
 import Colors from "../../constants/colors";
 
 const SignInScreen = ({ navigation }) => {
@@ -23,6 +22,7 @@ const SignInScreen = ({ navigation }) => {
         <Input
           inputStyle={styles.Input}
           placeholder="Email Address or UserName"
+          placeholderTextColor={Colors.placeholder}
           leftIcon={
             <MaterialIcons name="email" size={20} color={Colors.primary} />
           }
@@ -31,6 +31,7 @@ const SignInScreen = ({ navigation }) => {
           secureTextEntry={secureText}
           inputStyle={styles.Input}
           placeholder="Password"
+          placeholderTextColor={Colors.placeholder}
           leftIcon={
             <MaterialIcons name="lock" size={20} color={Colors.primary} />
           }
@@ -38,14 +39,14 @@ const SignInScreen = ({ navigation }) => {
             secureText ? (
               <Octicons
                 name="eye-closed"
-                size={20}
+                size={22}
                 color={Colors.primary}
                 onPress={() => setSecureText(false)}
               />
             ) : (
               <Octicons
                 name="eye"
-                size={20}
+                size={22}
                 color={Colors.primary}
                 onPress={() => setSecureText(true)}
               />
@@ -64,7 +65,7 @@ const SignInScreen = ({ navigation }) => {
         </View>
         <TouchableOpacity
           activeOpacity={1}
-          onPress={() => navigation.navigate("Signup")}
+          onPress={() => navigation.replace("Signup")}
         >
           <Text style={styles.newUser}>
             New User ? <Text style={{ color: Colors.primary }}>Signup</Text>
@@ -100,6 +101,7 @@ const styles = StyleSheet.create({
   Form: {
     width: "80%",
     marginVertical: 10,
+    marginTop: 25,
   },
   Input: {
     fontSize: 16,
