@@ -7,13 +7,13 @@ import IndexScreen from "./screens/AuthScreens/IndexScreen";
 import SignUpScreen from "./screens/AuthScreens/SignUpScreen";
 import SignInScreen from "./screens/AuthScreens/SignInScreen";
 import userDashboard from "./screens/MainScreens/userDashboard";
+import UserProfile from "./screens/ProfileScreens/UserProfile";
 import pdfDashboard from "./screens/pdfScreen/pdfDashboard";
 import bookList from "./screens/bookScreen/bookList";
 
 import { AntDesign } from "@expo/vector-icons";
 
 import Colors from "./constants/colors";
-import { createDrawerNavigator } from "react-navigation-drawer";
 
 const AuthFlow = createStackNavigator({
   Startscreen: IndexScreen,
@@ -21,13 +21,23 @@ const AuthFlow = createStackNavigator({
   Signin: SignInScreen,
 });
 
+const Dashboard = createStackNavigator({
+  Dashboard: userDashboard,
+});
+Dashboard.navigationOptions = {
+  title: "Home",
+  tabBarIcon: ({ tintColor }) => (
+    <AntDesign name="home" size={26} color={tintColor} />
+  ),
+};
+
 const pdfFlow = createStackNavigator({
   upload: pdfDashboard,
 });
 pdfFlow.navigationOptions = {
   title: "PDF",
   tabBarIcon: ({ tintColor }) => (
-    <AntDesign name="pdffile1" size={24} color={tintColor} />
+    <AntDesign name="pdffile1" size={26} color={tintColor} />
   ),
 };
 
@@ -37,21 +47,24 @@ const bookFlow = createStackNavigator({
 bookFlow.navigationOptions = {
   title: "Book",
   tabBarIcon: ({ tintColor }) => (
-    <AntDesign name="book" size={24} color={tintColor} />
+    <AntDesign name="book" size={26} color={tintColor} />
   ),
 };
-
-userDashboard.navigationOptions = {
-  title: "Home",
+const Profile = createStackNavigator({
+  profie: UserProfile,
+});
+Profile.navigationOptions = {
+  title: "Profile",
   tabBarIcon: ({ tintColor }) => (
-    <AntDesign name="home" size={24} color={tintColor} />
+    <AntDesign name="setting" size={26} color={tintColor} />
   ),
 };
-const BottomTab = createBottomTabNavigator(
+const MainFlow = createBottomTabNavigator(
   {
-    userDashboard: userDashboard,
+    Dashboard,
     pdfFlow,
     bookFlow,
+    Profile,
   },
   {
     tabBarOptions: {
@@ -60,7 +73,6 @@ const BottomTab = createBottomTabNavigator(
     },
   }
 );
-const MainFlow = createDrawerNavigator({ BottomTab });
 
 const switchNavigator = createSwitchNavigator({
   AuthFlow,

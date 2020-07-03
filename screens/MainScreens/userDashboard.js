@@ -1,15 +1,24 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-import HeaderComponent from "../../components/Header";
+import Title from "../../components/Title";
+import Colors from "../../constants/colors";
 
-const userDashboard = ({ navigation }) => {
+const userDashboard = () => {
   return (
     <View style={{ flex: 1 }}>
-      <HeaderComponent navigation={navigation} />
       <Text>H</Text>
     </View>
   );
 };
+userDashboard.navigationOptions = () => {
+  return {
+    headerTitle: () => <Title title="Dashboard" />,
+    headerStyle: {
+      backgroundColor: Colors.primary,
+    },
+  };
+};
 
+const styles = StyleSheet.create({});
 export default userDashboard;

@@ -1,23 +1,22 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 import Title from "../../components/Title";
 import Colors from "../../constants/colors";
 
-const bookList = () => {
+const UserProfile = () => {
   return (
     <View>
-      <Text>book</Text>
+      <Text>Profile</Text>
     </View>
   );
 };
-bookList.navigationOptions = () => {
+UserProfile.navigationOptions = () => {
   return {
-    headerTitle: () => <Title title="BOOK" />,
+    headerTitle: () => <Title title="PROFILE" />,
     headerStyle: {
       backgroundColor: Colors.primary,
     },
   };
 };
-
-export default bookList;
+export default UserProfile;

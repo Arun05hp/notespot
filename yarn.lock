@@ -4597,11 +4597,6 @@ react-native-web@~0.11.7:
     stacktrace-parser "^0.1.3"
     whatwg-fetch "^3.0.0"
 
-react-navigation-drawer@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/react-navigation-drawer/-/react-navigation-drawer-2.5.0.tgz#6d2940fb6f9ae557b47a717203b4058194ae9665"
-  integrity sha512-wSsIdLYXYdi9wOOXGzaY4Hk/NIXaP8tClEpjlAPl1rhn3kU++gyJFcQ3xLsPWg0yRYq3y8jDPEWFFf81JqfP9Q==
-
 react-navigation-native@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/react-navigation-native/-/react-navigation-native-0.0.0.tgz#08dfa322ff9834255a27b6de9d0db02065d1ac24"

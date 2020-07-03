@@ -61,7 +61,7 @@ const SignInScreen = ({ navigation }) => {
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.btnTitle}
             title="Sign in"
-            onPress={() => navigation.navigate("userDashboard")}
+            onPress={() => navigation.navigate("Dashboard")}
           />
         </View>
         <TouchableOpacity

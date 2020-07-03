@@ -2,13 +2,14 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 
-import HeaderComponent from "../../components/Header";
 import CardButton from "../../components/CardButton";
+
+import Title from "../../components/Title";
+import Colors from "../../constants/colors";
+
 const pdfDashboard = ({ navigation }) => {
   return (
     <View>
-      <HeaderComponent navigation={navigation} />
-
       <View style={styles.ButtonContainer}>
         <CardButton style={styles.CardButton}>
           <Text style={{ ...styles.CardTitle, color: "red" }}>Upload Pdf</Text>
@@ -34,11 +35,15 @@ const pdfDashboard = ({ navigation }) => {
 };
 pdfDashboard.navigationOptions = () => {
   return {
-    headerShown: false,
+    headerTitle: () => <Title title="PDF" />,
+    headerStyle: {
+      backgroundColor: Colors.primary,
+    },
   };
 };
 
 const styles = StyleSheet.create({
+  title: {},
   ButtonContainer: {
     flexDirection: "row",
     justifyContent: "space-evenly",
