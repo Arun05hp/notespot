@@ -60,7 +60,8 @@ const SignInScreen = ({ navigation }) => {
           <Button
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.btnTitle}
-            title="Login"
+            title="Sign in"
+            onPress={() => navigation.navigate("userDashboard")}
           />
         </View>
         <TouchableOpacity
@@ -68,7 +69,7 @@ const SignInScreen = ({ navigation }) => {
           onPress={() => navigation.replace("Signup")}
         >
           <Text style={styles.newUser}>
-            New User ? <Text style={{ color: Colors.primary }}>Signup</Text>
+            New User ? <Text style={{ color: Colors.primary }}>Sign up</Text>
           </Text>
         </TouchableOpacity>
       </View>
