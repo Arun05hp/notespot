@@ -63,6 +63,8 @@ const styles = StyleSheet.create({
   },
   btnTitle: {
     color: Colors.primary,
+    fontFamily: "Roboto-bold",
+    fontSize: 18,
   },
 });
 

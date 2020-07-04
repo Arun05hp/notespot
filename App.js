@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
+import * as Font from "expo-font";
+import { AppLoading } from "expo";
 
 import IndexScreen from "./screens/AuthScreens/IndexScreen";
 import SignUpScreen from "./screens/AuthScreens/SignUpScreen";
@@ -14,12 +16,6 @@ import bookList from "./screens/bookScreen/bookList";
 import { AntDesign } from "@expo/vector-icons";
 
 import Colors from "./constants/colors";
-
-const AuthFlow = createStackNavigator({
-  Startscreen: IndexScreen,
-  Signup: SignUpScreen,
-  Signin: SignInScreen,
-});
 
 const Dashboard = createStackNavigator({
   Dashboard: userDashboard,
@@ -50,6 +46,7 @@ bookFlow.navigationOptions = {
     <AntDesign name="book" size={26} color={tintColor} />
   ),
 };
+
 const Profile = createStackNavigator({
   profie: UserProfile,
 });
@@ -59,6 +56,13 @@ Profile.navigationOptions = {
     <AntDesign name="setting" size={26} color={tintColor} />
   ),
 };
+
+const AuthFlow = createStackNavigator({
+  Startscreen: IndexScreen,
+  Signup: SignUpScreen,
+  Signin: SignInScreen,
+});
+
 const MainFlow = createBottomTabNavigator(
   {
     Dashboard,
@@ -81,4 +85,22 @@ const switchNavigator = createSwitchNavigator({
 
 const App = createAppContainer(switchNavigator);
 
-export default () => <App />;
+const fetchFonts = async () => {
+  await Font.loadAsync({
+    "Roboto-regular": require("./assets/fonts/roboto.regular.ttf"),
+    "Roboto-bold": require("./assets/fonts/roboto.medium.ttf"),
+  });
+};
+
+export default () => {
+  const [FontLoaded, setFontLoaded] = useState(false);
+  if (!FontLoaded) {
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => setFontLoaded(true)}
+      />
+    );
+  }
+  return <App />;
+};

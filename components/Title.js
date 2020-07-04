@@ -10,8 +10,11 @@ const Title = ({ title }) => {
 const styles = StyleSheet.create({
   title: {
     fontSize: 22,
-    fontWeight: "bold",
+    fontWeight: "600",
     color: Colors.white,
+    textAlign: "center",
+    letterSpacing: 1,
+    fontFamily: "Roboto-regular",
   },
 });
 

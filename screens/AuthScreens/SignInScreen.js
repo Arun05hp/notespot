@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    fontFamily: "Roboto-regular",
   },
   imgWrapper: {
     width: 150,
@@ -111,6 +112,7 @@ const styles = StyleSheet.create({
   forget: {
     textAlign: "right",
     color: Colors.primary,
+    fontFamily: "Roboto-bold",
   },
   btnWrapper: {
     alignItems: "center",
@@ -124,8 +126,9 @@ const styles = StyleSheet.create({
   },
   btnTitle: {
     color: Colors.white,
+    fontFamily: "Roboto-bold",
   },
-  newUser: { textAlign: "center" },
+  newUser: { textAlign: "center", fontFamily: "Roboto-bold" },
 });
 
 export default SignInScreen;
