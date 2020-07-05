@@ -16,14 +16,12 @@ const GridTitle = ({ itemData }) => {
   return (
     <View style={styles.gridItem}>
       <TouchableCmp style={{ flex: 1 }}>
-        <View
-          style={{
-            ...styles.container,
-            ...{ backgroundColor: itemData.item.backgroundColor },
-          }}
-        >
+        <View style={styles.container}>
           {itemData.item.icon}
-          <Text style={styles.title} numberOfLines={2}>
+          <Text
+            style={{ ...styles.title, ...{ color: itemData.item.color } }}
+            numberOfLines={2}
+          >
             {itemData.item.title}
           </Text>
         </View>
@@ -37,20 +35,22 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 15,
     height: 150,
-    borderRadius: 10,
     overflow: "hidden",
   },
   container: {
     flex: 1,
-    borderRadius: 10,
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 3,
-    elevation: 3,
-    padding: 10,
+    borderRadius: 15,
+    margin: 2,
+    borderRadius: 20,
+    borderWidth: 5,
+    borderColor: "white",
+    backgroundColor: "#F5F3F3",
+    shadowColor: "rgba(0, 0, 0, 0.7)",
+    elevation: 5,
+    padding: 5,
     justifyContent: "center",
     alignItems: "center",
+    overflow: "hidden",
   },
   title: {
     marginTop: 10,

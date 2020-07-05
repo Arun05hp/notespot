@@ -1,60 +1,57 @@
 import React from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 
 import Title from "../../components/Title";
-import GridTile from "../../components/GridTile";
-import Colors from "../../constants/colors";
+import GridTitle from "../../components/GridTile";
 
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import GridTitle from "../../components/GridTile";
+import Colors from "../../constants/colors";
 
 const GridData = [
   {
     id: "upload",
     title: "Upload Pdf",
-    icon: <AntDesign name="upload" size={24} color="black" />,
-    backgroundColor: "#f5428d",
+    icon: <AntDesign name="upload" size={24} color="#0298C8" />,
+    color: "#0298C8",
   },
   {
     id: "recent",
     title: "Recent Uploads",
-    icon: <AntDesign name="clouduploado" size={24} color="black" />,
-    backgroundColor: "#f54242",
+    icon: <AntDesign name="clouduploado" size={24} color="#D168F7" />,
+    color: "#D168F7",
   },
   {
     id: "search",
     title: "Search Pdf",
-    icon: <AntDesign name="search1" size={24} color="black" />,
-    backgroundColor: "#f5d142",
+    icon: <AntDesign name="search1" size={24} color="#F84772" />,
+    color: "#F84772",
   },
   {
     id: "favorites",
     title: "Favorites",
-    icon: <AntDesign name="staro" size={24} color="black" />,
-    backgroundColor: "#368dff",
+    icon: <AntDesign name="staro" size={24} color="#F66E50" />,
+    color: "#F66E50",
   },
   {
     id: "buy",
     title: "Buy Book",
     icon: (
-      <MaterialCommunityIcons name="cart-arrow-down" size={24} color="black" />
+      <MaterialCommunityIcons
+        name="cart-arrow-down"
+        size={24}
+        color="#4ebbf9"
+      />
     ),
-    backgroundColor: "#41d95d",
+    color: "#0298C8",
   },
   {
     id: "sell",
     title: "Sell Book",
     icon: (
-      <MaterialCommunityIcons name="cart-arrow-up" size={24} color="black" />
+      <MaterialCommunityIcons name="cart-arrow-up" size={24} color="#39dc36" />
     ),
-    backgroundColor: "#9eecff",
+    color: "#0298C8",
   },
 ];
 
