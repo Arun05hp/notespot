@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-
+import Title from "../../components/Title";
 import Colors from "../../constants/colors";
 
 const pdfDashboard = ({ navigation }) => {

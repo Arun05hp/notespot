@@ -11,12 +11,12 @@ import SignInScreen from "./screens/AuthScreens/SignInScreen";
 import userDashboard from "./screens/MainScreens/userDashboard";
 import UserProfile from "./screens/ProfileScreens/UserProfile";
 import pdfDashboard from "./screens/pdfScreen/pdfDashboard";
+import uploadpdf from "./screens/pdfScreen/uploadpdf";
 import bookList from "./screens/bookScreen/bookList";
 
 import { AntDesign } from "@expo/vector-icons";
 
 import Colors from "./constants/colors";
-import uploadpdf from "./screens/pdfScreen/uploadpdf";
 
 const Dashboard = createStackNavigator({
   Dashboard: userDashboard,
