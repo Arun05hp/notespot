@@ -8,14 +8,18 @@ import {
   TouchableNativeFeedback,
 } from "react-native";
 
-const GridTitle = ({ itemData }) => {
+const GridTitle = ({ itemData, navigation, navigateScreen }) => {
+  console.log(navigateScreen);
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android" && Platform.Version >= 21) {
     TouchableCmp = TouchableNativeFeedback;
   }
   return (
     <View style={styles.gridItem}>
-      <TouchableCmp style={{ flex: 1 }}>
+      <TouchableCmp
+        style={{ flex: 1 }}
+        onPress={() => navigation.navigate({ navigateScreen })}
+      >
         <View style={styles.container}>
           {itemData.item.icon}
           <Text

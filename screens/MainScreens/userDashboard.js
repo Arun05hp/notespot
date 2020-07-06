@@ -14,24 +14,28 @@ const GridData = [
     title: "Upload Pdf",
     icon: <AntDesign name="upload" size={24} color="#0298C8" />,
     color: "#0298C8",
+    navigateScreen: "UploadPdf",
   },
   {
     id: "recent",
     title: "Recent Uploads",
     icon: <AntDesign name="clouduploado" size={24} color="#D168F7" />,
     color: "#D168F7",
+    navigateScreen: "UploadPdf",
   },
   {
     id: "search",
     title: "Search Pdf",
     icon: <AntDesign name="search1" size={24} color="#F84772" />,
     color: "#F84772",
+    navigateScreen: "UploadPdf",
   },
   {
     id: "favorites",
     title: "Favorites",
     icon: <AntDesign name="staro" size={24} color="#F66E50" />,
     color: "#F66E50",
+    navigateScreen: "UploadPdf",
   },
   {
     id: "buy",
@@ -44,6 +48,7 @@ const GridData = [
       />
     ),
     color: "#0298C8",
+    navigateScreen: "UploadPdf",
   },
   {
     id: "sell",
@@ -52,12 +57,19 @@ const GridData = [
       <MaterialCommunityIcons name="cart-arrow-up" size={24} color="#39dc36" />
     ),
     color: "#0298C8",
+    navigateScreen: "UploadPdf",
   },
 ];
 
-const userDashboard = () => {
+const userDashboard = ({ navigation }) => {
   const renderGridItem = (itemData) => {
-    return <GridTitle itemData={itemData} />;
+    return (
+      <GridTitle
+        navigation={navigation}
+        itemData={itemData}
+        navigateScreen={itemData.item.navigateScreen}
+      />
+    );
   };
 
   return (

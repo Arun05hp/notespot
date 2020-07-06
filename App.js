@@ -16,9 +16,11 @@ import bookList from "./screens/bookScreen/bookList";
 import { AntDesign } from "@expo/vector-icons";
 
 import Colors from "./constants/colors";
+import uploadpdf from "./screens/pdfScreen/uploadpdf";
 
 const Dashboard = createStackNavigator({
   Dashboard: userDashboard,
+  UploadPdf: uploadpdf,
 });
 Dashboard.navigationOptions = {
   title: "Home",
@@ -53,7 +55,7 @@ const Profile = createStackNavigator({
 Profile.navigationOptions = {
   title: "Profile",
   tabBarIcon: ({ tintColor }) => (
-    <AntDesign name="setting" size={26} color={tintColor} />
+    <AntDesign name="user" size={26} color={tintColor} />
   ),
 };
 
