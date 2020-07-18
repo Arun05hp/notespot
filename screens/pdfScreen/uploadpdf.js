@@ -44,6 +44,8 @@ const uploadpdf = () => {
         setFileDetails({
           fileName: res.name,
           fileSize: res.size,
+          customName: topicName,
+          category: category,
         });
         setFileExists(true);
       } else {
@@ -81,8 +83,18 @@ const uploadpdf = () => {
 
       {fileExists ? (
         <View style={styles.card}>
-          <Text>{topicName}</Text>
-          <Text>{category}</Text>
+          <Text style={styles.text}>
+            Topic Name:{" "}
+            <Text style={{ color: Colors.primary }}>
+              {fileDetails.customName}
+            </Text>
+          </Text>
+          <Text style={styles.text}>
+            Category:{" "}
+            <Text style={{ color: Colors.primary }}>
+              {fileDetails.category}
+            </Text>
+          </Text>
           <View style={styles.showFileContainer}>
             <MaterialIcons name="picture-as-pdf" size={24} color="#d21e27" />
             <Text numberOfLines={3} style={styles.fileNameText}>
@@ -100,7 +112,16 @@ const uploadpdf = () => {
 };
 uploadpdf.navigationOptions = () => {
   return {
-    headerTitle: () => <Title title="Upload Pdf" />,
+    headerTitle: "Upload Pdf",
+    headerTintColor: Colors.white,
+    headerTitleAlign: "center",
+    headerTitleStyle: {
+      fontSize: 22,
+      fontWeight: "600",
+      color: Colors.white,
+      letterSpacing: 1,
+      fontFamily: "Roboto-regular",
+    },
     headerStyle: {
       backgroundColor: Colors.primary,
     },
@@ -153,6 +174,11 @@ const styles = StyleSheet.create({
   },
   fileNameText: {
     paddingLeft: 5,
+  },
+  text: {
+    fontSize: 18,
+    fontFamily: "Roboto-bold",
+    marginVertical: 5,
   },
 });
 

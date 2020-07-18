@@ -8,18 +8,17 @@ import {
   TouchableNativeFeedback,
 } from "react-native";
 
-const GridTitle = ({ itemData, navigation, navigateScreen }) => {
+import Card from "../components/Card";
+
+const GridTile = ({ itemData, navigation, navigateScreen }) => {
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android" && Platform.Version >= 21) {
     TouchableCmp = TouchableNativeFeedback;
   }
   return (
-    <View style={styles.gridItem}>
-      <TouchableCmp
-        style={{ flex: 1 }}
-        onPress={() => navigation.navigate(navigateScreen)}
-      >
-        <View style={styles.container}>
+    <Card style={styles.container}>
+      <TouchableCmp onPress={() => navigation.navigate(navigateScreen)}>
+        <View style={styles.innerContainer}>
           {itemData.item.icon}
           <Text
             style={{ ...styles.title, ...{ color: itemData.item.color } }}
@@ -29,31 +28,27 @@ const GridTitle = ({ itemData, navigation, navigateScreen }) => {
           </Text>
         </View>
       </TouchableCmp>
-    </View>
+    </Card>
   );
 };
 
 const styles = StyleSheet.create({
-  gridItem: {
+  container: {
     flex: 1,
     margin: 15,
     height: 150,
-    overflow: "hidden",
-  },
-  container: {
-    flex: 1,
-    borderRadius: 15,
-    margin: 2,
     borderRadius: 20,
     borderWidth: 5,
     borderColor: "white",
     backgroundColor: "#F5F3F3",
-    shadowColor: "rgba(0, 0, 0, 0.7)",
-    elevation: 5,
-    padding: 5,
     justifyContent: "center",
     alignItems: "center",
-    overflow: "hidden",
+  },
+  innerContainer: {
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
     marginTop: 10,
@@ -62,4 +57,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
-export default GridTitle;
+export default GridTile;

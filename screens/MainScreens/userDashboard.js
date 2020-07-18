@@ -1,8 +1,8 @@
 import React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 
 import Title from "../../components/Title";
-import GridTitle from "../../components/GridTile";
+import GridTile from "../../components/GridTile";
 
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -64,7 +64,7 @@ const GridData = [
 const userDashboard = ({ navigation }) => {
   const renderGridItem = (itemData) => {
     return (
-      <GridTitle
+      <GridTile
         navigation={navigation}
         itemData={itemData}
         navigateScreen={itemData.item.navigateScreen}
@@ -73,9 +73,15 @@ const userDashboard = ({ navigation }) => {
   };
 
   return (
-    <FlatList data={GridData} renderItem={renderGridItem} numColumns={2} />
+    <FlatList
+      style={styles.container}
+      data={GridData}
+      renderItem={renderGridItem}
+      numColumns={2}
+    />
   );
 };
+
 userDashboard.navigationOptions = () => {
   return {
     headerTitle: () => <Title title="DASHBOARD" />,
@@ -85,5 +91,11 @@ userDashboard.navigationOptions = () => {
   };
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+    paddingBottom: 15,
+  },
+});
 export default userDashboard;

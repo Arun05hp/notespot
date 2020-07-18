@@ -19,7 +19,7 @@ const IndexScreen = ({ navigation }) => {
           buttonStyle={styles.buttonStyle}
           titleStyle={styles.btnTitle}
           title="Get Started"
-          onPress={() => navigation.replace("Signin")}
+          onPress={() => navigation.navigate("Dashboard")}
         />
       </View>
     </View>

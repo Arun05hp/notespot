@@ -1,17 +1,18 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
-import { Card } from "react-native-elements";
+import { View, StyleSheet } from "react-native";
+
 const CardComponent = ({ children, style }) => {
-  return (
-    <Card containerStyle={{ ...styles.CardContainer, ...style }}>
-      {children}
-    </Card>
-  );
+  return <View style={{ ...styles.cardContainer, ...style }}>{children}</View>;
 };
 
 const styles = StyleSheet.create({
-  CardContainer: {
-    borderRadius: 10,
+  cardContainer: {
+    shadowColor: "black",
+    shadowOffset: 0.26,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 8,
+    elevation: 8,
+    overflow: "hidden",
   },
 });
 export default CardComponent;
