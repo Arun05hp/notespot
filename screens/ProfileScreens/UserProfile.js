@@ -1,9 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-import Title from "../../components/Title";
-import Colors from "../../constants/colors";
-
 const UserProfile = () => {
   return (
     <View>
@@ -13,10 +10,7 @@ const UserProfile = () => {
 };
 UserProfile.navigationOptions = () => {
   return {
-    headerTitle: () => <Title title="PROFILE" />,
-    headerStyle: {
-      backgroundColor: Colors.primary,
-    },
+    headerTitle: "PROFILE",
   };
 };
 export default UserProfile;

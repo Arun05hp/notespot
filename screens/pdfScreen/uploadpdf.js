@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, Alert } from "react-native";
 import { Input, Button } from "react-native-elements";
 import * as DocumentPicker from "expo-document-picker";
 
-import Title from "../../components/Title";
 import { MaterialIcons } from "@expo/vector-icons";
 import Colors from "../../constants/colors";
 
@@ -112,19 +111,7 @@ const uploadpdf = () => {
 };
 uploadpdf.navigationOptions = () => {
   return {
-    headerTitle: "Upload Pdf",
-    headerTintColor: Colors.white,
-    headerTitleAlign: "center",
-    headerTitleStyle: {
-      fontSize: 22,
-      fontWeight: "600",
-      color: Colors.white,
-      letterSpacing: 1,
-      fontFamily: "Roboto-regular",
-    },
-    headerStyle: {
-      backgroundColor: Colors.primary,
-    },
+    headerTitle: "UPLOAD PDF",
   };
 };
 

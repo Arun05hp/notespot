@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { Input } from "react-native-elements";
-import { Button } from "react-native-elements";
+import { Input, Button } from "react-native-elements";
 
-import { MaterialIcons, Octicons } from "@expo/vector-icons";
+import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import Colors from "../../constants/colors";
 
 const SignInScreen = ({ navigation }) => {
@@ -36,21 +35,12 @@ const SignInScreen = ({ navigation }) => {
             <MaterialIcons name="lock" size={20} color={Colors.primary} />
           }
           rightIcon={
-            secureText ? (
-              <Octicons
-                name="eye-closed"
-                size={22}
-                color={Colors.primary}
-                onPress={() => setSecureText(false)}
-              />
-            ) : (
-              <Octicons
-                name="eye"
-                size={22}
-                color={Colors.primary}
-                onPress={() => setSecureText(true)}
-              />
-            )
+            <FontAwesome5
+              name={secureText ? "eye-slash" : "eye"}
+              size={22}
+              color={Colors.primary}
+              onPress={() => setSecureText((prevState) => !prevState)}
+            />
           }
         />
         <TouchableOpacity onPress={() => console.log("forget")}>

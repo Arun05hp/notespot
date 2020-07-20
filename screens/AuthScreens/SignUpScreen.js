@@ -1,14 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { Input } from "react-native-elements";
-import { Button } from "react-native-elements";
+import { Input, Button } from "react-native-elements";
 
-import {
-  MaterialIcons,
-  Octicons,
-  AntDesign,
-  FontAwesome5,
-} from "@expo/vector-icons";
+import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import Colors from "../../constants/colors";
 
 const SignUpScreen = ({ navigation }) => {
@@ -29,7 +23,9 @@ const SignUpScreen = ({ navigation }) => {
           inputStyle={styles.Input}
           placeholder="Full Name"
           placeholderTextColor={Colors.placeholder}
-          leftIcon={<AntDesign name="user" size={20} color={Colors.primary} />}
+          leftIcon={
+            <FontAwesome5 name="user-alt" size={20} color={Colors.primary} />
+          }
         />
         <Input
           textContentType="emailAddress"
@@ -59,21 +55,12 @@ const SignUpScreen = ({ navigation }) => {
             <MaterialIcons name="lock" size={20} color={Colors.primary} />
           }
           rightIcon={
-            secureText ? (
-              <Octicons
-                name="eye-closed"
-                size={22}
-                color={Colors.primary}
-                onPress={() => setSecureText(false)}
-              />
-            ) : (
-              <Octicons
-                name="eye"
-                size={22}
-                color={Colors.primary}
-                onPress={() => setSecureText(true)}
-              />
-            )
+            <FontAwesome5
+              name={secureText ? "eye-slash" : "eye"}
+              size={22}
+              color={Colors.primary}
+              onPress={() => setSecureText((prevState) => !prevState)}
+            />
           }
         />
         <View style={styles.btnWrapper}>

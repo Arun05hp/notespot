@@ -10,7 +10,7 @@ const pdfList = () => {
 };
 pdfList.navigationOptions = () => {
   return {
-    headerTitle: "Pdf List",
+    headerTitle: "PDF LIST",
   };
 };
 

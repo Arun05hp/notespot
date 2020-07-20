@@ -1,7 +1,5 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import Title from "../../components/Title";
-import Colors from "../../constants/colors";
 
 const pdfDashboard = ({ navigation }) => {
   return (
@@ -12,10 +10,7 @@ const pdfDashboard = ({ navigation }) => {
 };
 pdfDashboard.navigationOptions = () => {
   return {
-    headerTitle: () => <Title title="PDF" />,
-    headerStyle: {
-      backgroundColor: Colors.primary,
-    },
+    headerTitle: "PDF",
   };
 };
 

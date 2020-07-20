@@ -1,12 +1,10 @@
 import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
-import Title from "../../components/Title";
 import GridTile from "../../components/GridTile";
 
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import Colors from "../../constants/colors";
 
 const GridData = [
   {
@@ -84,10 +82,7 @@ const userDashboard = ({ navigation }) => {
 
 userDashboard.navigationOptions = () => {
   return {
-    headerTitle: () => <Title title="DASHBOARD" />,
-    headerStyle: {
-      backgroundColor: Colors.primary,
-    },
+    headerTitle: "DASHBOARD",
   };
 };
 
