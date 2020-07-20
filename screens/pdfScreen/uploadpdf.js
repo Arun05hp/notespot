@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Alert } from "react-native";
 import { Input, Button } from "react-native-elements";
 import * as DocumentPicker from "expo-document-picker";
 
+import Card from "../../components/Card";
+
 import { MaterialIcons } from "@expo/vector-icons";
 import Colors from "../../constants/colors";
 
@@ -58,7 +60,7 @@ const uploadpdf = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.card}>
+      <Card style={styles.card}>
         <Input
           containerStyle={styles.inputContainer}
           inputStyle={styles.Input}
@@ -76,12 +78,15 @@ const uploadpdf = () => {
           onChangeText={setCategory}
         />
         <View>
-          <Button title="Select File" onPress={documentSelect} />
+          <Button
+            title={fileExists ? "Change File" : "Select File"}
+            onPress={documentSelect}
+          />
         </View>
-      </View>
+      </Card>
 
       {fileExists ? (
-        <View style={styles.card}>
+        <Card style={styles.card}>
           <Text style={styles.text}>
             Topic Name:{" "}
             <Text style={{ color: Colors.primary }}>
@@ -104,7 +109,7 @@ const uploadpdf = () => {
           <View style={styles.btnContainer}>
             <Button title="Upload" onPress={() => console.log("upload")} />
           </View>
-        </View>
+        </Card>
       ) : null}
     </View>
   );
@@ -119,23 +124,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    justifyContent: "space-evenly",
   },
 
   card: {
     width: "90%",
-    marginVertical: 10,
-    marginTop: 25,
-    borderWidth: 1,
-    borderRadius: 2,
-    borderColor: "#ddd",
-    borderBottomWidth: 0,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
+    backgroundColor: "white",
     padding: 10,
-    backgroundColor: "#f4f4f4",
   },
   inputContainer: {
     paddingHorizontal: 0,
@@ -163,7 +158,7 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
   },
   text: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: "Roboto-bold",
     marginVertical: 5,
   },
