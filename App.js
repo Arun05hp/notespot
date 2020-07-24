@@ -8,7 +8,7 @@ import { AppLoading } from "expo";
 const fetchFonts = async () => {
   await Font.loadAsync({
     "Roboto-regular": require("./assets/fonts/roboto.regular.ttf"),
-    "Roboto-bold": require("./assets/fonts/roboto.medium.ttf"),
+    "Roboto-bold": require("./assets/fonts/roboto.bold.ttf"),
   });
 };
 
@@ -20,6 +20,7 @@ export default () => {
       <AppLoading
         startAsync={fetchFonts}
         onFinish={() => setFontLoaded(true)}
+        onError={console.warn}
       />
     );
   }
