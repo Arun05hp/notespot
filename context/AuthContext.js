@@ -21,17 +21,18 @@ const authReducer = (state, action) => {
   }
 };
 
-const signup = (dispatch) => async ({ name, email, userName, password }) => {
+const signup = (dispatch) => async ({ name, email, password }) => {
   try {
-    const response = await appApi.post("/signup", {
+    const response = await appApi.post("/user/signup", {
       name,
       email,
-      userName,
       password,
     });
+    console.log(response);
     dispatch({ type: "signup", payload: response.data.token });
-    navigate("Signin");
+    // navigate("Signin");
   } catch (error) {
+    console.log(error);
     dispatch({ type: "add_error", payload: "Something went Wrong" });
   }
 };

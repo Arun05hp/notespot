@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
 import AppNavigator from "./navigation/Navigation";
+import { setNavigator } from "./navigation/navigationRef";
+import { Provider as AuthProvider } from "./context/AuthContext";
 
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
@@ -24,5 +26,13 @@ export default () => {
       />
     );
   }
-  return <AppNavigator />;
+  return (
+    <AuthProvider>
+      <AppNavigator
+        ref={(navigator) => {
+          setNavigator(navigator);
+        }}
+      />
+    </AuthProvider>
+  );
 };

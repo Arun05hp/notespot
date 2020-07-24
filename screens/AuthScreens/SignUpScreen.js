@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Input, Button } from "react-native-elements";
-
+import { Context as AuthContext } from "../../context/AuthContext";
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import Colors from "../../constants/colors";
 
 const SignUpScreen = ({ navigation }) => {
   const [secureText, setSecureText] = useState(true);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { state, signup } = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
@@ -21,7 +26,11 @@ const SignUpScreen = ({ navigation }) => {
         <Input
           textContentType="name"
           inputStyle={styles.Input}
+          value={name}
+          onChangeText={setName}
           placeholder="Full Name"
+          autoCapitalize="none"
+          autoCorrect={false}
           placeholderTextColor={Colors.placeholder}
           leftIcon={
             <FontAwesome5 name="user-alt" size={20} color={Colors.primary} />
@@ -30,26 +39,25 @@ const SignUpScreen = ({ navigation }) => {
         <Input
           textContentType="emailAddress"
           inputStyle={styles.Input}
+          value={email}
+          onChangeText={setEmail}
           placeholder="Email Address"
+          autoCapitalize="none"
+          autoCorrect={false}
           placeholderTextColor={Colors.placeholder}
           leftIcon={
             <MaterialIcons name="email" size={20} color={Colors.primary} />
           }
         />
         <Input
-          textContentType="nickname"
-          inputStyle={styles.Input}
-          placeholder="User Name Eg: Abc@01"
-          placeholderTextColor={Colors.placeholder}
-          leftIcon={
-            <FontAwesome5 name="user-tag" size={21} color={Colors.primary} />
-          }
-        />
-        <Input
           secureTextEntry={secureText}
           textContentType="password"
           inputStyle={styles.Input}
+          value={password}
+          onChangeText={setPassword}
           placeholder="Password"
+          autoCapitalize="none"
+          autoCorrect={false}
           placeholderTextColor={Colors.placeholder}
           leftIcon={
             <MaterialIcons name="lock" size={20} color={Colors.primary} />
@@ -68,6 +76,7 @@ const SignUpScreen = ({ navigation }) => {
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.btnTitle}
             title="Sign up"
+            onPress={() => signup({ name, email, password })}
           />
         </View>
         <TouchableOpacity
