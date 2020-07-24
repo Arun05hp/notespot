@@ -21,6 +21,8 @@ const SignInScreen = ({ navigation }) => {
         <Input
           inputStyle={styles.Input}
           placeholder="Email Address or UserName"
+          autoCapitalize="none"
+          autoFocus={true}
           placeholderTextColor={Colors.placeholder}
           leftIcon={
             <MaterialIcons name="email" size={20} color={Colors.primary} />
@@ -74,6 +76,7 @@ SignInScreen.navigationOptions = () => {
 };
 
 const styles = StyleSheet.create({
+  screen: { flex: 1 },
   container: {
     flex: 1,
     justifyContent: "center",

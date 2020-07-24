@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Alert } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { Input, Button } from "react-native-elements";
 import * as DocumentPicker from "expo-document-picker";
 
@@ -33,6 +33,7 @@ const uploadpdf = () => {
   const [fileExists, setFileExists] = useState(false);
   const [topicName, setTopicName] = useState("");
   const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
   const [fileDetails, setFileDetails] = useState({});
 
   const documentSelect = async () => {
@@ -47,6 +48,7 @@ const uploadpdf = () => {
           fileSize: res.size,
           customName: topicName,
           category: category,
+          description: description,
         });
         setFileExists(true);
       } else {
@@ -59,7 +61,7 @@ const uploadpdf = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.contentContainer}>
       <Card style={styles.card}>
         <Input
           containerStyle={styles.inputContainer}
@@ -76,6 +78,16 @@ const uploadpdf = () => {
           label="Category"
           value={category}
           onChangeText={setCategory}
+        />
+        <Input
+          containerStyle={styles.inputContainer}
+          inputStyle={styles.Input}
+          labelStyle={styles.label}
+          label="Description"
+          placeholder="Optional"
+          multiline={true}
+          value={description}
+          onChangeText={setDescription}
         />
         <View>
           <Button
@@ -99,6 +111,12 @@ const uploadpdf = () => {
               {fileDetails.category}
             </Text>
           </Text>
+          <Text style={styles.text}>
+            Description:{" "}
+            <Text style={{ color: Colors.primary }}>
+              {fileDetails.description}
+            </Text>
+          </Text>
           <View style={styles.showFileContainer}>
             <MaterialIcons name="picture-as-pdf" size={24} color="#d21e27" />
             <Text numberOfLines={3} style={styles.fileNameText}>
@@ -111,7 +129,7 @@ const uploadpdf = () => {
           </View>
         </Card>
       ) : null}
-    </View>
+    </ScrollView>
   );
 };
 uploadpdf.navigationOptions = () => {
@@ -121,7 +139,7 @@ uploadpdf.navigationOptions = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  contentContainer: {
     flex: 1,
     alignItems: "center",
     justifyContent: "space-evenly",
@@ -137,10 +155,12 @@ const styles = StyleSheet.create({
   },
   Input: {
     fontSize: 16,
+    minHeight: 30,
   },
   label: {
     fontFamily: "Roboto-bold",
     color: Colors.primary,
+    padding: 0,
   },
   btnContainer: {
     marginVertical: 10,
