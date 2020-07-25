@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Input, Button } from "react-native-elements";
+import { NavigationEvents } from "react-navigation";
+
 import { Context as AuthContext } from "../../context/AuthContext";
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import Colors from "../../constants/colors";
@@ -11,10 +13,12 @@ const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { state, signup } = useContext(AuthContext);
+  const { state, signup, clearErrorMessage } = useContext(AuthContext);
+  const errorMessage = state.errorMessage;
 
   return (
     <View style={styles.container}>
+      <NavigationEvents onWillFocus={clearErrorMessage} />
       <View style={styles.imgWrapper}>
         <Image
           source={require("../../assets/images/logo.png")}
@@ -71,12 +75,17 @@ const SignUpScreen = ({ navigation }) => {
             />
           }
         />
+        {errorMessage ? (
+          <Text style={styles.errorMessage}>{errorMessage}</Text>
+        ) : null}
         <View style={styles.btnWrapper}>
           <Button
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.btnTitle}
             title="Sign up"
-            onPress={() => signup({ name, email, password })}
+            onPress={() => {
+              signup({ name, email, password });
+            }}
           />
         </View>
         <TouchableOpacity
@@ -143,6 +152,11 @@ const styles = StyleSheet.create({
     color: Colors.white,
   },
   newUser: { textAlign: "center" },
+  errorMessage: {
+    fontSize: 14,
+    color: "red",
+    textAlign: "center",
+  },
 });
 
 export default SignUpScreen;

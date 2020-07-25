@@ -4,7 +4,7 @@ import createDataContext from "./createDataContext";
 import { navigate } from "../navigation/navigationRef";
 
 const authReducer = (state, action) => {
-  switch (action.key) {
+  switch (action.type) {
     case "add_error":
       return { ...state, errorMessage: action.payload };
     case "signup":
@@ -13,12 +13,16 @@ const authReducer = (state, action) => {
       return { errorMessage: "", token: action.payload };
     case "signout":
       return { errorMessage: "", token: null };
-    case "clear_error":
+    case "clear_error_message":
       return { ...state, errorMessage: "" };
 
     default:
       return state;
   }
+};
+
+const clearErrorMessage = (dispatch) => () => {
+  dispatch({ type: "clear_error_message" });
 };
 
 const signup = (dispatch) => async ({ name, email, password }) => {
@@ -28,17 +32,19 @@ const signup = (dispatch) => async ({ name, email, password }) => {
       email,
       password,
     });
-    console.log(response);
-    dispatch({ type: "signup", payload: response.data.token });
-    // navigate("Signin");
+    if (response.data.error) {
+      dispatch({ type: "add_error", payload: response.data.error });
+    } else {
+      dispatch({ type: "signup", payload: response.data.token });
+      navigate("Signin");
+    }
   } catch (error) {
-    console.log(error);
     dispatch({ type: "add_error", payload: "Something went Wrong" });
   }
 };
 
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { signup },
+  { signup, clearErrorMessage },
   { token: null, errorMessage: "" }
 );
