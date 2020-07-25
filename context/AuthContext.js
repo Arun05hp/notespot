@@ -80,8 +80,14 @@ const signin = (dispatch) => async ({ email, password }) => {
   }
 };
 
+const signout = (dispatch) => async () => {
+  await AsyncStorage.removeItem("token");
+  dispatch({ type: "signout" });
+  navigate("AuthFlow");
+};
+
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { tryLocalSignin, signup, signin, clearMessage },
+  { tryLocalSignin, signup, signin, signout, clearMessage },
   { token: null, errorMessage: "", successMessage: "" }
 );
