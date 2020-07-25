@@ -13,12 +13,12 @@ const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { state, signup, clearErrorMessage } = useContext(AuthContext);
-  const errorMessage = state.errorMessage;
+  const { state, signup, clearMessage } = useContext(AuthContext);
+  const { errorMessage, successMessage } = state;
 
   return (
     <View style={styles.container}>
-      <NavigationEvents onWillFocus={clearErrorMessage} />
+      <NavigationEvents onWillFocus={clearMessage} />
       <View style={styles.imgWrapper}>
         <Image
           source={require("../../assets/images/logo.png")}
@@ -76,7 +76,14 @@ const SignUpScreen = ({ navigation }) => {
           }
         />
         {errorMessage ? (
-          <Text style={styles.errorMessage}>{errorMessage}</Text>
+          <Text style={{ ...styles.message, ...styles.errorMessage }}>
+            {errorMessage}
+          </Text>
+        ) : null}
+        {successMessage ? (
+          <Text style={{ ...styles.message, ...styles.successMessage }}>
+            {successMessage}
+          </Text>
         ) : null}
         <View style={styles.btnWrapper}>
           <Button
@@ -151,11 +158,20 @@ const styles = StyleSheet.create({
   btnTitle: {
     color: Colors.white,
   },
-  newUser: { textAlign: "center" },
-  errorMessage: {
-    fontSize: 14,
-    color: "red",
+  newUser: {
     textAlign: "center",
+    fontFamily: "Roboto-bold",
+  },
+  message: {
+    fontSize: 14,
+    textAlign: "center",
+    fontFamily: "Roboto-bold",
+  },
+  errorMessage: {
+    color: "red",
+  },
+  successMessage: {
+    color: "green",
   },
 });
 

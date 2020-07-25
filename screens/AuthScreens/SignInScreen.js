@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Input, Button } from "react-native-elements";
+import { NavigationEvents } from "react-navigation";
 
+import { Context as AuthContext } from "../../context/AuthContext";
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import Colors from "../../constants/colors";
 
 const SignInScreen = ({ navigation }) => {
   const [secureText, setSecureText] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { state, signin, clearMessage } = useContext(AuthContext);
+  const { errorMessage, successMessage } = state;
 
   return (
     <View style={styles.container}>
+      <NavigationEvents onWillFocus={clearMessage} />
       <View style={styles.imgWrapper}>
         <Image
           source={require("../../assets/images/logo.png")}
@@ -20,8 +28,11 @@ const SignInScreen = ({ navigation }) => {
       <View style={styles.Form}>
         <Input
           inputStyle={styles.Input}
-          placeholder="Email Address or UserName"
+          placeholder="Email Address"
+          value={email}
+          onChangeText={setEmail}
           autoCapitalize="none"
+          autoCorrect={false}
           autoFocus={true}
           placeholderTextColor={Colors.placeholder}
           leftIcon={
@@ -32,6 +43,10 @@ const SignInScreen = ({ navigation }) => {
           secureTextEntry={secureText}
           inputStyle={styles.Input}
           placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          autoCapitalize="none"
+          autoCorrect={false}
           placeholderTextColor={Colors.placeholder}
           leftIcon={
             <MaterialIcons name="lock" size={20} color={Colors.primary} />
@@ -45,6 +60,16 @@ const SignInScreen = ({ navigation }) => {
             />
           }
         />
+        {errorMessage ? (
+          <Text style={{ ...styles.message, ...styles.errorMessage }}>
+            {errorMessage}
+          </Text>
+        ) : null}
+        {successMessage ? (
+          <Text style={{ ...styles.message, ...styles.successMessage }}>
+            {successMessage}
+          </Text>
+        ) : null}
         <TouchableOpacity onPress={() => console.log("forget")}>
           <Text style={styles.forget}>Forget Password ?</Text>
         </TouchableOpacity>
@@ -53,7 +78,7 @@ const SignInScreen = ({ navigation }) => {
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.btnTitle}
             title="Sign in"
-            onPress={() => navigation.navigate("Dashboard")}
+            onPress={() => signin({ email, password })}
           />
         </View>
         <TouchableOpacity
@@ -122,6 +147,18 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-bold",
   },
   newUser: { textAlign: "center", fontFamily: "Roboto-bold" },
+  message: {
+    fontSize: 14,
+    textAlign: "center",
+    fontFamily: "Roboto-bold",
+    marginBottom: 5,
+  },
+  errorMessage: {
+    color: "red",
+  },
+  successMessage: {
+    color: "green",
+  },
 });
 
 export default SignInScreen;

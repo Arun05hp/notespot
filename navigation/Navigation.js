@@ -3,6 +3,7 @@ import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 
+import ResolveAuthScreen from "../screens/AuthScreens/ResolveAuthScreen";
 import IndexScreen from "../screens/AuthScreens/IndexScreen";
 import SignUpScreen from "../screens/AuthScreens/SignUpScreen";
 import SignInScreen from "../screens/AuthScreens/SignInScreen";
@@ -113,6 +114,7 @@ const MainFlow = createBottomTabNavigator(
 );
 
 const switchNavigator = createSwitchNavigator({
+  ResolveAuth: ResolveAuthScreen,
   AuthFlow,
   MainFlow,
 });
