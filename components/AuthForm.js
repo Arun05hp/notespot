@@ -38,9 +38,19 @@ const AuthForm = ({
         />
       </View>
       <View style={styles.Form}>
+        {errorMessage ? (
+          <Text style={{ ...styles.message, ...styles.errorMessage }}>
+            {errorMessage}
+          </Text>
+        ) : null}
+        {successMessage ? (
+          <Text style={{ ...styles.message, ...styles.successMessage }}>
+            {successMessage}
+          </Text>
+        ) : null}
         {isSignUpForm ? (
           <Input
-            textContentType="name"
+            keyboardType="default"
             inputStyle={styles.Input}
             value={name}
             onChangeText={setName}
@@ -54,7 +64,7 @@ const AuthForm = ({
           />
         ) : null}
         <Input
-          textContentType="emailAddress"
+          keyboardType="email-address"
           inputStyle={styles.Input}
           value={email}
           onChangeText={setEmail}
@@ -68,7 +78,7 @@ const AuthForm = ({
         />
         <Input
           secureTextEntry={secureText}
-          textContentType="password"
+          keyboardType="default"
           inputStyle={styles.Input}
           value={password}
           onChangeText={setPassword}
@@ -88,16 +98,6 @@ const AuthForm = ({
             />
           }
         />
-        {errorMessage ? (
-          <Text style={{ ...styles.message, ...styles.errorMessage }}>
-            {errorMessage}
-          </Text>
-        ) : null}
-        {successMessage ? (
-          <Text style={{ ...styles.message, ...styles.successMessage }}>
-            {successMessage}
-          </Text>
-        ) : null}
         {isSignUpForm ? null : (
           <TouchableOpacity onPress={() => console.log("forget")}>
             <Text style={styles.forget}>Forget Password ?</Text>
@@ -164,7 +164,6 @@ const styles = StyleSheet.create({
   Form: {
     width: "80%",
     marginVertical: 10,
-    marginTop: 25,
   },
   Input: {
     fontSize: 16,
@@ -196,19 +195,26 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-bold",
   },
   newUser: {
+    fontSize: 16,
     textAlign: "center",
     fontFamily: "Roboto-bold",
   },
   message: {
     fontSize: 14,
     textAlign: "center",
+    padding: 5,
+    marginBottom: 5,
     fontFamily: "Roboto-bold",
   },
   errorMessage: {
-    color: "red",
+    color: "#721c24",
+    backgroundColor: "#f8d7da",
+    borderColor: "#f5c6cb",
   },
   successMessage: {
-    color: "green",
+    color: "#155724",
+    backgroundColor: "#d4edda",
+    borderColor: "#c3e6cb",
   },
 });
 
