@@ -6,9 +6,10 @@ import {
   StyleSheet,
   TouchableOpacity,
   Keyboard,
+  ActivityIndicator,
 } from "react-native";
 
-import { Input, Button } from "react-native-elements";
+import { Input } from "react-native-elements";
 
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import Colors from "../constants/colors";
@@ -17,6 +18,7 @@ const AuthForm = ({
   isSignUpForm,
   errorMessage,
   successMessage,
+  isLoading,
   submitButtonText,
   navigation,
   onSubmit,
@@ -101,19 +103,28 @@ const AuthForm = ({
             <Text style={styles.forget}>Forget Password ?</Text>
           </TouchableOpacity>
         )}
-        <View style={styles.btnWrapper}>
-          <Button
-            buttonStyle={styles.buttonStyle}
-            titleStyle={styles.btnTitle}
-            title={submitButtonText}
-            onPress={() => {
-              Keyboard.dismiss();
-              isSignUpForm
-                ? onSubmit({ name, email, password })
-                : onSubmit({ email, password });
-            }}
-          />
-        </View>
+        <TouchableOpacity
+          activeOpacity={0.6}
+          disabled={isLoading}
+          onPress={() => {
+            Keyboard.dismiss();
+            isSignUpForm
+              ? onSubmit({ name, email, password })
+              : onSubmit({ email, password });
+          }}
+        >
+          <View style={styles.btnWrapper}>
+            <View style={styles.btnStyle}>
+              {isLoading ? (
+                <View style={{ marginRight: 5 }}>
+                  <ActivityIndicator size="small" color="#ffffff" />
+                </View>
+              ) : null}
+              <Text style={styles.btnTitle}>{submitButtonText}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+
         <TouchableOpacity
           activeOpacity={1}
           onPress={() => navigation.replace(isSignUpForm ? "Signin" : "Signup")}
@@ -167,15 +178,22 @@ const styles = StyleSheet.create({
   btnWrapper: {
     alignItems: "center",
     marginVertical: 15,
+    width: "50%",
+    alignSelf: "center",
   },
-  buttonStyle: {
+  btnStyle: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     paddingVertical: 10,
-    paddingHorizontal: 50,
     borderRadius: 30,
     backgroundColor: Colors.primary,
   },
   btnTitle: {
     color: Colors.white,
+    fontSize: 16,
+    fontFamily: "Roboto-bold",
   },
   newUser: {
     textAlign: "center",

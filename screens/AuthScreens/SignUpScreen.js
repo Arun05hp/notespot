@@ -7,7 +7,7 @@ import AuthForm from "../../components/AuthForm";
 
 const SignUpScreen = ({ navigation }) => {
   const { state, signup, clearMessage } = useContext(AuthContext);
-  const { errorMessage, successMessage } = state;
+  const { errorMessage, successMessage, isLoading } = state;
 
   return (
     <View style={{ flex: 1 }}>
@@ -16,6 +16,7 @@ const SignUpScreen = ({ navigation }) => {
         isSignUpForm={true}
         errorMessage={errorMessage}
         successMessage={successMessage}
+        isLoading={isLoading}
         submitButtonText="Sign Up"
         navigation={navigation}
         onSubmit={signup}

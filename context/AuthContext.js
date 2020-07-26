@@ -23,7 +23,8 @@ const authReducer = (state, action) => {
       return { errorMessage: "", successMessage: "", token: null };
     case "clear_message":
       return { ...state, errorMessage: "", successMessage: "" };
-
+    case "isLoading":
+      return { ...state, isLoading: action.payload };
     default:
       return state;
   }
@@ -47,6 +48,7 @@ const clearMessage = (dispatch) => () => {
 };
 
 const signup = (dispatch) => async ({ name, email, password }) => {
+  dispatch({ type: "isLoading", payload: true });
   try {
     const response = await appApi.post("/user/signup", {
       name,
@@ -55,28 +57,35 @@ const signup = (dispatch) => async ({ name, email, password }) => {
     });
     if (response.data.error) {
       dispatch({ type: "add_error", payload: response.data.error });
+      dispatch({ type: "isLoading", payload: false });
     } else {
       dispatch({ type: "signup", payload: response.data });
+      dispatch({ type: "isLoading", payload: false });
     }
   } catch (error) {
     console.log(error);
     dispatch({ type: "add_error", payload: "Something went Wrong" });
+    dispatch({ type: "isLoading", payload: false });
   }
 };
 
 const signin = (dispatch) => async ({ email, password }) => {
+  dispatch({ type: "isLoading", payload: true });
   try {
     const response = await appApi.post("/user/signin", { email, password });
     if (response.data.error) {
       dispatch({ type: "add_error", payload: response.data.error });
+      dispatch({ type: "isLoading", payload: false });
     } else {
       await AsyncStorage.setItem("token", response.data.token);
       dispatch({ type: "signin", payload: response.data });
+      dispatch({ type: "isLoading", payload: false });
       navigate("MainFlow");
     }
   } catch (error) {
     console.log(error);
     dispatch({ type: "add_error", payload: "Something went Wrong" });
+    dispatch({ type: "isLoading", payload: false });
   }
 };
 
@@ -89,5 +98,5 @@ const signout = (dispatch) => async () => {
 export const { Provider, Context } = createDataContext(
   authReducer,
   { tryLocalSignin, signup, signin, signout, clearMessage },
-  { token: null, errorMessage: "", successMessage: "" }
+  { token: null, errorMessage: "", successMessage: "", isLoading: false }
 );
