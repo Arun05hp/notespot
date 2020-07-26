@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import AppNavigator from "./navigation/Navigation";
 import { setNavigator } from "./navigation/navigationRef";
 import { Provider as AuthProvider } from "./context/AuthContext";
+import { Provider as UserProvider } from "./context/UserContext";
 
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
@@ -27,12 +28,14 @@ export default () => {
     );
   }
   return (
-    <AuthProvider>
-      <AppNavigator
-        ref={(navigator) => {
-          setNavigator(navigator);
-        }}
-      />
-    </AuthProvider>
+    <UserProvider>
+      <AuthProvider>
+        <AppNavigator
+          ref={(navigator) => {
+            setNavigator(navigator);
+          }}
+        />
+      </AuthProvider>
+    </UserProvider>
   );
 };

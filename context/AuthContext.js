@@ -78,6 +78,7 @@ const signin = (dispatch) => async ({ email, password }) => {
       dispatch({ type: "isLoading", payload: false });
     } else {
       await AsyncStorage.setItem("token", response.data.token);
+      await AsyncStorage.setItem("id", response.data.id.toString());
       dispatch({ type: "signin", payload: response.data });
       dispatch({ type: "isLoading", payload: false });
       navigate("MainFlow");
@@ -91,6 +92,7 @@ const signin = (dispatch) => async ({ email, password }) => {
 
 const signout = (dispatch) => async () => {
   await AsyncStorage.removeItem("token");
+  await AsyncStorage.removeItem("id");
   dispatch({ type: "signout" });
   navigate("AuthFlow");
 };

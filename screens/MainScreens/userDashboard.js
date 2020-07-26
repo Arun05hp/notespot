@@ -19,7 +19,7 @@ const GridData = [
     title: "Recent Uploads",
     icon: <AntDesign name="clouduploado" size={24} color="#D168F7" />,
     color: "#D168F7",
-    navigateScreen: "UploadPdf",
+    navigateScreen: "pdfFlow",
   },
   {
     id: "search",
@@ -55,7 +55,7 @@ const GridData = [
       <MaterialCommunityIcons name="cart-arrow-up" size={24} color="#39dc36" />
     ),
     color: "#0298C8",
-    navigateScreen: "UploadPdf",
+    navigateScreen: "Profile",
   },
 ];
 
@@ -63,9 +63,8 @@ const userDashboard = ({ navigation }) => {
   const renderGridItem = (itemData) => {
     return (
       <GridTile
-        navigation={navigation}
+        onClick={() => navigation.navigate(itemData.item.navigateScreen)}
         itemData={itemData}
-        navigateScreen={itemData.item.navigateScreen}
       />
     );
   };
@@ -89,7 +88,6 @@ userDashboard.navigationOptions = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
     paddingBottom: 15,
   },
 });

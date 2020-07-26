@@ -10,14 +10,14 @@ import {
 
 import Card from "../components/Card";
 
-const GridTile = ({ itemData, navigation, navigateScreen }) => {
+const GridTile = ({ itemData, onClick }) => {
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android" && Platform.Version >= 21) {
     TouchableCmp = TouchableNativeFeedback;
   }
   return (
     <Card style={styles.container}>
-      <TouchableCmp onPress={() => navigation.navigate(navigateScreen)}>
+      <TouchableCmp onPress={onClick}>
         <View style={styles.innerContainer}>
           {itemData.item.icon}
           <Text
@@ -37,10 +37,8 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 15,
     height: 150,
-    borderRadius: 20,
-    borderWidth: 5,
-    borderColor: "white",
-    backgroundColor: "#F5F3F3",
+    borderRadius: 10,
+    backgroundColor: "#FFFFFF",
     justifyContent: "center",
     alignItems: "center",
   },
