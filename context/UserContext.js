@@ -4,15 +4,29 @@ import createDataContext from "./createDataContext";
 
 const userReducer = (state, action) => {
   switch (action.type) {
-    case "add_error":
-      return { ...state, errorMessage: action.payload };
+    case "add_message":
+      return {
+        ...state,
+        errorMessage: action.payload.error,
+        successMessage: action.payload.success,
+      };
+
     case "get_user_data":
-      return { ...state, userData: { ...action.payload } };
+      return {
+        ...state,
+        userData: { ...action.payload },
+      };
     case "clear_state":
-      return { ...state, errorMessage: "", userData: {} };
+      return { ...state, errorMessage: "", userData: {}, successMessage: "" };
+    case "clear_message":
+      return { ...state, errorMessage: "", successMessage: "" };
     default:
       return state;
   }
+};
+
+const clearMessage = (dispatch) => () => {
+  dispatch({ type: "clear_message" });
 };
 
 const clearState = (dispatch) => () => {
@@ -24,12 +38,18 @@ const getUserData = (dispatch) => async () => {
   try {
     const response = await appApi.post("/user/profile", { userId });
     if (response.data.error) {
-      dispatch({ type: "add_error", payload: response.data.error });
+      dispatch({
+        type: "add_message",
+        payload: { error: response.data.error, success: "" },
+      });
     } else {
       dispatch({ type: "get_user_data", payload: response.data });
     }
   } catch (error) {
-    dispatch({ type: "add_error", payload: "Something went Wrong" });
+    dispatch({
+      type: "add_message",
+      payload: { error: "Something Went Wrong", success: "" },
+    });
   }
 };
 
@@ -54,8 +74,42 @@ const uploadImage = (dispatch) => async ({ id, imageUrl, profileImg }) => {
   }
 };
 
+const updateProfile = (dispatch) => async ({
+  id,
+  username,
+  useremail,
+  mobileNumber,
+  userAddress,
+}) => {
+  try {
+    const response = await appApi.post("/user/updateprofile", {
+      id,
+      username,
+      useremail,
+      mobileNumber,
+      userAddress,
+    });
+    if (response.data.error) {
+      dispatch({
+        type: "add_message",
+        payload: { error: response.data.error, success: "" },
+      });
+    } else {
+      dispatch({
+        type: "add_message",
+        payload: { error: "", success: response.data.success },
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: "add_message",
+      payload: { error: "Something Went Wrong", success: "" },
+    });
+  }
+};
+
 export const { Provider, Context } = createDataContext(
   userReducer,
-  { getUserData, uploadImage, clearState },
-  { userData: {}, errorMessage: "" }
+  { getUserData, uploadImage, clearState, updateProfile, clearMessage },
+  { userData: {}, errorMessage: "", successMessage: "" }
 );

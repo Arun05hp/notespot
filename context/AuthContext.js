@@ -39,7 +39,7 @@ const tryLocalSignin = (dispatch) => async () => {
     });
     navigate("MainFlow");
   } else {
-    navigate("Profile");
+    navigate("AuthFlow");
   }
 };
 
