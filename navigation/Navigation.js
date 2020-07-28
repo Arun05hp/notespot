@@ -8,7 +8,9 @@ import IndexScreen from "../screens/AuthScreens/IndexScreen";
 import SignUpScreen from "../screens/AuthScreens/SignUpScreen";
 import SignInScreen from "../screens/AuthScreens/SignInScreen";
 import userDashboard from "../screens/MainScreens/userDashboard";
-import UserProfile from "../screens/ProfileScreens/UserProfile";
+import UserProfile from "../screens/UserScreens/UserProfile";
+import EditProfileDetails from "../screens/UserScreens/EditProfileDetails";
+import EditCollegeDetails from "../screens/UserScreens/EditCollegeDetails";
 import pdfDashboard from "../screens/pdfScreen/pdfDashboard";
 import uploadpdf from "../screens/pdfScreen/uploadpdf";
 import bookList from "../screens/bookScreen/bookList";
@@ -79,11 +81,11 @@ bookFlow.navigationOptions = {
 
 const Profile = createStackNavigator(
   {
-    profie: UserProfile,
+    profile: UserProfile,
+    editProfile: EditProfileDetails,
+    editCollegeDetails: EditCollegeDetails,
   },
-  {
-    defaultNavigationOptions: defaultNavOptions,
-  }
+  { headerMode: "none", defaultNavigationOptions: defaultNavOptions }
 );
 Profile.navigationOptions = {
   title: "Profile",

@@ -6,17 +6,17 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
+  SafeAreaView,
 } from "react-native";
 
 import { Context as AuthContext } from "../../context/AuthContext";
 import { Context as UserContext } from "../../context/UserContext";
 import baseUrl from "../../api/baseUrl";
 import * as ImagePicker from "expo-image-picker";
-import Card from "../../components/Card";
 import Colors from "../../constants/colors";
 import { AntDesign, Feather } from "@expo/vector-icons";
 
-const UserProfile = () => {
+const UserProfile = ({ navigation }) => {
   const { signout } = useContext(AuthContext);
   const { state, getUserData, uploadImage, clearState } = useContext(
     UserContext
@@ -45,7 +45,7 @@ const UserProfile = () => {
     getUserData();
   }, []);
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.wrapper}>
         {!name ? (
           <ActivityIndicator size="large" color={Colors.white} />
@@ -79,11 +79,15 @@ const UserProfile = () => {
                   paddingHorizontal: 8,
                   backgroundColor: Colors.white,
                   borderRadius: 10,
+                  marginTop: 5,
                 }}
                 activeOpacity={0.7}
               >
                 <Text
-                  style={{ color: Colors.primary, fontFamily: "Roboto-bold" }}
+                  style={{
+                    color: Colors.primary,
+                    fontFamily: "Roboto-bold",
+                  }}
                 >
                   Add Mobile Number
                 </Text>
@@ -93,38 +97,41 @@ const UserProfile = () => {
         )}
       </View>
       <View style={styles.wrapper2}>
-        <Card style={styles.card}>
-          <TouchableOpacity style={styles.pd}>
-            <View style={styles.row}>
-              <Text style={styles.text}>Edit Profile Details</Text>
-              <AntDesign style={styles.icons} name="edit" />
-            </View>
-          </TouchableOpacity>
-        </Card>
-        <Card style={styles.card}>
-          <TouchableOpacity style={styles.pd}>
-            <View style={styles.row}>
-              <Text style={styles.text}>Add College Details</Text>
-              <AntDesign style={styles.icons} name="plus" />
-            </View>
-          </TouchableOpacity>
-        </Card>
-        <Card style={styles.card}>
-          <TouchableOpacity
-            style={styles.pd}
-            onPress={() => {
-              clearState();
-              signout();
-            }}
-          >
-            <View style={styles.row}>
-              <Text style={styles.text}>Sign Out</Text>
-              <AntDesign style={styles.icons} name="logout" />
-            </View>
-          </TouchableOpacity>
-        </Card>
+        <Text style={styles.subHeading}>Edit</Text>
+        <TouchableOpacity
+          style={styles.linkWrapper}
+          onPress={() => navigation.navigate("editProfile")}
+        >
+          <View style={styles.row}>
+            <Text style={styles.text}>Profile Details</Text>
+            <AntDesign style={styles.icons} name="edit" />
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.linkWrapper}
+          onPress={() => navigation.navigate("editCollegeDetails")}
+        >
+          <View style={styles.row}>
+            <Text style={styles.text}>College Details</Text>
+            <AntDesign style={styles.icons} name="plus" />
+          </View>
+        </TouchableOpacity>
+        <Text style={styles.subHeading}>Account Action</Text>
+        <TouchableOpacity
+          style={styles.linkWrapper}
+          onPress={() => {
+            clearState();
+            signout();
+          }}
+        >
+          <View style={styles.row}>
+            <Text style={styles.text}>Sign Out</Text>
+            <AntDesign style={styles.icons} name="logout" />
+          </View>
+        </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -138,6 +145,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: Colors.primary,
+    paddingTop: 10,
   },
   innerContainer: {
     alignItems: "center",
@@ -180,15 +188,28 @@ const styles = StyleSheet.create({
   },
   wrapper2: {
     flex: 1,
-    padding: 15,
+    paddingHorizontal: 15,
   },
-  card: {
-    backgroundColor: Colors.white,
-    borderRadius: 10,
-    marginVertical: 5,
+  // card: {
+  //   backgroundColor: Colors.white,
+  //   borderRadius: 10,
+  //   marginVertical: 5,
+  // },
+  subHeading: {
+    borderBottomColor: "rgba(0,0,0,0.2)",
+    borderBottomWidth: 1,
+    color: "#3e4a6e",
+    fontSize: 17,
+    fontFamily: "Roboto-bold",
+    marginVertical: 15,
+    paddingBottom: 5,
   },
-  pd: {
-    padding: 15,
+  linkWrapper: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderColor: "rgba(0,0,0,0.2)",
+    borderWidth: 1,
+    marginBottom: 4,
   },
   row: {
     flexDirection: "row",
@@ -206,9 +227,4 @@ const styles = StyleSheet.create({
   },
 });
 
-UserProfile.navigationOptions = () => {
-  return {
-    headerTitle: "PROFILE",
-  };
-};
 export default UserProfile;
