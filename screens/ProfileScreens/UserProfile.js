@@ -18,7 +18,9 @@ import { AntDesign, Feather } from "@expo/vector-icons";
 
 const UserProfile = () => {
   const { signout } = useContext(AuthContext);
-  const { state, getUserData, uploadImage } = useContext(UserContext);
+  const { state, getUserData, uploadImage, clearState } = useContext(
+    UserContext
+  );
   const { id, name, email, mobileno, profileImg } = state.userData;
 
   const pickImage = async () => {
@@ -31,7 +33,7 @@ const UserProfile = () => {
       });
       if (!result.cancelled) {
         const imageUrl = result.uri;
-        await uploadImage({ id, imageUrl });
+        await uploadImage({ id, imageUrl, profileImg });
         getUserData();
       }
     } catch (E) {
@@ -108,7 +110,13 @@ const UserProfile = () => {
           </TouchableOpacity>
         </Card>
         <Card style={styles.card}>
-          <TouchableOpacity style={styles.pd} onPress={signout}>
+          <TouchableOpacity
+            style={styles.pd}
+            onPress={() => {
+              clearState();
+              signout();
+            }}
+          >
             <View style={styles.row}>
               <Text style={styles.text}>Sign Out</Text>
               <AntDesign style={styles.icons} name="logout" />
