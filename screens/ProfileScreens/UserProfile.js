@@ -10,19 +10,38 @@ import {
 
 import { Context as AuthContext } from "../../context/AuthContext";
 import { Context as UserContext } from "../../context/UserContext";
+import baseUrl from "../../api/baseUrl";
+import * as ImagePicker from "expo-image-picker";
 import Card from "../../components/Card";
 import Colors from "../../constants/colors";
 import { AntDesign, Feather } from "@expo/vector-icons";
 
 const UserProfile = () => {
   const { signout } = useContext(AuthContext);
-  const { state, getUserData } = useContext(UserContext);
-  const { name, email } = state.userData;
+  const { state, getUserData, uploadImage } = useContext(UserContext);
+  const { id, name, email, mobileno, profileImg } = state.userData;
+
+  const pickImage = async () => {
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [3, 3],
+        quality: 0.6,
+      });
+      if (!result.cancelled) {
+        const imageUrl = result.uri;
+        await uploadImage({ id, imageUrl });
+        getUserData();
+      }
+    } catch (E) {
+      console.log(E);
+    }
+  };
 
   useEffect(() => {
     getUserData();
   }, []);
-
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
@@ -34,19 +53,40 @@ const UserProfile = () => {
               <Image
                 style={styles.img}
                 source={{
-                  uri: "https://img.icons8.com/ultraviolet/80/000000/user.png",
+                  uri: !profileImg
+                    ? "https://img.icons8.com/ultraviolet/80/000000/user.png"
+                    : baseUrl + "/" + profileImg,
                 }}
               />
+
               <TouchableOpacity
                 style={styles.editIconBox}
-                onPress={() => console.log("change")}
+                onPress={() => pickImage()}
               >
                 <Feather style={styles.editIcon} name="edit-2" />
               </TouchableOpacity>
             </View>
             <Text style={styles.title}>{name}</Text>
             <Text style={styles.subtitle}>{email}</Text>
-            <Text style={styles.subtitle}>8894989573</Text>
+            {mobileno != 0 ? (
+              <Text style={styles.subtitle}>{mobileno}</Text>
+            ) : (
+              <TouchableOpacity
+                style={{
+                  paddingVertical: 2,
+                  paddingHorizontal: 8,
+                  backgroundColor: Colors.white,
+                  borderRadius: 10,
+                }}
+                activeOpacity={0.7}
+              >
+                <Text
+                  style={{ color: Colors.primary, fontFamily: "Roboto-bold" }}
+                >
+                  Add Mobile Number
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         )}
       </View>
@@ -109,13 +149,13 @@ const styles = StyleSheet.create({
   editIconBox: {
     position: "absolute",
     bottom: 0,
-    right: -10,
+    right: 0,
   },
   editIcon: {
-    fontSize: 20,
+    fontSize: 16,
     color: Colors.primary,
     backgroundColor: Colors.white,
-    padding: 5,
+    padding: 8,
     borderRadius: 20,
   },
   title: {

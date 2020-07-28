@@ -1,7 +1,6 @@
 import axios from "axios";
-
+import baseUrl from "./baseUrl";
 const instance = axios.create({
-  baseURL: "https://nebula-boiling-yuzu.glitch.me",
-  // baseURL: "http://192.168.43.122:3000",
+  baseURL: baseUrl,
 });
 export default instance;

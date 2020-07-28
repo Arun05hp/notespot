@@ -1,6 +1,7 @@
 import { AsyncStorage } from "react-native";
 import appApi from "../api/appApi";
 import createDataContext from "./createDataContext";
+import { navigate } from "../navigation/navigationRef";
 
 const userReducer = (state, action) => {
   switch (action.type) {
@@ -27,8 +28,29 @@ const getUserData = (dispatch) => async () => {
   }
 };
 
+const uploadImage = (dispatch) => async ({ id, imageUrl }) => {
+  try {
+    var data = new FormData();
+    data.append("id", id);
+    data.append("imageData", {
+      uri: imageUrl,
+      name: `userProfile-${id}.jpg`,
+      type: "image/jpeg",
+    });
+    const response = await appApi.post("/user/imgupload", data, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const { Provider, Context } = createDataContext(
   userReducer,
-  { getUserData },
+  { getUserData, uploadImage },
   { userData: {}, errorMessage: "" }
 );
