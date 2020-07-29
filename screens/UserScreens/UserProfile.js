@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import {
   View,
   Text,
@@ -39,10 +39,6 @@ const UserProfile = ({ navigation }) => {
       console.log(E);
     }
   };
-
-  useEffect(() => {
-    getUserData();
-  }, []);
 
   return (
     <View style={styles.container}>

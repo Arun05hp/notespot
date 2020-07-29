@@ -26,12 +26,18 @@ const EditProfileDetails = ({ navigation }) => {
   const [userAddress, setUserAddress] = useState(address);
   const [numError, setNumError] = useState("");
 
-  function validate() {
+  const validate = async () => {
     const regx = /^[0-9]{10}$/;
     if (mobileNumber) {
       if (regx.test(mobileNumber)) {
         setNumError("");
-        updateProfile({ id, username, useremail, mobileNumber, userAddress });
+        await updateProfile({
+          id,
+          username,
+          useremail,
+          mobileNumber,
+          userAddress,
+        });
         getUserData();
       } else {
         setNumError("Invalid Mobile Number");
@@ -39,7 +45,7 @@ const EditProfileDetails = ({ navigation }) => {
     } else {
       setNumError("Required");
     }
-  }
+  };
 
   return (
     <View style={styles.container}>

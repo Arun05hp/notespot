@@ -1,8 +1,8 @@
-import React from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import React, { useContext, useEffect } from "react";
+import { FlatList, StyleSheet } from "react-native";
 
 import GridTile from "../../components/GridTile";
-
+import { Context as UserContext } from "../../context/UserContext";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -60,6 +60,8 @@ const GridData = [
 ];
 
 const userDashboard = ({ navigation }) => {
+  const { getUserData, getCollegeDetails } = useContext(UserContext);
+
   const renderGridItem = (itemData) => {
     return (
       <GridTile
@@ -68,6 +70,11 @@ const userDashboard = ({ navigation }) => {
       />
     );
   };
+
+  useEffect(() => {
+    getUserData();
+    getCollegeDetails();
+  }, []);
 
   return (
     <FlatList

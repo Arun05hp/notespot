@@ -16,12 +16,24 @@ const userReducer = (state, action) => {
         ...state,
         userData: { ...action.payload },
       };
+    case "get_college_data":
+      return {
+        ...state,
+        collegeData: { ...action.payload },
+      };
     case "clear_state":
-      return { ...state, errorMessage: "", userData: {}, successMessage: "" };
+      return {
+        ...state,
+        errorMessage: "",
+        userData: {},
+        collegeData: {},
+        successMessage: "",
+      };
     case "clear_message":
       return { ...state, errorMessage: "", successMessage: "" };
     case "isUpdating":
       return { ...state, isUpdating: action.payload };
+
     default:
       return state;
   }
@@ -46,6 +58,26 @@ const getUserData = (dispatch) => async () => {
       });
     } else {
       dispatch({ type: "get_user_data", payload: response.data });
+    }
+  } catch (error) {
+    dispatch({
+      type: "add_message",
+      payload: { error: "Something Went Wrong", success: "" },
+    });
+  }
+};
+
+const getCollegeDetails = (dispatch) => async () => {
+  const userId = await AsyncStorage.getItem("id");
+  try {
+    const response = await appApi.post("/user/getCollegeData", { userId });
+    if (response.data.error) {
+      dispatch({
+        type: "add_message",
+        payload: { error: response.data.error, success: "" },
+      });
+    } else {
+      dispatch({ type: "get_college_data", payload: response.data });
     }
   } catch (error) {
     dispatch({
@@ -114,8 +146,48 @@ const updateProfile = (dispatch) => async ({
   }
 };
 
+const updateCollegeDetails = (dispatch) => async (data) => {
+  dispatch({ type: "isUpdating", payload: true });
+  try {
+    const response = await appApi.post("/user/updateCollegeDetails", data);
+    if (response.data.error) {
+      dispatch({
+        type: "add_message",
+        payload: { error: response.data.error, success: "" },
+      });
+      dispatch({ type: "isUpdating", payload: false });
+    } else {
+      dispatch({
+        type: "add_message",
+        payload: { error: "", success: response.data.success },
+      });
+      dispatch({ type: "isUpdating", payload: false });
+    }
+  } catch (error) {
+    dispatch({
+      type: "add_message",
+      payload: { error: "Something Went Wrong", success: "" },
+    });
+    dispatch({ type: "isUpdating", payload: false });
+  }
+};
+
 export const { Provider, Context } = createDataContext(
   userReducer,
-  { getUserData, uploadImage, clearState, updateProfile, clearMessage },
-  { userData: {}, errorMessage: "", successMessage: "", isUpdating: false }
+  {
+    getUserData,
+    getCollegeDetails,
+    uploadImage,
+    clearState,
+    updateProfile,
+    clearMessage,
+    updateCollegeDetails,
+  },
+  {
+    userData: {},
+    collegeData: {},
+    errorMessage: "",
+    successMessage: "",
+    isUpdating: false,
+  }
 );
