@@ -20,6 +20,8 @@ const userReducer = (state, action) => {
       return { ...state, errorMessage: "", userData: {}, successMessage: "" };
     case "clear_message":
       return { ...state, errorMessage: "", successMessage: "" };
+    case "isUpdating":
+      return { ...state, isUpdating: action.payload };
     default:
       return state;
   }
@@ -81,6 +83,7 @@ const updateProfile = (dispatch) => async ({
   mobileNumber,
   userAddress,
 }) => {
+  dispatch({ type: "isUpdating", payload: true });
   try {
     const response = await appApi.post("/user/updateprofile", {
       id,
@@ -94,22 +97,25 @@ const updateProfile = (dispatch) => async ({
         type: "add_message",
         payload: { error: response.data.error, success: "" },
       });
+      dispatch({ type: "isUpdating", payload: false });
     } else {
       dispatch({
         type: "add_message",
         payload: { error: "", success: response.data.success },
       });
+      dispatch({ type: "isUpdating", payload: false });
     }
   } catch (error) {
     dispatch({
       type: "add_message",
       payload: { error: "Something Went Wrong", success: "" },
     });
+    dispatch({ type: "isUpdating", payload: false });
   }
 };
 
 export const { Provider, Context } = createDataContext(
   userReducer,
   { getUserData, uploadImage, clearState, updateProfile, clearMessage },
-  { userData: {}, errorMessage: "", successMessage: "" }
+  { userData: {}, errorMessage: "", successMessage: "", isUpdating: false }
 );

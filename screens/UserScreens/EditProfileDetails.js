@@ -18,9 +18,8 @@ const EditProfileDetails = ({ navigation }) => {
   const { state, updateProfile, getUserData, clearMessage } = useContext(
     UserContext
   );
-  const { errorMessage, successMessage } = state;
+  const { errorMessage, successMessage, isUpdating } = state;
   const { id, name, email, mobileno, address } = state.userData;
-  const isLoading = false;
   const [username, setUsername] = useState(name);
   const [useremail, setUseremail] = useState(email);
   const [mobileNumber, setMobileNumber] = useState(mobileno);
@@ -125,6 +124,7 @@ const EditProfileDetails = ({ navigation }) => {
         >
           <TouchableOpacity
             activeOpacity={0.6}
+            disabled={isUpdating}
             onPress={() => {
               navigation.goBack();
             }}
@@ -137,7 +137,7 @@ const EditProfileDetails = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.6}
-            disabled={isLoading}
+            disabled={isUpdating}
             onPress={() => {
               Keyboard.dismiss();
               validate();
@@ -145,7 +145,7 @@ const EditProfileDetails = ({ navigation }) => {
           >
             <View style={styles.btnWrapper}>
               <View style={styles.btnStyle}>
-                {isLoading ? (
+                {isUpdating ? (
                   <View style={{ marginRight: 5 }}>
                     <ActivityIndicator size="small" color="#ffffff" />
                   </View>
