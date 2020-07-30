@@ -21,6 +21,7 @@ const UserProfile = ({ navigation }) => {
     UserContext
   );
   const { id, name, email, mobileno, profileImg } = state.userData;
+  const { collegeName } = state.collegeData;
 
   const pickImage = async () => {
     try {
@@ -116,14 +117,17 @@ const UserProfile = ({ navigation }) => {
                 <AntDesign style={styles.icons} name="edit" />
               </View>
             </TouchableOpacity>
-
+            {!collegeName ? <Text style={styles.subHeading}>Add</Text> : null}
             <TouchableOpacity
               style={styles.linkWrapper}
               onPress={() => navigation.navigate("editCollegeDetails")}
             >
               <View style={styles.row}>
                 <Text style={styles.text}>College Details</Text>
-                <AntDesign style={styles.icons} name="plus" />
+                <AntDesign
+                  style={styles.icons}
+                  name={!collegeName ? "plus" : "edit"}
+                />
               </View>
             </TouchableOpacity>
           </>
@@ -200,6 +204,7 @@ const styles = StyleSheet.create({
   wrapper2: {
     flex: 1,
     paddingHorizontal: 15,
+    paddingTop: 5,
   },
   subHeading: {
     borderBottomColor: "rgba(0,0,0,0.2)",
@@ -207,7 +212,7 @@ const styles = StyleSheet.create({
     color: "#3e4a6e",
     fontSize: 17,
     fontFamily: "Roboto-bold",
-    marginVertical: 15,
+    marginVertical: 10,
     paddingBottom: 5,
   },
   linkWrapper: {

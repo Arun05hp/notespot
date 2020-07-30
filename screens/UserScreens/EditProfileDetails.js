@@ -71,9 +71,7 @@ const EditProfileDetails = ({ navigation }) => {
           autoCapitalize="none"
           autoCorrect={false}
           placeholderTextColor={Colors.placeholder}
-          leftIcon={
-            <FontAwesome5 name="user-alt" size={20} color={Colors.primary} />
-          }
+          leftIcon={<FontAwesome5 name="user-alt" style={styles.iconStyle} />}
         />
         <Input
           keyboardType="email-address"
@@ -84,9 +82,7 @@ const EditProfileDetails = ({ navigation }) => {
           autoCapitalize="none"
           autoCorrect={false}
           placeholderTextColor={Colors.placeholder}
-          leftIcon={
-            <MaterialIcons name="email" size={20} color={Colors.primary} />
-          }
+          leftIcon={<MaterialIcons name="email" style={styles.iconStyle} />}
         />
         <Input
           keyboardType="numeric"
@@ -99,9 +95,7 @@ const EditProfileDetails = ({ navigation }) => {
           autoCapitalize="none"
           autoCorrect={false}
           placeholderTextColor={Colors.placeholder}
-          leftIcon={
-            <FontAwesome5 name="mobile-alt" size={20} color={Colors.primary} />
-          }
+          leftIcon={<FontAwesome5 name="mobile-alt" style={styles.iconStyle} />}
         />
         <Input
           keyboardType="default"
@@ -115,11 +109,7 @@ const EditProfileDetails = ({ navigation }) => {
           numberOfLines={2}
           placeholderTextColor={Colors.placeholder}
           leftIcon={
-            <MaterialIcons
-              name="location-on"
-              size={20}
-              color={Colors.primary}
-            />
+            <MaterialIcons name="location-on" style={styles.iconStyle} />
           }
         />
         <View
@@ -185,6 +175,10 @@ const styles = StyleSheet.create({
   Input: {
     fontSize: 16,
     paddingLeft: 5,
+  },
+  iconStyle: {
+    fontSize: 20,
+    color: Colors.primary,
   },
   btnWrapper: {
     alignItems: "center",

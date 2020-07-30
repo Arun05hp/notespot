@@ -24,7 +24,6 @@ const documentSelect = async () => {
       console.log(res.type);
     }
   } catch (err) {
-    //Handling any exception (If any)
     console.log(err);
   }
 };
@@ -55,7 +54,6 @@ const uploadpdf = () => {
         console.log(res.type);
       }
     } catch (err) {
-      //Handling any exception (If any)
       console.log(err);
     }
   };

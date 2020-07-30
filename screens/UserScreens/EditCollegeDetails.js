@@ -31,6 +31,7 @@ const EditCollegeDetails = ({ navigation }) => {
     isHosteller,
     regNo,
   } = state.collegeData;
+  const btnText = !collegeName ? "Save" : "Update";
   const [uCollegeName, setuCollegeName] = useState(
     collegeName ? collegeName : ""
   );
@@ -39,14 +40,13 @@ const EditCollegeDetails = ({ navigation }) => {
   const [uHostelAddress, setuHostelAddress] = useState(
     hostelAddress ? hostelAddress : ""
   );
+
   let value = false;
   if (isHosteller) {
     isHosteller == "true" ? (value = true) : value;
   }
 
   const [uIsHosteller, setuIsHosteller] = useState(value);
-  console.log("hosteler", uIsHosteller);
-  console.log("address", uHostelAddress);
 
   const update = async () => {
     const hosteller = uIsHosteller ? "true" : "false";
@@ -64,7 +64,9 @@ const EditCollegeDetails = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <NavigationEvents onWillFocus={clearMessage} />
-      <Text style={styles.heading}>Your College Details</Text>
+      <Text style={styles.heading}>
+        {!collegeName ? "Add" : "Edit"} College Details
+      </Text>
       <View style={styles.Form}>
         {errorMessage ? (
           <Text style={{ ...styles.message, ...styles.errorMessage }}>
@@ -176,7 +178,7 @@ const EditCollegeDetails = ({ navigation }) => {
                     <ActivityIndicator size="small" color="#ffffff" />
                   </View>
                 ) : null}
-                <Text style={styles.btnTitle}>Update</Text>
+                <Text style={styles.btnTitle}>{btnText}</Text>
               </View>
             </View>
           </TouchableOpacity>

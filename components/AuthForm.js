@@ -58,9 +58,7 @@ const AuthForm = ({
             autoCapitalize="none"
             autoCorrect={false}
             placeholderTextColor={Colors.placeholder}
-            leftIcon={
-              <FontAwesome5 name="user-alt" size={20} color={Colors.primary} />
-            }
+            leftIcon={<FontAwesome5 style={styles.iconStyle} name="user-alt" />}
           />
         ) : null}
         <Input
@@ -72,9 +70,7 @@ const AuthForm = ({
           autoCapitalize="none"
           autoCorrect={false}
           placeholderTextColor={Colors.placeholder}
-          leftIcon={
-            <MaterialIcons name="email" size={20} color={Colors.primary} />
-          }
+          leftIcon={<MaterialIcons style={styles.iconStyle} name="email" />}
         />
         <Input
           secureTextEntry={secureText}
@@ -86,14 +82,11 @@ const AuthForm = ({
           autoCapitalize="none"
           autoCorrect={false}
           placeholderTextColor={Colors.placeholder}
-          leftIcon={
-            <MaterialIcons name="lock" size={20} color={Colors.primary} />
-          }
+          leftIcon={<MaterialIcons style={styles.iconStyle} name="lock" />}
           rightIcon={
             <FontAwesome5
               name={secureText ? "eye-slash" : "eye"}
-              size={22}
-              color={Colors.primary}
+              style={styles.iconStyle}
               onPress={() => setSecureText((prevState) => !prevState)}
             />
           }
@@ -168,6 +161,10 @@ const styles = StyleSheet.create({
   Input: {
     fontSize: 16,
     paddingLeft: 5,
+  },
+  iconStyle: {
+    fontSize: 20,
+    color: Colors.primary,
   },
   forget: {
     textAlign: "right",
