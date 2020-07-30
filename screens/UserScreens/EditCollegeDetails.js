@@ -10,10 +10,9 @@ import {
 } from "react-native";
 
 import { Context as UserContext } from "../../context/UserContext";
+import { NavigationEvents } from "react-navigation";
 import { Input } from "react-native-elements";
 import Colors from "../../constants/colors";
-
-import { NavigationEvents } from "react-navigation";
 
 const EditCollegeDetails = ({ navigation }) => {
   const {
@@ -116,7 +115,7 @@ const EditCollegeDetails = ({ navigation }) => {
             marginBottom: 5,
           }}
         >
-          <Text style={styles.text}>Are You Hosteller ? Yes</Text>
+          <Text style={styles.Title}>Are You Hosteller ? Yes</Text>
           <CheckBox
             value={uIsHosteller}
             onValueChange={() => {
@@ -159,7 +158,7 @@ const EditCollegeDetails = ({ navigation }) => {
           >
             <View style={styles.btnWrapper}>
               <View style={styles.btnStyle}>
-                <Text style={styles.btnTitle}>Back</Text>
+                <Text style={styles.Title}>Back</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -178,7 +177,7 @@ const EditCollegeDetails = ({ navigation }) => {
                     <ActivityIndicator size="small" color="#ffffff" />
                   </View>
                 ) : null}
-                <Text style={styles.btnTitle}>{btnText}</Text>
+                <Text style={styles.Title}>{btnText}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -208,11 +207,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingLeft: 5,
   },
-  text: {
-    fontSize: 16,
-    color: Colors.primary,
-    fontFamily: "Roboto-bold",
-  },
   label: {
     fontFamily: "Roboto-bold",
     color: Colors.primary,
@@ -233,15 +227,10 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: Colors.primary,
   },
-  btnTitle: {
+  Title: {
     color: Colors.white,
-    fontSize: 16,
     fontFamily: "Roboto-bold",
-  },
-  newUser: {
     fontSize: 16,
-    textAlign: "center",
-    fontFamily: "Roboto-bold",
   },
   message: {
     fontSize: 14,

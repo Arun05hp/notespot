@@ -10,9 +10,10 @@ import {
 
 import { Context as UserContext } from "../../context/UserContext";
 import { Input } from "react-native-elements";
-import Colors from "../../constants/colors";
-import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
+
 import { NavigationEvents } from "react-navigation";
+import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
+import Colors from "../../constants/colors";
 
 const EditProfileDetails = ({ navigation }) => {
   const { state, updateProfile, getUserData, clearMessage } = useContext(
@@ -198,11 +199,6 @@ const styles = StyleSheet.create({
   btnTitle: {
     color: Colors.white,
     fontSize: 16,
-    fontFamily: "Roboto-bold",
-  },
-  newUser: {
-    fontSize: 16,
-    textAlign: "center",
     fontFamily: "Roboto-bold",
   },
   message: {

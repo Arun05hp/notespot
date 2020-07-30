@@ -41,97 +41,94 @@ const UserProfile = ({ navigation }) => {
     }
   };
 
+  if (!name) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
-        {!name ? (
-          <ActivityIndicator size="large" color={Colors.white} />
-        ) : (
-          <View style={styles.innerContainer}>
-            <View style={styles.imgWrapper}>
-              <Image
-                style={styles.img}
-                source={{
-                  uri: !profileImg
-                    ? "https://img.icons8.com/ultraviolet/80/000000/user.png"
-                    : baseUrl + "/" + profileImg,
-                }}
-              />
+        <View style={styles.innerContainer}>
+          <View style={styles.imgWrapper}>
+            <Image
+              style={styles.img}
+              source={{
+                uri: !profileImg
+                  ? "https://img.icons8.com/ultraviolet/80/000000/user.png"
+                  : baseUrl + "/" + profileImg,
+              }}
+            />
 
-              <TouchableOpacity
-                style={styles.editIconBox}
-                onPress={() => pickImage()}
-              >
-                <Feather style={styles.editIcon} name="edit-2" />
-              </TouchableOpacity>
-            </View>
-            <Text style={styles.title}>{name}</Text>
-            <Text style={styles.subtitle}>{email}</Text>
-            {mobileno ? (
-              <Text style={styles.subtitle}>{mobileno}</Text>
-            ) : (
-              <TouchableOpacity
-                style={{
-                  paddingVertical: 2,
-                  paddingHorizontal: 8,
-                  backgroundColor: Colors.white,
-                  borderRadius: 10,
-                  marginTop: 5,
-                }}
-                activeOpacity={0.7}
-                onPress={() => navigation.navigate("editProfile")}
-              >
-                <Text
-                  style={{
-                    color: Colors.primary,
-                    fontFamily: "Roboto-bold",
-                  }}
-                >
-                  Add Mobile Number
-                </Text>
-              </TouchableOpacity>
-            )}
-          </View>
-        )}
-      </View>
-      <View style={styles.wrapper2}>
-        {!name ? (
-          <View
-            style={{
-              flex: 0.8,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <ActivityIndicator size="large" color={Colors.primary} />
-          </View>
-        ) : (
-          <>
-            <Text style={styles.subHeading}>Edit</Text>
             <TouchableOpacity
-              style={styles.linkWrapper}
+              style={styles.editIconBox}
+              onPress={() => pickImage()}
+            >
+              <Feather style={styles.editIcon} name="edit-2" />
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.title}>{name}</Text>
+          <Text style={styles.subtitle}>{email}</Text>
+          {mobileno ? (
+            <Text style={styles.subtitle}>{mobileno}</Text>
+          ) : (
+            <TouchableOpacity
+              style={{
+                paddingVertical: 2,
+                paddingHorizontal: 8,
+                backgroundColor: Colors.white,
+                borderRadius: 10,
+                marginTop: 5,
+              }}
+              activeOpacity={0.7}
               onPress={() => navigation.navigate("editProfile")}
             >
-              <View style={styles.row}>
-                <Text style={styles.text}>Profile Details</Text>
-                <AntDesign style={styles.icons} name="edit" />
-              </View>
+              <Text
+                style={{
+                  color: Colors.primary,
+                  fontFamily: "Roboto-bold",
+                }}
+              >
+                Add Mobile Number
+              </Text>
             </TouchableOpacity>
-            {!collegeName ? <Text style={styles.subHeading}>Add</Text> : null}
-            <TouchableOpacity
-              style={styles.linkWrapper}
-              onPress={() => navigation.navigate("editCollegeDetails")}
-            >
-              <View style={styles.row}>
-                <Text style={styles.text}>College Details</Text>
-                <AntDesign
-                  style={styles.icons}
-                  name={!collegeName ? "plus" : "edit"}
-                />
-              </View>
-            </TouchableOpacity>
-          </>
-        )}
+          )}
+        </View>
+      </View>
+      <View style={styles.wrapper2}>
+        <Text style={styles.subHeading}>Edit</Text>
+        <TouchableOpacity
+          style={styles.linkWrapper}
+          onPress={() => navigation.navigate("editProfile")}
+        >
+          <View style={styles.row}>
+            <Text style={styles.text}>Profile Details</Text>
+            <AntDesign style={styles.icons} name="edit" />
+          </View>
+        </TouchableOpacity>
+        {!collegeName ? <Text style={styles.subHeading}>Add</Text> : null}
+        <TouchableOpacity
+          style={styles.linkWrapper}
+          onPress={() => navigation.navigate("editCollegeDetails")}
+        >
+          <View style={styles.row}>
+            <Text style={styles.text}>College Details</Text>
+            <AntDesign
+              style={styles.icons}
+              name={!collegeName ? "plus" : "edit"}
+            />
+          </View>
+        </TouchableOpacity>
+
         <Text style={styles.subHeading}>Account Action</Text>
         <TouchableOpacity
           style={styles.linkWrapper}

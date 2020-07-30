@@ -10,7 +10,6 @@ import {
 } from "react-native";
 
 import { Input } from "react-native-elements";
-
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import Colors from "../constants/colors";
 
