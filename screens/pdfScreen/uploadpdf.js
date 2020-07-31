@@ -1,39 +1,34 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { Input, Button } from "react-native-elements";
+import React, { useContext, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import { Input } from "react-native-elements";
 import * as DocumentPicker from "expo-document-picker";
 
-import Card from "../../components/Card";
-
+import TwoButtonRow from "../../components/TwoButtonRow";
+import { Context as PdfContext } from "../../context/PdfContext";
+import { Context as UserContext } from "../../context/UserContext";
 import { MaterialIcons } from "@expo/vector-icons";
 import Colors from "../../constants/colors";
 
-const documentSelect = async () => {
-  try {
-    const res = await DocumentPicker.getDocumentAsync({
-      type: "application/pdf",
-      copyToCacheDirectory: false,
-    });
-    if (res.type === "success") {
-      setFileDetails({
-        fileName: res.name,
-        fileSize: res.size,
-      });
-      setFileExists(true);
-    } else {
-      console.log(res.type);
-    }
-  } catch (err) {
-    console.log(err);
-  }
-};
-
 const uploadpdf = () => {
+  const { uploadPdf } = useContext(PdfContext);
+  const { state } = useContext(UserContext);
+  const userId = state.userData.id;
+  const [pdfFileData, setPdfFileData] = useState({
+    fileName: "",
+    fileSize: Number,
+    uri: "",
+  });
   const [fileExists, setFileExists] = useState(false);
   const [topicName, setTopicName] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
-  const [fileDetails, setFileDetails] = useState({});
+  let selectBtnText = fileExists ? "Change Pdf" : "Select pdf";
 
   const documentSelect = async () => {
     try {
@@ -42,16 +37,14 @@ const uploadpdf = () => {
         copyToCacheDirectory: false,
       });
       if (res.type === "success") {
-        setFileDetails({
+        setPdfFileData({
           fileName: res.name,
           fileSize: res.size,
-          customName: topicName,
-          category: category,
-          description: description,
+          uri: res.uri,
         });
         setFileExists(true);
       } else {
-        console.log(res.type);
+        return;
       }
     } catch (err) {
       console.log(err);
@@ -60,7 +53,8 @@ const uploadpdf = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
-      <Card style={styles.card}>
+      <Text style={styles.heading}>Enter PDF Details</Text>
+      <View style={styles.container}>
         <Input
           containerStyle={styles.inputContainer}
           inputStyle={styles.Input}
@@ -88,45 +82,66 @@ const uploadpdf = () => {
           onChangeText={setDescription}
         />
         <View>
-          <Button
-            title={fileExists ? "Change File" : "Select File"}
-            onPress={documentSelect}
+          {fileExists && (
+            <>
+              <View style={{ ...styles.showFileContainer, ...styles.row }}>
+                <View
+                  style={{
+                    ...styles.row,
+                    width: "80%",
+                  }}
+                >
+                  <MaterialIcons
+                    name="picture-as-pdf"
+                    size={24}
+                    color="#d21e27"
+                  />
+                  <Text numberOfLines={3} style={styles.fileNameText}>
+                    {pdfFileData.fileName}
+                  </Text>
+                </View>
+
+                <TouchableOpacity
+                  onPress={() => {
+                    setPdfFileData({});
+                    setFileExists(false);
+                  }}
+                >
+                  <MaterialIcons
+                    style={{
+                      textAlign: "center",
+                      padding: 5,
+                      borderRadius: 20,
+                      marginHorizontal: 10,
+                      backgroundColor: Colors.white,
+                      borderWidth: 1,
+                      borderColor: "rgba(0,0,0,0.2)",
+                    }}
+                    name="delete"
+                    size={20}
+                    color="#dc3545"
+                  />
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
+          <TwoButtonRow
+            firstBtnText={selectBtnText}
+            secBtnText="Upload Pdf"
+            onSubmit1st={documentSelect}
+            onSubmit2nd={() =>
+              uploadPdf({
+                userId,
+                topicName,
+                category,
+                description,
+                ...pdfFileData,
+              })
+            }
+            isloading={false}
           />
         </View>
-      </Card>
-
-      {fileExists ? (
-        <Card style={styles.card}>
-          <Text style={styles.text}>
-            Topic Name:{" "}
-            <Text style={{ color: Colors.primary }}>
-              {fileDetails.customName}
-            </Text>
-          </Text>
-          <Text style={styles.text}>
-            Category:{" "}
-            <Text style={{ color: Colors.primary }}>
-              {fileDetails.category}
-            </Text>
-          </Text>
-          <Text style={styles.text}>
-            Description:{" "}
-            <Text style={{ color: Colors.primary }}>
-              {fileDetails.description}
-            </Text>
-          </Text>
-          <View style={styles.showFileContainer}>
-            <MaterialIcons name="picture-as-pdf" size={24} color="#d21e27" />
-            <Text numberOfLines={3} style={styles.fileNameText}>
-              {fileDetails.fileName}
-            </Text>
-          </View>
-
-          <View style={styles.btnContainer}>
-            <Button title="Upload" onPress={() => console.log("upload")} />
-          </View>
-        </Card>
-      ) : null}
+      </View>
     </ScrollView>
   );
 };
@@ -140,12 +155,17 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "space-evenly",
-  },
-
-  card: {
-    width: "90%",
+    justifyContent: "center",
     backgroundColor: "white",
+  },
+  heading: {
+    fontSize: 20,
+    fontFamily: "Roboto-bold",
+    color: Colors.primary,
+    marginBottom: 15,
+  },
+  container: {
+    width: "85%",
     padding: 10,
   },
   inputContainer: {
@@ -160,25 +180,19 @@ const styles = StyleSheet.create({
     color: Colors.primary,
     padding: 0,
   },
-  btnContainer: {
-    marginVertical: 10,
-  },
   showFileContainer: {
-    marginVertical: 5,
+    marginVertical: 15,
     borderWidth: 1,
     borderColor: Colors.primary,
-    paddingVertical: 10,
-    paddingHorizontal: 5,
+    padding: 10,
+    textAlign: "center",
+  },
+  row: {
     flexDirection: "row",
     alignItems: "center",
   },
   fileNameText: {
     paddingLeft: 5,
-  },
-  text: {
-    fontSize: 16,
-    fontFamily: "Roboto-bold",
-    marginVertical: 5,
   },
 });
 

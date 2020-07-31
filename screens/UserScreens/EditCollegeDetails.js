@@ -1,17 +1,10 @@
 import React, { useContext, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Keyboard,
-  ActivityIndicator,
-  CheckBox,
-} from "react-native";
+import { View, Text, StyleSheet, CheckBox } from "react-native";
 
 import { Context as UserContext } from "../../context/UserContext";
 import { NavigationEvents } from "react-navigation";
 import { Input } from "react-native-elements";
+import TwoButtonRow from "../../components/TwoButtonRow";
 import Colors from "../../constants/colors";
 
 const EditCollegeDetails = ({ navigation }) => {
@@ -115,13 +108,14 @@ const EditCollegeDetails = ({ navigation }) => {
             marginBottom: 5,
           }}
         >
-          <Text style={styles.Title}>Are You Hosteller ? Yes</Text>
+          <Text style={{ ...styles.Title, color: Colors.primary }}>
+            Are You Hosteller ? Yes
+          </Text>
           <CheckBox
             value={uIsHosteller}
             onValueChange={() => {
               setuIsHosteller((prevState) => !prevState);
               if (uIsHosteller) {
-                console.log("log", uIsHosteller);
                 setuHostelAddress("");
               }
             }}
@@ -143,45 +137,15 @@ const EditCollegeDetails = ({ navigation }) => {
             numberOfLines={2}
           />
         )}
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
+        <TwoButtonRow
+          firstBtnText="Back"
+          onSubmit1st={() => {
+            navigation.goBack();
           }}
-        >
-          <TouchableOpacity
-            activeOpacity={0.6}
-            disabled={isUpdating}
-            onPress={() => {
-              navigation.goBack();
-            }}
-          >
-            <View style={styles.btnWrapper}>
-              <View style={styles.btnStyle}>
-                <Text style={styles.Title}>Back</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.6}
-            disabled={isUpdating}
-            onPress={() => {
-              Keyboard.dismiss();
-              update();
-            }}
-          >
-            <View style={styles.btnWrapper}>
-              <View style={styles.btnStyle}>
-                {isUpdating ? (
-                  <View style={{ marginRight: 5 }}>
-                    <ActivityIndicator size="small" color="#ffffff" />
-                  </View>
-                ) : null}
-                <Text style={styles.Title}>{btnText}</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
+          secBtnText={btnText}
+          onSubmit2nd={() => update()}
+          isloading={isUpdating}
+        />
       </View>
     </View>
   );
@@ -211,21 +175,6 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-bold",
     color: Colors.primary,
     padding: 0,
-  },
-  btnWrapper: {
-    alignItems: "center",
-    marginVertical: 15,
-    width: "80%",
-    alignSelf: "center",
-  },
-  btnStyle: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 10,
-    borderRadius: 30,
-    backgroundColor: Colors.primary,
   },
   Title: {
     color: Colors.white,
