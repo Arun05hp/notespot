@@ -11,15 +11,16 @@ import * as DocumentPicker from "expo-document-picker";
 
 import ErrorMsgBox from "../../components/ErrorMsgBox";
 import TwoButtonRow from "../../components/TwoButtonRow";
+import { NavigationEvents } from "react-navigation";
 import { Context as PdfContext } from "../../context/PdfContext";
 import { Context as UserContext } from "../../context/UserContext";
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
 import Colors from "../../constants/colors";
 
 const UploadPdf = () => {
-  const { uploadPdf, state: pdfState } = useContext(PdfContext);
+  const { uploadPdf, state: pdfState, clearMessage } = useContext(PdfContext);
   const { state } = useContext(UserContext);
-  const { errorMessage, successMessage, isUpdating } = pdfState;
+  const { errorMessage, successMessage, isUploading } = pdfState;
   const userId = state.userData.id;
   const [pdfFileData, setPdfFileData] = useState({
     fileName: "",
@@ -65,6 +66,7 @@ const UploadPdf = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
+      <NavigationEvents onWillFocus={clearMessage} />
       <Text style={styles.heading}>Enter PDF Details</Text>
       <View style={styles.container}>
         <ErrorMsgBox
@@ -151,7 +153,7 @@ const UploadPdf = () => {
             secBtnText="Upload Pdf"
             onSubmit1st={documentSelect}
             onSubmit2nd={() => validatePdf()}
-            isloading={false}
+            isloading={isUploading}
           />
         </View>
       </View>

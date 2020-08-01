@@ -11,6 +11,8 @@ const pdfReducer = (state, action) => {
       };
     case "clear_message":
       return { ...state, errorMessage: "", successMessage: "" };
+    case "isUploading":
+      return { ...state, isUploading: action.payload };
     default:
       return state;
   }
@@ -36,6 +38,7 @@ const uploadPdf = (dispatch) => async ({
     return;
   }
   try {
+    dispatch({ type: "isUploading", payload: true });
     let data = new FormData();
     data.append("userId", userId);
     data.append("topicName", topicName);
@@ -57,22 +60,25 @@ const uploadPdf = (dispatch) => async ({
         type: "add_message",
         payload: { error: response.data.error, success: "" },
       });
+      dispatch({ type: "isUploading", payload: false });
     } else {
       dispatch({
         type: "add_message",
         payload: { error: "", success: response.data.success },
       });
+      dispatch({ type: "isUploading", payload: false });
     }
   } catch (error) {
     dispatch({
       type: "add_message",
       payload: { error: "Something Went Wrong", success: "" },
     });
+    dispatch({ type: "isUploading", payload: false });
   }
 };
 
 export const { Provider, Context } = createDataContext(
   pdfReducer,
   { uploadPdf, clearMessage },
-  { errorMessage: "", successMessage: "", isUpdating: false }
+  { errorMessage: "", successMessage: "", isUploading: false }
 );
