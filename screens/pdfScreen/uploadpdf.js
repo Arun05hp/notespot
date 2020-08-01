@@ -17,15 +17,16 @@ import { Context as UserContext } from "../../context/UserContext";
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
 import Colors from "../../constants/colors";
 
-const UploadPdf = () => {
+const UploadPdf = ({ navigation }) => {
   const { uploadPdf, state: pdfState, clearMessage } = useContext(PdfContext);
   const { state } = useContext(UserContext);
-  const { errorMessage, successMessage, isUploading } = pdfState;
+  const { errorMessage, successMessage, isLoading, pdfsList } = pdfState;
   const userId = state.userData.id;
   const [pdfFileData, setPdfFileData] = useState({
     fileName: "",
     uri: "",
   });
+
   const [fileExists, setFileExists] = useState(false);
   const [topicName, setTopicName] = useState("");
   const [category, setCategory] = useState("");
@@ -52,15 +53,18 @@ const UploadPdf = () => {
     }
   };
 
-  const validatePdf = () => {
+  const validatePdf = async () => {
     if (fileExists) {
-      uploadPdf({
+      await uploadPdf({
         userId,
         topicName,
         category,
         description,
         ...pdfFileData,
       });
+      setTimeout(function () {
+        navigation.goBack();
+      }, 1500);
     }
   };
 
@@ -153,7 +157,7 @@ const UploadPdf = () => {
             secBtnText="Upload Pdf"
             onSubmit1st={documentSelect}
             onSubmit2nd={() => validatePdf()}
-            isloading={isUploading}
+            isloading={isLoading}
           />
         </View>
       </View>

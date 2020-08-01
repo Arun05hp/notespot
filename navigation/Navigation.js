@@ -11,9 +11,9 @@ import UserDashboard from "../screens/MainScreens/UserDashboard";
 import UserProfile from "../screens/UserScreens/UserProfile";
 import EditProfileDetails from "../screens/UserScreens/EditProfileDetails";
 import EditCollegeDetails from "../screens/UserScreens/EditCollegeDetails";
-import pdfDashboard from "../screens/pdfScreen/pdfDashboard";
 import UploadPdf from "../screens/pdfScreen/UploadPdf";
 import BookList from "../screens/bookScreen/BookList";
+import PdfLists from "../screens/pdfScreen/PdfLists";
 
 import { AntDesign } from "@expo/vector-icons";
 
@@ -50,7 +50,7 @@ Dashboard.navigationOptions = {
 
 const pdfFlow = createStackNavigator(
   {
-    upload: pdfDashboard,
+    pdfLists: PdfLists,
   },
   {
     defaultNavigationOptions: defaultNavOptions,

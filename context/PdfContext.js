@@ -9,10 +9,17 @@ const pdfReducer = (state, action) => {
         errorMessage: action.payload.error,
         successMessage: action.payload.success,
       };
+    case "get_pdfs":
+      return {
+        ...state,
+        errorMessage: "",
+        successMessage: "",
+        pdfLists: action.payload,
+      };
     case "clear_message":
       return { ...state, errorMessage: "", successMessage: "" };
-    case "isUploading":
-      return { ...state, isUploading: action.payload };
+    case "isLoading":
+      return { ...state, isLoading: action.payload };
     default:
       return state;
   }
@@ -38,7 +45,7 @@ const uploadPdf = (dispatch) => async ({
     return;
   }
   try {
-    dispatch({ type: "isUploading", payload: true });
+    dispatch({ type: "isLoading", payload: true });
     let data = new FormData();
     data.append("userId", userId);
     data.append("topicName", topicName);
@@ -60,25 +67,48 @@ const uploadPdf = (dispatch) => async ({
         type: "add_message",
         payload: { error: response.data.error, success: "" },
       });
-      dispatch({ type: "isUploading", payload: false });
+      dispatch({ type: "isLoading", payload: false });
     } else {
       dispatch({
         type: "add_message",
         payload: { error: "", success: response.data.success },
       });
-      dispatch({ type: "isUploading", payload: false });
+      dispatch({ type: "isLoading", payload: false });
     }
   } catch (error) {
     dispatch({
       type: "add_message",
       payload: { error: "Something Went Wrong", success: "" },
     });
-    dispatch({ type: "isUploading", payload: false });
+    dispatch({ type: "isLoading", payload: false });
+  }
+};
+
+const getPdfs = (dispatch) => async () => {
+  dispatch({ type: "isLoading", payload: true });
+  try {
+    const response = await appApi.get("/user/getPdfs");
+    if (response.data.error) {
+      dispatch({
+        type: "add_message",
+        payload: { error: response.data.error, success: "" },
+      });
+      dispatch({ type: "isLoading", payload: false });
+    } else {
+      dispatch({ type: "get_pdfs", payload: response.data });
+      dispatch({ type: "isLoading", payload: false });
+    }
+  } catch (error) {
+    dispatch({
+      type: "add_message",
+      payload: { error: "Something Went Wrong", success: "" },
+    });
+    dispatch({ type: "isLoading", payload: false });
   }
 };
 
 export const { Provider, Context } = createDataContext(
   pdfReducer,
-  { uploadPdf, clearMessage },
-  { errorMessage: "", successMessage: "", isUploading: false }
+  { uploadPdf, getPdfs, clearMessage },
+  { pdfLists: [], errorMessage: "", successMessage: "", isLoading: false }
 );
