@@ -12,10 +12,10 @@ import * as DocumentPicker from "expo-document-picker";
 import TwoButtonRow from "../../components/TwoButtonRow";
 import { Context as PdfContext } from "../../context/PdfContext";
 import { Context as UserContext } from "../../context/UserContext";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, Entypo } from "@expo/vector-icons";
 import Colors from "../../constants/colors";
 
-const uploadpdf = () => {
+const UploadPdf = () => {
   const { uploadPdf } = useContext(PdfContext);
   const { state } = useContext(UserContext);
   const userId = state.userData.id;
@@ -48,6 +48,18 @@ const uploadpdf = () => {
       }
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const validatePdf = () => {
+    if (fileExists) {
+      uploadPdf({
+        userId,
+        topicName,
+        category,
+        description,
+        ...pdfFileData,
+      });
     }
   };
 
@@ -107,7 +119,7 @@ const uploadpdf = () => {
                     setFileExists(false);
                   }}
                 >
-                  <MaterialIcons
+                  <Entypo
                     style={{
                       textAlign: "center",
                       padding: 5,
@@ -117,7 +129,7 @@ const uploadpdf = () => {
                       borderWidth: 1,
                       borderColor: "rgba(0,0,0,0.2)",
                     }}
-                    name="delete"
+                    name="cross"
                     size={20}
                     color="#dc3545"
                   />
@@ -125,19 +137,16 @@ const uploadpdf = () => {
               </View>
             </>
           )}
+          {!fileExists && (
+            <Text style={{ color: "#ff0011", textAlign: "center" }}>
+              Please Select File !
+            </Text>
+          )}
           <TwoButtonRow
             firstBtnText={selectBtnText}
             secBtnText="Upload Pdf"
             onSubmit1st={documentSelect}
-            onSubmit2nd={() =>
-              uploadPdf({
-                userId,
-                topicName,
-                category,
-                description,
-                ...pdfFileData,
-              })
-            }
+            onSubmit2nd={() => validatePdf()}
             isloading={false}
           />
         </View>
@@ -145,7 +154,7 @@ const uploadpdf = () => {
     </ScrollView>
   );
 };
-uploadpdf.navigationOptions = () => {
+UploadPdf.navigationOptions = () => {
   return {
     headerTitle: "UPLOAD PDF",
   };
@@ -196,4 +205,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default uploadpdf;
+export default UploadPdf;

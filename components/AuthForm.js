@@ -10,6 +10,7 @@ import {
 } from "react-native";
 
 import { Input } from "react-native-elements";
+import ErrorMsgBox from "./ErrorMsgBox";
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import Colors from "../constants/colors";
 
@@ -37,16 +38,10 @@ const AuthForm = ({
         />
       </View>
       <View style={styles.Form}>
-        {errorMessage ? (
-          <Text style={{ ...styles.message, ...styles.errorMessage }}>
-            {errorMessage}
-          </Text>
-        ) : null}
-        {successMessage ? (
-          <Text style={{ ...styles.message, ...styles.successMessage }}>
-            {successMessage}
-          </Text>
-        ) : null}
+        <ErrorMsgBox
+          errorMessage={errorMessage}
+          successMessage={successMessage}
+        />
         {isSignUpForm ? (
           <Input
             keyboardType="default"
@@ -194,23 +189,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     fontFamily: "Roboto-bold",
-  },
-  message: {
-    fontSize: 14,
-    textAlign: "center",
-    padding: 5,
-    marginBottom: 5,
-    fontFamily: "Roboto-bold",
-  },
-  errorMessage: {
-    color: "#721c24",
-    backgroundColor: "#f8d7da",
-    borderColor: "#f5c6cb",
-  },
-  successMessage: {
-    color: "#155724",
-    backgroundColor: "#d4edda",
-    borderColor: "#c3e6cb",
   },
 });
 

@@ -1,17 +1,17 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-const bookList = () => {
+const BookList = () => {
   return (
     <View>
       <Text>book</Text>
     </View>
   );
 };
-bookList.navigationOptions = () => {
+BookList.navigationOptions = () => {
   return {
     headerTitle: "BOOK",
   };
 };
 
-export default bookList;
+export default BookList;

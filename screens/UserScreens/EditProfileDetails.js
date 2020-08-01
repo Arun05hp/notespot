@@ -4,6 +4,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { Context as UserContext } from "../../context/UserContext";
 import { Input } from "react-native-elements";
 import TwoButtonRow from "../../components/TwoButtonRow";
+import ErrorMsgBox from "../../components/ErrorMsgBox";
 import { NavigationEvents } from "react-navigation";
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import Colors from "../../constants/colors";
@@ -46,16 +47,10 @@ const EditProfileDetails = ({ navigation }) => {
       <NavigationEvents onWillFocus={clearMessage} />
       <Text style={styles.heading}>Edit Profile</Text>
       <View style={styles.Form}>
-        {errorMessage ? (
-          <Text style={{ ...styles.message, ...styles.errorMessage }}>
-            {errorMessage}
-          </Text>
-        ) : null}
-        {successMessage ? (
-          <Text style={{ ...styles.message, ...styles.successMessage }}>
-            {successMessage}
-          </Text>
-        ) : null}
+        <ErrorMsgBox
+          errorMessage={errorMessage}
+          successMessage={successMessage}
+        />
         <Input
           keyboardType="default"
           inputStyle={styles.Input}
@@ -148,23 +143,6 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 16,
     fontFamily: "Roboto-bold",
-  },
-  message: {
-    fontSize: 14,
-    textAlign: "center",
-    padding: 5,
-    marginBottom: 5,
-    fontFamily: "Roboto-bold",
-  },
-  errorMessage: {
-    color: "#721c24",
-    backgroundColor: "#f8d7da",
-    borderColor: "#f5c6cb",
-  },
-  successMessage: {
-    color: "#155724",
-    backgroundColor: "#d4edda",
-    borderColor: "#c3e6cb",
   },
 });
 

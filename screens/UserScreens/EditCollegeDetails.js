@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, CheckBox } from "react-native";
 import { Context as UserContext } from "../../context/UserContext";
 import { NavigationEvents } from "react-navigation";
 import { Input } from "react-native-elements";
+import ErrorMsgBox from "../../components/ErrorMsgBox";
 import TwoButtonRow from "../../components/TwoButtonRow";
 import Colors from "../../constants/colors";
 
@@ -60,16 +61,10 @@ const EditCollegeDetails = ({ navigation }) => {
         {!collegeName ? "Add" : "Edit"} College Details
       </Text>
       <View style={styles.Form}>
-        {errorMessage ? (
-          <Text style={{ ...styles.message, ...styles.errorMessage }}>
-            {errorMessage}
-          </Text>
-        ) : null}
-        {successMessage ? (
-          <Text style={{ ...styles.message, ...styles.successMessage }}>
-            {successMessage}
-          </Text>
-        ) : null}
+        <ErrorMsgBox
+          errorMessage={errorMessage}
+          successMessage={successMessage}
+        />
         <Input
           keyboardType="default"
           inputStyle={styles.Input}
@@ -180,23 +175,6 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontFamily: "Roboto-bold",
     fontSize: 16,
-  },
-  message: {
-    fontSize: 14,
-    textAlign: "center",
-    padding: 5,
-    marginBottom: 5,
-    fontFamily: "Roboto-bold",
-  },
-  errorMessage: {
-    color: "#721c24",
-    backgroundColor: "#f8d7da",
-    borderColor: "#f5c6cb",
-  },
-  successMessage: {
-    color: "#155724",
-    backgroundColor: "#d4edda",
-    borderColor: "#c3e6cb",
   },
 });
 
