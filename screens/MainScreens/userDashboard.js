@@ -59,7 +59,7 @@ const GridData = [
   },
 ];
 
-const userDashboard = ({ navigation }) => {
+const UserDashboard = ({ navigation }) => {
   const { getUserData, getCollegeDetails } = useContext(UserContext);
 
   const renderGridItem = (itemData) => {
@@ -86,7 +86,7 @@ const userDashboard = ({ navigation }) => {
   );
 };
 
-userDashboard.navigationOptions = () => {
+UserDashboard.navigationOptions = () => {
   return {
     headerTitle: "DASHBOARD",
   };
@@ -98,4 +98,4 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
   },
 });
-export default userDashboard;
+export default UserDashboard;

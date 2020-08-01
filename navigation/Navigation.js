@@ -7,7 +7,7 @@ import ResolveAuthScreen from "../screens/AuthScreens/ResolveAuthScreen";
 import IndexScreen from "../screens/AuthScreens/IndexScreen";
 import SignUpScreen from "../screens/AuthScreens/SignUpScreen";
 import SignInScreen from "../screens/AuthScreens/SignInScreen";
-import userDashboard from "../screens/MainScreens/userDashboard";
+import UserDashboard from "../screens/MainScreens/UserDashboard";
 import UserProfile from "../screens/UserScreens/UserProfile";
 import EditProfileDetails from "../screens/UserScreens/EditProfileDetails";
 import EditCollegeDetails from "../screens/UserScreens/EditCollegeDetails";
@@ -33,7 +33,7 @@ const defaultNavOptions = {
 
 const Dashboard = createStackNavigator(
   {
-    Dashboard: userDashboard,
+    Dashboard: UserDashboard,
     UploadPdf: UploadPdf,
   },
   {

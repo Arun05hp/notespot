@@ -89,7 +89,7 @@ const getCollegeDetails = (dispatch) => async () => {
 
 const uploadImage = (dispatch) => async ({ id, imageUrl, profileImg }) => {
   try {
-    var data = new FormData();
+    let data = new FormData();
     data.append("id", id);
     data.append("imageData", {
       uri: imageUrl,

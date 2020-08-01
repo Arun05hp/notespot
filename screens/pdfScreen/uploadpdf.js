@@ -9,6 +9,7 @@ import {
 import { Input } from "react-native-elements";
 import * as DocumentPicker from "expo-document-picker";
 
+import ErrorMsgBox from "../../components/ErrorMsgBox";
 import TwoButtonRow from "../../components/TwoButtonRow";
 import { Context as PdfContext } from "../../context/PdfContext";
 import { Context as UserContext } from "../../context/UserContext";
@@ -16,12 +17,12 @@ import { MaterialIcons, Entypo } from "@expo/vector-icons";
 import Colors from "../../constants/colors";
 
 const UploadPdf = () => {
-  const { uploadPdf } = useContext(PdfContext);
+  const { uploadPdf, state: pdfState } = useContext(PdfContext);
   const { state } = useContext(UserContext);
+  const { errorMessage, successMessage, isUpdating } = pdfState;
   const userId = state.userData.id;
   const [pdfFileData, setPdfFileData] = useState({
     fileName: "",
-    fileSize: Number,
     uri: "",
   });
   const [fileExists, setFileExists] = useState(false);
@@ -39,7 +40,6 @@ const UploadPdf = () => {
       if (res.type === "success") {
         setPdfFileData({
           fileName: res.name,
-          fileSize: res.size,
           uri: res.uri,
         });
         setFileExists(true);
@@ -67,6 +67,10 @@ const UploadPdf = () => {
     <ScrollView contentContainerStyle={styles.contentContainer}>
       <Text style={styles.heading}>Enter PDF Details</Text>
       <View style={styles.container}>
+        <ErrorMsgBox
+          errorMessage={errorMessage}
+          successMessage={successMessage}
+        />
         <Input
           containerStyle={styles.inputContainer}
           inputStyle={styles.Input}
