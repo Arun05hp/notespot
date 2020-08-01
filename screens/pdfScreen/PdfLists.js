@@ -10,7 +10,8 @@ import {
 import { Context as PdfContext } from "../../context/PdfContext";
 import Card from "../../components/Card";
 import { MaterialIcons } from "@expo/vector-icons";
-const PdfLists = () => {
+
+const PdfLists = ({ navigation }) => {
   const { state, getPdfs } = useContext(PdfContext);
   const pdfListData = state.pdfLists;
   useEffect(() => {
@@ -24,7 +25,14 @@ const PdfLists = () => {
         keyExtractor={(item, index) => item.id.toString()}
         renderItem={(itemData) => (
           <Card style={styles.card}>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("viewPdf", {
+                  pdfName: itemData.item.pdfName,
+                  uri: itemData.item.pdfLink,
+                })
+              }
+            >
               <View style={styles.innerContainer}>
                 <MaterialIcons
                   name="picture-as-pdf"
