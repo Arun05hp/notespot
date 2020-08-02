@@ -55,7 +55,7 @@ const GridData = [
       <MaterialCommunityIcons name="cart-arrow-up" size={24} color="#39dc36" />
     ),
     color: "#0298C8",
-    navigateScreen: "Profile",
+    navigateScreen: "SellBooks",
   },
 ];
 

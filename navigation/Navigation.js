@@ -11,10 +11,11 @@ import UserDashboard from "../screens/MainScreens/UserDashboard";
 import UserProfile from "../screens/UserScreens/UserProfile";
 import EditProfileDetails from "../screens/UserScreens/EditProfileDetails";
 import EditCollegeDetails from "../screens/UserScreens/EditCollegeDetails";
-import UploadPdf from "../screens/pdfScreen/UploadPdf";
-import BookList from "../screens/bookScreen/BookList";
-import PdfLists from "../screens/pdfScreen/PdfLists";
-import ViewPdf from "../screens/pdfScreen/ViewPdf";
+import UploadPdf from "../screens/PdfScreen/UploadPdf";
+import BookList from "../screens/BookScreen/BookList";
+import SellBooks from "../screens/BookScreen/SellBooks";
+import PdfLists from "../screens/PdfScreen/PdfLists";
+import ViewPdf from "../screens/PdfScreen/ViewPdf";
 
 import { AntDesign } from "@expo/vector-icons";
 
@@ -36,6 +37,7 @@ const Dashboard = createStackNavigator(
   {
     Dashboard: UserDashboard,
     UploadPdf: UploadPdf,
+    SellBooks: SellBooks,
   },
   {
     defaultNavigationOptions: defaultNavOptions,

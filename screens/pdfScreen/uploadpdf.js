@@ -49,7 +49,7 @@ const UploadPdf = ({ navigation }) => {
         return;
       }
     } catch (err) {
-      console.log(err);
+      err = err;
     }
   };
 

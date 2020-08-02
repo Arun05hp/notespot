@@ -1,0 +1,119 @@
+import appApi from "../api/appApi";
+import createDataContext from "../context/createDataContext";
+
+const buySellBookReducer = (state, action) => {
+  switch (action.type) {
+    case "add_message":
+      return {
+        ...state,
+        errorMessage: action.payload.error,
+        successMessage: action.payload.success,
+      };
+    // case "get_pdfs":
+    //   return {
+    //     ...state,
+    //     errorMessage: "",
+    //     successMessage: "",
+    //     pdfLists: action.payload,
+    //   };
+    case "clear_message":
+      return { ...state, errorMessage: "", successMessage: "" };
+    case "isLoading":
+      return { ...state, isLoading: action.payload };
+    default:
+      return state;
+  }
+};
+
+const clearMessage = (dispatch) => () => {
+  dispatch({ type: "clear_message" });
+};
+
+const sellBook = (dispatch) => async ({
+  userId,
+  bookName,
+  authorName,
+  publisherName,
+  description,
+  price,
+  imgUri,
+}) => {
+  console.log("here");
+  if (!bookName || !authorName || !publisherName || !description) {
+    dispatch({
+      type: "add_message",
+      payload: { error: "All Fields Required", success: "" },
+    });
+    return;
+  }
+  try {
+    dispatch({ type: "isLoading", payload: true });
+    let data = new FormData();
+    data.append("userId", userId);
+    data.append("bookName", bookName);
+    data.append("authorName", authorName);
+    data.append("publisherName", publisherName);
+    data.append("description", description);
+    data.append("price", price);
+    data.append("imgData", {
+      uri: imgUri,
+      name: `userProfile-${id}.jpg`,
+      type: "application/pdf",
+      type: "image/jpeg",
+    });
+    const response = await appApi.post("/user/sellBook", data, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    if (response.data.error) {
+      dispatch({
+        type: "add_message",
+        payload: { error: response.data.error, success: "" },
+      });
+      dispatch({ type: "isLoading", payload: false });
+    } else {
+      dispatch({
+        type: "add_message",
+        payload: { error: "", success: response.data.success },
+      });
+      dispatch({ type: "isLoading", payload: false });
+    }
+  } catch (error) {
+    dispatch({
+      type: "add_message",
+      payload: { error: "Something Went Wrong", success: "" },
+    });
+    dispatch({ type: "isLoading", payload: false });
+  }
+};
+
+// const getPdfs = (dispatch) => async () => {
+//   dispatch({ type: "isLoading", payload: true });
+//   try {
+//     const response = await appApi.get("/user/getPdfs");
+//     if (response.data.error) {
+//       dispatch({
+//         type: "add_message",
+//         payload: { error: response.data.error, success: "" },
+//       });
+//       dispatch({ type: "isLoading", payload: false });
+//     } else {
+//       dispatch({ type: "get_pdfs", payload: response.data });
+//       dispatch({ type: "isLoading", payload: false });
+//     }
+//   } catch (error) {
+//     dispatch({
+//       type: "add_message",
+//       payload: { error: "Something Went Wrong", success: "" },
+//     });
+//     dispatch({ type: "isLoading", payload: false });
+//   }
+// };
+
+export const { Provider, Context } = createDataContext(
+  buySellBookReducer,
+  { sellBook, clearMessage },
+  { errorMessage: "", successMessage: "", isLoading: false }
+);

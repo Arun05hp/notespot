@@ -5,6 +5,7 @@ import { setNavigator } from "./navigation/navigationRef";
 import { Provider as AuthProvider } from "./context/AuthContext";
 import { Provider as UserProvider } from "./context/UserContext";
 import { Provider as PdfProvider } from "./context/PdfContext";
+import { Provider as BookProvider } from "./context/BuySellBookContext";
 
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
@@ -29,16 +30,18 @@ export default () => {
     );
   }
   return (
-    <PdfProvider>
-      <UserProvider>
-        <AuthProvider>
-          <AppNavigator
-            ref={(navigator) => {
-              setNavigator(navigator);
-            }}
-          />
-        </AuthProvider>
-      </UserProvider>
-    </PdfProvider>
+    <BookProvider>
+      <PdfProvider>
+        <UserProvider>
+          <AuthProvider>
+            <AppNavigator
+              ref={(navigator) => {
+                setNavigator(navigator);
+              }}
+            />
+          </AuthProvider>
+        </UserProvider>
+      </PdfProvider>
+    </BookProvider>
   );
 };
