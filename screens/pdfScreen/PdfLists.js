@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   FlatList,
+  ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
 
@@ -17,6 +18,21 @@ const PdfLists = ({ navigation }) => {
   useEffect(() => {
     getPdfs();
   }, []);
+
+  if (pdfListData.length <= 0) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <ActivityIndicator size="large" color="red" />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <FlatList
