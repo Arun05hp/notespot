@@ -32,7 +32,7 @@ const SellBooks = ({ navigation }) => {
   const [price, setPrice] = useState("");
   const [imgUri, setImgUri] = useState("");
   const [imgExist, setImgExist] = useState(false);
-  const selectBtnText = "Select Image";
+  const selectBtnText = imgExist ? "Change Image" : "Select Image";
 
   const [priceError, setPriceError] = useState("");
 
@@ -49,8 +49,8 @@ const SellBooks = ({ navigation }) => {
         setImgUri(imageUrl);
         setImgExist(true);
       }
-    } catch (E) {
-      console.log(E);
+    } catch (err) {
+      err = err;
     }
   };
 
@@ -58,7 +58,7 @@ const SellBooks = ({ navigation }) => {
     if (imgExist) {
       const regx = /^[0-9]*$/;
       if (price && regx.test(price)) {
-        await sellBook({
+        const res = await sellBook({
           userId,
           bookName,
           authorName,
@@ -67,7 +67,18 @@ const SellBooks = ({ navigation }) => {
           price,
           imgUri,
         });
-        console.log("done");
+        if (res) {
+          setBookName("");
+          setAuthorName("");
+          setDescription("");
+          setPublisherName("");
+          setPrice("");
+          setImgExist(false);
+          setImgUri("");
+          setTimeout(function () {
+            navigation.goBack();
+          }, 1500);
+        }
       } else {
         setPriceError("Number Only");
       }

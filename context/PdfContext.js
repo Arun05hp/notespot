@@ -42,7 +42,7 @@ const uploadPdf = (dispatch) => async ({
       type: "add_message",
       payload: { error: "Required Topic Name and Category", success: "" },
     });
-    return;
+    return null;
   }
   try {
     dispatch({ type: "isLoading", payload: true });
@@ -74,6 +74,7 @@ const uploadPdf = (dispatch) => async ({
         payload: { error: "", success: response.data.success },
       });
       dispatch({ type: "isLoading", payload: false });
+      return true;
     }
   } catch (error) {
     dispatch({

@@ -20,7 +20,7 @@ import Colors from "../../constants/colors";
 const UploadPdf = ({ navigation }) => {
   const { uploadPdf, state: pdfState, clearMessage } = useContext(PdfContext);
   const { state } = useContext(UserContext);
-  const { errorMessage, successMessage, isLoading, pdfsList } = pdfState;
+  const { errorMessage, successMessage, isLoading } = pdfState;
   const userId = state.userData.id;
   const [pdfFileData, setPdfFileData] = useState({
     fileName: "",
@@ -55,16 +55,18 @@ const UploadPdf = ({ navigation }) => {
 
   const validatePdf = async () => {
     if (fileExists) {
-      await uploadPdf({
+      const res = await uploadPdf({
         userId,
         topicName,
         category,
         description,
         ...pdfFileData,
       });
-      setTimeout(function () {
-        navigation.goBack();
-      }, 1500);
+      if (res) {
+        setTimeout(function () {
+          navigation.goBack();
+        }, 1000);
+      }
     }
   };
 

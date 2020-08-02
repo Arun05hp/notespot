@@ -38,13 +38,12 @@ const sellBook = (dispatch) => async ({
   price,
   imgUri,
 }) => {
-  console.log("here");
   if (!bookName || !authorName || !publisherName || !description) {
     dispatch({
       type: "add_message",
       payload: { error: "All Fields Required", success: "" },
     });
-    return;
+    return null;
   }
   try {
     dispatch({ type: "isLoading", payload: true });
@@ -57,7 +56,7 @@ const sellBook = (dispatch) => async ({
     data.append("price", price);
     data.append("imgData", {
       uri: imgUri,
-      name: `userProfile-${id}.jpg`,
+      name: `userProfile-${userId}.jpeg`,
       type: "application/pdf",
       type: "image/jpeg",
     });
@@ -79,8 +78,10 @@ const sellBook = (dispatch) => async ({
         payload: { error: "", success: response.data.success },
       });
       dispatch({ type: "isLoading", payload: false });
+      return true;
     }
   } catch (error) {
+    console.log(error);
     dispatch({
       type: "add_message",
       payload: { error: "Something Went Wrong", success: "" },
