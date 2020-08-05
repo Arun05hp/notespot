@@ -46,7 +46,7 @@ const GridData = [
       />
     ),
     color: "#0298C8",
-    navigateScreen: "UploadPdf",
+    navigateScreen: "BuyBook",
   },
   {
     id: "sell",

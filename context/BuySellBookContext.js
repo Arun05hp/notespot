@@ -9,13 +9,13 @@ const buySellBookReducer = (state, action) => {
         errorMessage: action.payload.error,
         successMessage: action.payload.success,
       };
-    // case "get_pdfs":
-    //   return {
-    //     ...state,
-    //     errorMessage: "",
-    //     successMessage: "",
-    //     pdfLists: action.payload,
-    //   };
+    case "get_Books":
+      return {
+        ...state,
+        errorMessage: "",
+        successMessage: "",
+        bookLists: action.payload,
+      };
     case "clear_message":
       return { ...state, errorMessage: "", successMessage: "" };
     case "isLoading":
@@ -90,31 +90,31 @@ const sellBook = (dispatch) => async ({
   }
 };
 
-// const getPdfs = (dispatch) => async () => {
-//   dispatch({ type: "isLoading", payload: true });
-//   try {
-//     const response = await appApi.get("/user/getPdfs");
-//     if (response.data.error) {
-//       dispatch({
-//         type: "add_message",
-//         payload: { error: response.data.error, success: "" },
-//       });
-//       dispatch({ type: "isLoading", payload: false });
-//     } else {
-//       dispatch({ type: "get_pdfs", payload: response.data });
-//       dispatch({ type: "isLoading", payload: false });
-//     }
-//   } catch (error) {
-//     dispatch({
-//       type: "add_message",
-//       payload: { error: "Something Went Wrong", success: "" },
-//     });
-//     dispatch({ type: "isLoading", payload: false });
-//   }
-// };
+const getBooks = (dispatch) => async () => {
+  dispatch({ type: "isLoading", payload: true });
+  try {
+    const response = await appApi.get("/user/getbooksData");
+    if (response.data.error) {
+      dispatch({
+        type: "add_message",
+        payload: { error: response.data.error, success: "" },
+      });
+      dispatch({ type: "isLoading", payload: false });
+    } else {
+      dispatch({ type: "get_Books", payload: response.data });
+      dispatch({ type: "isLoading", payload: false });
+    }
+  } catch (error) {
+    dispatch({
+      type: "add_message",
+      payload: { error: "Something Went Wrong", success: "" },
+    });
+    dispatch({ type: "isLoading", payload: false });
+  }
+};
 
 export const { Provider, Context } = createDataContext(
   buySellBookReducer,
-  { sellBook, clearMessage },
-  { errorMessage: "", successMessage: "", isLoading: false }
+  { sellBook, getBooks, clearMessage },
+  { bookLists: [], errorMessage: "", successMessage: "", isLoading: false }
 );

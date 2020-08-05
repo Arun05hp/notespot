@@ -3,22 +3,26 @@ import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 
+import UserDashboard from "../screens/MainScreens/UserDashboard";
+
 import ResolveAuthScreen from "../screens/AuthScreens/ResolveAuthScreen";
 import IndexScreen from "../screens/AuthScreens/IndexScreen";
 import SignUpScreen from "../screens/AuthScreens/SignUpScreen";
 import SignInScreen from "../screens/AuthScreens/SignInScreen";
-import UserDashboard from "../screens/MainScreens/UserDashboard";
+
 import UserProfile from "../screens/UserScreens/UserProfile";
 import EditProfileDetails from "../screens/UserScreens/EditProfileDetails";
 import EditCollegeDetails from "../screens/UserScreens/EditCollegeDetails";
-import UploadPdf from "../screens/PdfScreen/UploadPdf";
+
 import BookList from "../screens/BookScreen/BookList";
 import SellBooks from "../screens/BookScreen/SellBooks";
+import BuyBook from "../screens/BookScreen/BuyBook";
+
+import UploadPdf from "../screens/PdfScreen/UploadPdf";
 import PdfLists from "../screens/PdfScreen/PdfLists";
 import ViewPdf from "../screens/PdfScreen/ViewPdf";
 
 import { AntDesign } from "@expo/vector-icons";
-
 import Colors from "../constants/colors";
 
 const defaultNavOptions = {
@@ -38,6 +42,7 @@ const Dashboard = createStackNavigator(
     Dashboard: UserDashboard,
     UploadPdf: UploadPdf,
     SellBooks: SellBooks,
+    BuyBook: BuyBook,
   },
   {
     defaultNavigationOptions: defaultNavOptions,
