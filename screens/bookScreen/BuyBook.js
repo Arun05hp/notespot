@@ -13,6 +13,8 @@ import { Context as BuyBookContext } from "../../context/BuySellBookContext";
 import Card from "../../components/Card";
 import baseUrl from "../../api/baseUrl";
 import Colors from "../../constants/colors";
+import { Ionicons } from "@expo/vector-icons";
+
 const BuyBook = ({ navigation }) => {
   const { state, getBooks } = useContext(BuyBookContext);
   const bookListData = state.bookLists;
@@ -52,13 +54,22 @@ const BuyBook = ({ navigation }) => {
                   />
                 </View>
                 <View style={styles.infoBox}>
-                  <Text style={styles.title}>{itemData.item.bookName}</Text>
+                  <Text style={styles.title} numberOfLines={2}>
+                    {itemData.item.bookName}
+                  </Text>
                   <Text style={styles.subTitle}>
                     By {itemData.item.authorName}
                   </Text>
                   <View style={styles.roundWrapper}>
                     <Text style={styles.price}>₹ {itemData.item.price}</Text>
                   </View>
+                </View>
+                <View style={{ justifyContent: "center" }}>
+                  <Ionicons
+                    name="ios-arrow-forward"
+                    size={24}
+                    color="#9e9e9e"
+                  />
                 </View>
               </View>
             </TouchableOpacity>
@@ -84,8 +95,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   infoBox: {
+    flex: 1,
     justifyContent: "space-between",
-    marginLeft: 15,
+    marginHorizontal: 15,
+    alignItems: "flex-start",
   },
   roundWrapper: {
     backgroundColor: "#4853dd",
@@ -98,6 +111,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontFamily: "Roboto-bold",
+    color: "#333333",
   },
   price: {
     fontSize: 16,
