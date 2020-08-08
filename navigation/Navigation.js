@@ -42,9 +42,9 @@ const defaultNavOptions = {
 const DashboardNavigator = () => (
   <Stack.Navigator screenOptions={defaultNavOptions}>
     <Stack.Screen name="Dashboard" component={UserDashboard} />
-    <Stack.Screen name="UploadPdf" component={UploadPdf} />
-    <Stack.Screen name="SellBooks" component={SellBooks} />
-    <Stack.Screen name="BuyBook" component={BuyBook} />
+    <Stack.Screen name="Upload" component={UploadPdf} />
+    <Stack.Screen name="Sell" component={SellBooks} />
+    <Stack.Screen name="Buy" component={BuyBook} />
   </Stack.Navigator>
 );
 
@@ -77,27 +77,27 @@ const AuthNavigator = () => (
   </Stack.Navigator>
 );
 
-const MainFlow = createBottomTabNavigator(
-  {
-    Dashboard,
-    pdfFlow,
-    bookFlow,
-    Profile,
-  },
-  {
-    tabBarOptions: {
-      showLabel: false,
-      activeTintColor: Colors.primary,
-    },
-  }
+const TabNavigator = () => (
+  <Tab.Navigator>
+    <Tab.Screen name="Dashboard" component={DashboardNavigator} />
+    <Tab.Screen name="Pdf" component={PdfNavigator} />
+    <Tab.Screen name="Book" component={BookNavigator} />
+    <Tab.Screen name="Profile" component={ProfileNavigator} />
+  </Tab.Navigator>
 );
 
-const switchNavigator = createSwitchNavigator({
-  ResolveAuth: ResolveAuthScreen,
-  AuthFlow,
-  MainFlow,
-});
+const SwitchNavigator = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="ResolveAuth" component={ResolveAuthScreen} />
+    <Stack.Screen name="AuthNavigator" component={AuthNavigator} />
+    <Stack.Screen name="TabNavigator" component={TabNavigator} />
+  </Stack.Navigator>
+);
 
-const AppNavigator = createAppContainer(switchNavigator);
+const AppNavigator = () => (
+  <NavigationContainer>
+    <SwitchNavigator />
+  </NavigationContainer>
+);
 
 export default AppNavigator;
