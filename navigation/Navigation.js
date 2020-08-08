@@ -79,17 +79,53 @@ const AuthNavigator = () => (
 );
 
 const MainNavigator = () => (
-  <Tab.Navigator>
-    <Tab.Screen name="Dashboard" component={DashboardNavigator} />
-    <Tab.Screen name="Pdf" component={PdfNavigator} />
-    <Tab.Screen name="Book" component={BookNavigator} />
-    <Tab.Screen name="Profile" component={ProfileNavigator} />
+  <Tab.Navigator
+    tabBarOptions={{
+      activeTintColor: Colors.primary,
+      showLabel: false,
+    }}
+  >
+    <Tab.Screen
+      name="Dashboard"
+      component={DashboardNavigator}
+      options={{
+        tabBarIcon: ({ size, color }) => (
+          <AntDesign name="home" color={color} size={size} />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Pdf"
+      component={PdfNavigator}
+      options={{
+        tabBarIcon: ({ size, color }) => (
+          <AntDesign name="pdffile1" color={color} size={size} />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Book"
+      component={BookNavigator}
+      options={{
+        tabBarIcon: ({ size, color }) => (
+          <AntDesign name="book" color={color} size={size} />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Profile"
+      component={ProfileNavigator}
+      options={{
+        tabBarIcon: ({ size, color }) => (
+          <AntDesign name="user" color={color} size={size} />
+        ),
+      }}
+    />
   </Tab.Navigator>
 );
 
 const SwitchNavigator = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="ResolveAuth" component={ResolveAuthScreen} />
     <Stack.Screen name="AuthNavigator" component={AuthNavigator} />
     <Stack.Screen name="MainNavigator" component={MainNavigator} />
   </Stack.Navigator>

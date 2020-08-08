@@ -1,7 +1,7 @@
 import { AsyncStorage } from "react-native";
 import appApi from "../api/appApi";
 import createDataContext from "./createDataContext";
-import { navigate } from "../navigation/navigationRef";
+// import { navigate } from "../navigation/navigationRef";
 
 const authReducer = (state, action) => {
   switch (action.type) {
@@ -37,9 +37,9 @@ const tryLocalSignin = (dispatch) => async () => {
       type: "signin",
       payload: token,
     });
-    navigate("MainNavigator");
+    // navigate("MainNavigator");
   } else {
-    navigate("AuthNavigator");
+    // navigate("AuthNavigator");
   }
 };
 
