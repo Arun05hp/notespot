@@ -1,4 +1,5 @@
 import React from "react";
+import { navigationRef } from "./navigationRef";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -133,14 +134,14 @@ const MainNavigator = () => (
 );
 
 const SwitchNavigator = () => (
-  <SwitchStack.Navigator mode="modal" screenOptions={{ headerShown: false }}>
+  <SwitchStack.Navigator screenOptions={{ headerShown: false }}>
     <SwitchStack.Screen name="Auth" component={AuthNavigator} />
     <SwitchStack.Screen name="Main" component={MainNavigator} />
   </SwitchStack.Navigator>
 );
 
 const AppNavigator = () => (
-  <NavigationContainer>
+  <NavigationContainer ref={navigationRef}>
     <SwitchNavigator />
   </NavigationContainer>
 );

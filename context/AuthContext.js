@@ -1,7 +1,7 @@
 import { AsyncStorage } from "react-native";
 import appApi from "../api/appApi";
 import createDataContext from "./createDataContext";
-// import { navigate } from "../navigation/navigationRef";
+import * as RootNavigation from "../navigation/navigationRef";
 
 const authReducer = (state, action) => {
   switch (action.type) {
@@ -37,9 +37,9 @@ const tryLocalSignin = (dispatch) => async () => {
       type: "signin",
       payload: token,
     });
-    // navigate("MainNavigator");
+    RootNavigation.navigate("Main");
   } else {
-    // navigate("AuthNavigator");
+    RootNavigation.navigate("Auth");
   }
 };
 
@@ -49,6 +49,7 @@ const clearMessage = (dispatch) => () => {
 
 const signup = (dispatch) => async ({ name, email, password }) => {
   dispatch({ type: "isLoading", payload: true });
+
   try {
     const response = await appApi.post("/user/signup", {
       name,
@@ -70,6 +71,7 @@ const signup = (dispatch) => async ({ name, email, password }) => {
 
 const signin = (dispatch) => async ({ email, password }) => {
   dispatch({ type: "isLoading", payload: true });
+
   try {
     const response = await appApi.post("/user/signin", { email, password });
     if (response.data.error) {
@@ -80,9 +82,10 @@ const signin = (dispatch) => async ({ email, password }) => {
       await AsyncStorage.setItem("id", response.data.id.toString());
       dispatch({ type: "signin", payload: response.data });
       dispatch({ type: "isLoading", payload: false });
-      navigate("MainFlow");
+      RootNavigation.navigate("Main");
     }
   } catch (error) {
+    console.log(error);
     dispatch({ type: "add_error", payload: "Something went Wrong" });
     dispatch({ type: "isLoading", payload: false });
   }
@@ -92,7 +95,7 @@ const signout = (dispatch) => async () => {
   await AsyncStorage.removeItem("token");
   await AsyncStorage.removeItem("id");
   dispatch({ type: "signout" });
-  navigate("AuthFlow");
+  RootNavigation.navigate("Auth");
 };
 
 export const { Provider, Context } = createDataContext(

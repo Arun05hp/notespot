@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import { View, StyleSheet, Image } from "react-native";
 import { Button } from "react-native-elements";
+
+import { Context as AuthContext } from "../../context/AuthContext";
 
 import Colors from "../../constants/colors";
 
 const WelcomeScreen = ({ navigation }) => {
+  const { tryLocalSignin } = useContext(AuthContext);
+  useEffect(() => {
+    tryLocalSignin();
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.imgWrapper}>
