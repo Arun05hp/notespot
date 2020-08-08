@@ -63,7 +63,6 @@ const signup = (dispatch) => async ({ name, email, password }) => {
       dispatch({ type: "isLoading", payload: false });
     }
   } catch (error) {
-    console.log(error);
     dispatch({ type: "add_error", payload: "Something went Wrong" });
     dispatch({ type: "isLoading", payload: false });
   }
@@ -84,7 +83,6 @@ const signin = (dispatch) => async ({ email, password }) => {
       navigate("MainFlow");
     }
   } catch (error) {
-    console.log(error);
     dispatch({ type: "add_error", payload: "Something went Wrong" });
     dispatch({ type: "isLoading", payload: false });
   }

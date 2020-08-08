@@ -5,7 +5,6 @@ import { Button } from "react-native-elements";
 import Colors from "../../constants/colors";
 
 const WelcomeScreen = ({ navigation }) => {
-  console.log("n", navigation);
   return (
     <View style={styles.container}>
       <View style={styles.imgWrapper}>
@@ -20,7 +19,7 @@ const WelcomeScreen = ({ navigation }) => {
           buttonStyle={styles.buttonStyle}
           titleStyle={styles.btnTitle}
           title="Get Started"
-          onPress={() => navigation.navigate("MainNavigator")}
+          onPress={() => navigation.navigate("Signin")}
         />
       </View>
     </View>

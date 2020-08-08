@@ -25,7 +25,12 @@ import ViewPdf from "../screens/PdfScreen/ViewPdf";
 import { AntDesign } from "@expo/vector-icons";
 import Colors from "../constants/colors";
 
-const Stack = createStackNavigator();
+const DashboardStack = createStackNavigator();
+const PdfStack = createStackNavigator();
+const BookStack = createStackNavigator();
+const ProfileStack = createStackNavigator();
+const AuthStack = createStackNavigator();
+const SwitchStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const defaultNavOptions = {
@@ -41,41 +46,44 @@ const defaultNavOptions = {
 };
 
 const DashboardNavigator = () => (
-  <Stack.Navigator screenOptions={defaultNavOptions}>
-    <Stack.Screen name="Dashboard" component={UserDashboard} />
-    <Stack.Screen name="Upload" component={UploadPdf} />
-    <Stack.Screen name="Sell" component={SellBooks} />
-    <Stack.Screen name="Buy" component={BuyBook} />
-  </Stack.Navigator>
+  <DashboardStack.Navigator screenOptions={defaultNavOptions}>
+    <DashboardStack.Screen name="Dashboard" component={UserDashboard} />
+    <DashboardStack.Screen name="Upload" component={UploadPdf} />
+    <DashboardStack.Screen name="Sell" component={SellBooks} />
+    <DashboardStack.Screen name="Buy" component={BuyBook} />
+  </DashboardStack.Navigator>
 );
 
 const PdfNavigator = () => (
-  <Stack.Navigator screenOptions={defaultNavOptions}>
-    <Stack.Screen name="PdfLists" component={PdfLists} />
-    <Stack.Screen name="ViewPdf" component={ViewPdf} />
-  </Stack.Navigator>
+  <PdfStack.Navigator screenOptions={defaultNavOptions}>
+    <PdfStack.Screen name="PdfLists" component={PdfLists} />
+    <PdfStack.Screen name="ViewPdf" component={ViewPdf} />
+  </PdfStack.Navigator>
 );
 
 const BookNavigator = () => (
-  <Stack.Navigator screenOptions={defaultNavOptions}>
-    <Stack.Screen name="BookList" component={BookList} />
-  </Stack.Navigator>
+  <BookStack.Navigator screenOptions={defaultNavOptions}>
+    <BookStack.Screen name="BookList" ch component={BookList} />
+  </BookStack.Navigator>
 );
 
 const ProfileNavigator = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="Profile" component={UserProfile} />
-    <Stack.Screen name="EditProfile" component={EditProfileDetails} />
-    <Stack.Screen name="EditCollegeDetails" component={EditCollegeDetails} />
-  </Stack.Navigator>
+  <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
+    <ProfileStack.Screen name="Profile" component={UserProfile} />
+    <ProfileStack.Screen name="EditProfile" component={EditProfileDetails} />
+    <ProfileStack.Screen
+      name="EditCollegeDetails"
+      component={EditCollegeDetails}
+    />
+  </ProfileStack.Navigator>
 );
 
 const AuthNavigator = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="Welcome" component={WelcomeScreen} />
-    <Stack.Screen name="Signup" component={SignUpScreen} />
-    <Stack.Screen name="Signin" component={SignInScreen} />
-  </Stack.Navigator>
+  <AuthStack.Navigator screenOptions={{ headerShown: false }}>
+    <AuthStack.Screen name="Welcome" component={WelcomeScreen} />
+    <AuthStack.Screen name="Signup" component={SignUpScreen} />
+    <AuthStack.Screen name="Signin" component={SignInScreen} />
+  </AuthStack.Navigator>
 );
 
 const MainNavigator = () => (
@@ -125,10 +133,10 @@ const MainNavigator = () => (
 );
 
 const SwitchNavigator = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="AuthNavigator" component={AuthNavigator} />
-    <Stack.Screen name="MainNavigator" component={MainNavigator} />
-  </Stack.Navigator>
+  <SwitchStack.Navigator mode="modal" screenOptions={{ headerShown: false }}>
+    <SwitchStack.Screen name="Auth" component={AuthNavigator} />
+    <SwitchStack.Screen name="Main" component={MainNavigator} />
+  </SwitchStack.Navigator>
 );
 
 const AppNavigator = () => (

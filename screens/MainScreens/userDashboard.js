@@ -12,7 +12,7 @@ const GridData = [
     title: "Upload Pdf",
     icon: <AntDesign name="upload" size={24} color="#0298C8" />,
     color: "#0298C8",
-    navigateScreen: "UploadPdf",
+    navigateScreen: "Upload",
   },
   {
     id: "recent",
@@ -46,7 +46,7 @@ const GridData = [
       />
     ),
     color: "#0298C8",
-    navigateScreen: "BuyBook",
+    navigateScreen: "Buy",
   },
   {
     id: "sell",
@@ -55,7 +55,7 @@ const GridData = [
       <MaterialCommunityIcons name="cart-arrow-up" size={24} color="#39dc36" />
     ),
     color: "#0298C8",
-    navigateScreen: "SellBooks",
+    navigateScreen: "Sell",
   },
 ];
 
@@ -84,12 +84,6 @@ const UserDashboard = ({ navigation }) => {
       numColumns={2}
     />
   );
-};
-
-UserDashboard.navigationOptions = () => {
-  return {
-    headerTitle: "DASHBOARD",
-  };
 };
 
 const styles = StyleSheet.create({

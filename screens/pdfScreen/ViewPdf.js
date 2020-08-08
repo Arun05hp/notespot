@@ -17,11 +17,4 @@ const ViewPdf = ({ navigation }) => {
   );
 };
 
-ViewPdf.navigationOptions = (navData) => {
-  const pdfName = navData.navigation.getParam("pdfName");
-  return {
-    headerTitle: pdfName,
-  };
-};
-
 export default ViewPdf;

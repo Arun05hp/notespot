@@ -1,11 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 import { Context as UserContext } from "../../context/UserContext";
 import { Input } from "react-native-elements";
 import TwoButtonRow from "../../components/TwoButtonRow";
 import ErrorMsgBox from "../../components/ErrorMsgBox";
-import { NavigationEvents } from "react-navigation";
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import Colors from "../../constants/colors";
 
@@ -41,10 +40,13 @@ const EditProfileDetails = ({ navigation }) => {
       setNumError("Required");
     }
   };
-
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      clearMessage();
+    });
+  }, [navigation]);
   return (
     <View style={styles.container}>
-      <NavigationEvents onWillFocus={clearMessage} />
       <Text style={styles.heading}>Edit Profile</Text>
       <View style={styles.Form}>
         <ErrorMsgBox

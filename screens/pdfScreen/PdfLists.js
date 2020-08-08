@@ -76,11 +76,6 @@ const PdfLists = ({ navigation }) => {
     </View>
   );
 };
-PdfLists.navigationOptions = () => {
-  return {
-    headerTitle: "PDF LIST",
-  };
-};
 
 const styles = StyleSheet.create({
   container: {

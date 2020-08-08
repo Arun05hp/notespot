@@ -8,10 +8,5 @@ const BookList = () => {
     </View>
   );
 };
-BookList.navigationOptions = () => {
-  return {
-    headerTitle: "BOOK",
-  };
-};
 
 export default BookList;

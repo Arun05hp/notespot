@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,7 +8,6 @@ import {
   Image,
 } from "react-native";
 import { Input } from "react-native-elements";
-import { NavigationEvents } from "react-navigation";
 import * as ImagePicker from "expo-image-picker";
 import { Context as SellBookContext } from "../../context/BuySellBookContext";
 import { Context as UserContext } from "../../context/UserContext";
@@ -76,7 +75,7 @@ const SellBooks = ({ navigation }) => {
           setImgExist(false);
           setImgUri("");
           setTimeout(function () {
-            navigation.goBack();
+            // navigation.goBack();
           }, 1500);
         }
       } else {
@@ -85,12 +84,17 @@ const SellBooks = ({ navigation }) => {
     }
   };
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      clearMessage();
+    });
+  }, [navigation]);
+
   return (
     <ScrollView
       contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
     >
       <View style={styles.contentContainer}>
-        <NavigationEvents onWillFocus={clearMessage} />
         <Text style={styles.heading}>Enter Book Details</Text>
         <View style={styles.container}>
           <Input
@@ -195,12 +199,6 @@ const SellBooks = ({ navigation }) => {
       </View>
     </ScrollView>
   );
-};
-
-SellBooks.navigationOptions = () => {
-  return {
-    headerTitle: "Sell Book",
-  };
 };
 
 const styles = StyleSheet.create({

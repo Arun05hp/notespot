@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -11,7 +11,6 @@ import * as DocumentPicker from "expo-document-picker";
 
 import ErrorMsgBox from "../../components/ErrorMsgBox";
 import TwoButtonRow from "../../components/TwoButtonRow";
-import { NavigationEvents } from "react-navigation";
 import { Context as PdfContext } from "../../context/PdfContext";
 import { Context as UserContext } from "../../context/UserContext";
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
@@ -32,6 +31,12 @@ const UploadPdf = ({ navigation }) => {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   let selectBtnText = fileExists ? "Change Pdf" : "Select pdf";
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      clearMessage();
+    });
+  }, [navigation]);
 
   const documentSelect = async () => {
     try {
@@ -72,7 +77,6 @@ const UploadPdf = ({ navigation }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
-      <NavigationEvents onWillFocus={clearMessage} />
       <Text style={styles.heading}>Enter PDF Details</Text>
       <View style={styles.container}>
         <ErrorMsgBox
@@ -165,11 +169,6 @@ const UploadPdf = ({ navigation }) => {
       </View>
     </ScrollView>
   );
-};
-UploadPdf.navigationOptions = () => {
-  return {
-    headerTitle: "UPLOAD PDF",
-  };
 };
 
 const styles = StyleSheet.create({

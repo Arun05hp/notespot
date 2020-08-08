@@ -129,10 +129,4 @@ const styles = StyleSheet.create({
   },
 });
 
-BuyBook.navigationOptions = () => {
-  return {
-    headerTitle: "Buy Book",
-  };
-};
-
 export default BuyBook;

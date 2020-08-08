@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, StyleSheet, CheckBox } from "react-native";
 
 import { Context as UserContext } from "../../context/UserContext";
-import { NavigationEvents } from "react-navigation";
+
 import { Input } from "react-native-elements";
 import ErrorMsgBox from "../../components/ErrorMsgBox";
 import TwoButtonRow from "../../components/TwoButtonRow";
@@ -53,10 +53,13 @@ const EditCollegeDetails = ({ navigation }) => {
     });
     getCollegeDetails();
   };
-
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      clearMessage();
+    });
+  }, [navigation]);
   return (
     <View style={styles.container}>
-      <NavigationEvents onWillFocus={clearMessage} />
       <Text style={styles.heading}>
         {!collegeName ? "Add" : "Edit"} College Details
       </Text>
