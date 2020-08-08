@@ -1,12 +1,11 @@
 import React from "react";
-import { createAppContainer, createSwitchNavigator } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
-import { createBottomTabNavigator } from "react-navigation-tabs";
-
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import UserDashboard from "../screens/MainScreens/UserDashboard";
 
 import ResolveAuthScreen from "../screens/AuthScreens/ResolveAuthScreen";
-import IndexScreen from "../screens/AuthScreens/IndexScreen";
+import WelcomeScreen from "../screens/AuthScreens/WelcomeScreen";
 import SignUpScreen from "../screens/AuthScreens/SignUpScreen";
 import SignInScreen from "../screens/AuthScreens/SignInScreen";
 
@@ -25,6 +24,9 @@ import ViewPdf from "../screens/PdfScreen/ViewPdf";
 import { AntDesign } from "@expo/vector-icons";
 import Colors from "../constants/colors";
 
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
 const defaultNavOptions = {
   headerStyle: {
     backgroundColor: Colors.primary,
@@ -37,77 +39,43 @@ const defaultNavOptions = {
   },
 };
 
-const Dashboard = createStackNavigator(
-  {
-    Dashboard: UserDashboard,
-    UploadPdf: UploadPdf,
-    SellBooks: SellBooks,
-    BuyBook: BuyBook,
-  },
-  {
-    defaultNavigationOptions: defaultNavOptions,
-  }
+const DashboardNavigator = () => (
+  <Stack.Navigator screenOptions={defaultNavOptions}>
+    <Stack.Screen name="Dashboard" component={UserDashboard} />
+    <Stack.Screen name="UploadPdf" component={UploadPdf} />
+    <Stack.Screen name="SellBooks" component={SellBooks} />
+    <Stack.Screen name="BuyBook" component={BuyBook} />
+  </Stack.Navigator>
 );
 
-Dashboard.navigationOptions = {
-  title: "Home",
-  tabBarIcon: ({ tintColor }) => (
-    <AntDesign name="home" size={26} color={tintColor} />
-  ),
-};
-
-const pdfFlow = createStackNavigator(
-  {
-    pdfLists: PdfLists,
-    viewPdf: ViewPdf,
-  },
-  {
-    defaultNavigationOptions: defaultNavOptions,
-  }
+const PdfNavigator = () => (
+  <Stack.Navigator screenOptions={defaultNavOptions}>
+    <Stack.Screen name="PdfLists" component={PdfLists} />
+    <Stack.Screen name="ViewPdf" component={ViewPdf} />
+  </Stack.Navigator>
 );
 
-pdfFlow.navigationOptions = {
-  title: "PDF",
-  tabBarIcon: ({ tintColor }) => (
-    <AntDesign name="pdffile1" size={26} color={tintColor} />
-  ),
-};
-
-const bookFlow = createStackNavigator(
-  {
-    upload: BookList,
-  },
-  {
-    defaultNavigationOptions: defaultNavOptions,
-  }
+const BookNavigator = () => (
+  <Stack.Navigator screenOptions={defaultNavOptions}>
+    <Stack.Screen name="BookList" component={BookList} />
+  </Stack.Navigator>
 );
-bookFlow.navigationOptions = {
-  title: "Book",
-  tabBarIcon: ({ tintColor }) => (
-    <AntDesign name="book" size={26} color={tintColor} />
-  ),
-};
 
-const Profile = createStackNavigator(
-  {
-    profile: UserProfile,
-    editProfile: EditProfileDetails,
-    editCollegeDetails: EditCollegeDetails,
-  },
-  { headerMode: "none", defaultNavigationOptions: defaultNavOptions }
+const ProfileNavigator = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="Profile" component={UserProfile} />
+    <Stack.Screen name="EditProfile" component={EditProfileDetails} />
+    <Stack.Screen name="EditCollegeDetails" component={EditCollegeDetails} />
+  </Stack.Navigator>
 );
-Profile.navigationOptions = {
-  title: "Profile",
-  tabBarIcon: ({ tintColor }) => (
-    <AntDesign name="user" size={26} color={tintColor} />
-  ),
-};
 
-const AuthFlow = createStackNavigator({
-  Startscreen: IndexScreen,
-  Signup: SignUpScreen,
-  Signin: SignInScreen,
-});
+const AuthNavigator = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="Welcome" component={WelcomeScreen} />
+    <Stack.Screen name="Signup" component={SignUpScreen} />
+    <Stack.Screen name="Signin" component={SignInScreen} />
+  </Stack.Navigator>
+);
 
 const MainFlow = createBottomTabNavigator(
   {

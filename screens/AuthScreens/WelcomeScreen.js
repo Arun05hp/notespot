@@ -4,7 +4,7 @@ import { Button } from "react-native-elements";
 
 import Colors from "../../constants/colors";
 
-const IndexScreen = ({ navigation }) => {
+const WelcomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.imgWrapper}>
@@ -26,7 +26,7 @@ const IndexScreen = ({ navigation }) => {
   );
 };
 
-IndexScreen.navigationOptions = () => {
+WelcomeScreen.navigationOptions = () => {
   return {
     headerShown: false,
   };
@@ -68,4 +68,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default IndexScreen;
+export default WelcomeScreen;
