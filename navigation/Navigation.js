@@ -1,4 +1,5 @@
 import React from "react";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -77,7 +78,7 @@ const AuthNavigator = () => (
   </Stack.Navigator>
 );
 
-const TabNavigator = () => (
+const MainNavigator = () => (
   <Tab.Navigator>
     <Tab.Screen name="Dashboard" component={DashboardNavigator} />
     <Tab.Screen name="Pdf" component={PdfNavigator} />
@@ -90,7 +91,7 @@ const SwitchNavigator = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="ResolveAuth" component={ResolveAuthScreen} />
     <Stack.Screen name="AuthNavigator" component={AuthNavigator} />
-    <Stack.Screen name="TabNavigator" component={TabNavigator} />
+    <Stack.Screen name="MainNavigator" component={MainNavigator} />
   </Stack.Navigator>
 );
 

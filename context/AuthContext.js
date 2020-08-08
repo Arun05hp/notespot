@@ -37,9 +37,9 @@ const tryLocalSignin = (dispatch) => async () => {
       type: "signin",
       payload: token,
     });
-    navigate("MainFlow");
+    navigate("MainNavigator");
   } else {
-    navigate("AuthFlow");
+    navigate("AuthNavigator");
   }
 };
 

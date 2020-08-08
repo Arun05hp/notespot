@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import AppNavigator from "./navigation/Navigation";
-import { setNavigator } from "./navigation/navigationRef";
 import { Provider as AuthProvider } from "./context/AuthContext";
 import { Provider as UserProvider } from "./context/UserContext";
 import { Provider as PdfProvider } from "./context/PdfContext";
@@ -34,11 +33,7 @@ export default () => {
       <PdfProvider>
         <UserProvider>
           <AuthProvider>
-            <AppNavigator
-              ref={(navigator) => {
-                setNavigator(navigator);
-              }}
-            />
+            <AppNavigator />
           </AuthProvider>
         </UserProvider>
       </PdfProvider>
