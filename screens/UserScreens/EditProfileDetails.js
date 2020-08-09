@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 import { Context as UserContext } from "../../context/UserContext";
@@ -40,11 +40,7 @@ const EditProfileDetails = ({ navigation }) => {
       setNumError("Required");
     }
   };
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("blur", () => {
-      clearMessage();
-    });
-  }, [navigation]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Edit Profile</Text>

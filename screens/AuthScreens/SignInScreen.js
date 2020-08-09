@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { View } from "react-native";
 
 import { Context as AuthContext } from "../../context/AuthContext";
@@ -7,12 +7,6 @@ import AuthForm from "../../components/AuthForm";
 const SignInScreen = ({ navigation }) => {
   const { state, signin, clearMessage } = useContext(AuthContext);
   const { errorMessage, successMessage, isLoading } = state;
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("blur", () => {
-      clearMessage();
-    });
-  }, [navigation]);
 
   return (
     <View style={{ flex: 1 }}>

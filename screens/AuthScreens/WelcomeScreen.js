@@ -8,8 +8,16 @@ import Colors from "../../constants/colors";
 
 const WelcomeScreen = ({ navigation }) => {
   const { tryLocalSignin } = useContext(AuthContext);
+
+  const getToken = async () => {
+    const isToken = await tryLocalSignin();
+    if (isToken) {
+      navigation.replace("Main");
+    }
+  };
+
   useEffect(() => {
-    tryLocalSignin();
+    getToken();
   }, []);
   return (
     <View style={styles.container}>

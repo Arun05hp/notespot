@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, StyleSheet, CheckBox } from "react-native";
 
 import { Context as UserContext } from "../../context/UserContext";
@@ -53,11 +53,7 @@ const EditCollegeDetails = ({ navigation }) => {
     });
     getCollegeDetails();
   };
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("blur", () => {
-      clearMessage();
-    });
-  }, [navigation]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>

@@ -37,9 +37,9 @@ const tryLocalSignin = (dispatch) => async () => {
       type: "signin",
       payload: token,
     });
-    RootNavigation.navigate("Main");
+    return true;
   } else {
-    RootNavigation.navigate("Auth");
+    return false;
   }
 };
 

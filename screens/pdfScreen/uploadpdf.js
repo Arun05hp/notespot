@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   Text,
@@ -31,12 +31,6 @@ const UploadPdf = ({ navigation }) => {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   let selectBtnText = fileExists ? "Change Pdf" : "Select pdf";
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("blur", () => {
-      clearMessage();
-    });
-  }, [navigation]);
 
   const documentSelect = async () => {
     try {
