@@ -6,11 +6,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   Keyboard,
-  ActivityIndicator,
 } from "react-native";
-import { Formik } from 'formik';
+import { Formik } from "formik";
 
 import { Input } from "react-native-elements";
+import CustomButton from "../components/CustomButton";
 import ErrorMsgBox from "./ErrorMsgBox";
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import Colors from "../constants/colors";
@@ -91,27 +91,19 @@ const AuthForm = ({
             <Text style={styles.forget}>Forget Password ?</Text>
           </TouchableOpacity>
         )}
-        <TouchableOpacity
-          activeOpacity={0.6}
-          disabled={isLoading}
+        <CustomButton
+          style={styles.btnWrapper}
           onPress={() => {
             Keyboard.dismiss();
             isSignUpForm
               ? onSubmit({ name, email, password })
               : onSubmit({ email, password });
           }}
-        >
-          <View style={styles.btnWrapper}>
-            <View style={styles.btnStyle}>
-              {isLoading ? (
-                <View style={{ marginRight: 5 }}>
-                  <ActivityIndicator size="small" color="#ffffff" />
-                </View>
-              ) : null}
-              <Text style={styles.btnTitle}>{submitButtonText}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
+          bgColor={Colors.primary}
+          color={Colors.white}
+          title={submitButtonText}
+          isLoading={isLoading}
+        />
 
         <TouchableOpacity
           activeOpacity={1}
@@ -167,24 +159,8 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-bold",
   },
   btnWrapper: {
-    alignItems: "center",
-    marginVertical: 15,
-    width: "50%",
     alignSelf: "center",
-  },
-  btnStyle: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 10,
-    borderRadius: 30,
-    backgroundColor: Colors.primary,
-  },
-  btnTitle: {
-    color: Colors.white,
-    fontSize: 16,
-    fontFamily: "Roboto-bold",
+    marginVertical: 15,
   },
   newUser: {
     fontSize: 16,

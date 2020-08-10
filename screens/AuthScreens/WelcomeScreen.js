@@ -1,9 +1,8 @@
 import React, { useEffect, useContext } from "react";
 import { View, StyleSheet, Image } from "react-native";
-import { Button } from "react-native-elements";
 
 import { Context as AuthContext } from "../../context/AuthContext";
-
+import CustomButton from "../../components/CustomButton";
 import Colors from "../../constants/colors";
 
 const WelcomeScreen = ({ navigation }) => {
@@ -28,14 +27,12 @@ const WelcomeScreen = ({ navigation }) => {
           resizeMode="contain"
         />
       </View>
-      <View style={styles.btnWrapper}>
-        <Button
-          buttonStyle={styles.buttonStyle}
-          titleStyle={styles.btnTitle}
-          title="Get Started"
-          onPress={() => navigation.navigate("Signin")}
-        />
-      </View>
+      <CustomButton
+        title="Get Started"
+        bgColor={Colors.white}
+        color={Colors.primary}
+        onPress={() => navigation.navigate("Signin")}
+      />
     </View>
   );
 };
@@ -49,7 +46,7 @@ WelcomeScreen.navigationOptions = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     alignItems: "center",
     backgroundColor: Colors.primary,
     paddingTop: 40,
@@ -65,20 +62,6 @@ const styles = StyleSheet.create({
   imgStyle: {
     width: "100%",
     height: "100%",
-  },
-  btnWrapper: {
-    marginTop: 120,
-  },
-  buttonStyle: {
-    paddingVertical: 10,
-    paddingHorizontal: 30,
-    borderRadius: 30,
-    backgroundColor: Colors.white,
-  },
-  btnTitle: {
-    color: Colors.primary,
-    fontFamily: "Roboto-bold",
-    fontSize: 18,
   },
 });
 
