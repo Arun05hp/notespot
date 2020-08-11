@@ -1,12 +1,13 @@
 import React, { useContext, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { Formik } from "formik";
+
 import * as Yup from "yup";
 
+import AppForm from "../../components/AppForm";
 import AppFormField from "../../components/AppFormField";
 import { Context as AuthContext } from "../../context/AuthContext";
 import AppLogo from "../../components/AppLogo";
-import CustomButton from "../../components/CustomButton";
+import SubmitButton from "../../components/SubmitButton";
 import Colors from "../../constants/colors";
 import ErrorMsgBox from "../../components/ErrorMsgBox";
 
@@ -30,57 +31,49 @@ const SignInScreen = ({ navigation }) => {
         errorMessage={errorMessage}
         successMessage={successMessage}
       />
-      <Formik
+      <AppForm
         initialValues={{ email: "", password: "" }}
         onSubmit={signin}
         validationSchema={validationSchema}
       >
-        {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
-          <>
-            <AppFormField
-              keyboardType="email-address"
-              leftIcon={<MaterialIcons style={styles.iconStyle} name="email" />}
-              name="email"
-              placeholder="Email"
-              placeholderTextColor={Colors.placeholder}
+        <AppFormField
+          keyboardType="email-address"
+          leftIcon={<MaterialIcons style={styles.iconStyle} name="email" />}
+          name="email"
+          placeholder="Email"
+          placeholderTextColor={Colors.placeholder}
+        />
+        <AppFormField
+          leftIcon={<MaterialIcons style={styles.iconStyle} name="lock" />}
+          name="password"
+          placeholder="Password"
+          placeholderTextColor={Colors.placeholder}
+          rightIcon={
+            <FontAwesome5
+              name={secureText ? "eye-slash" : "eye"}
+              style={styles.iconStyle}
+              onPress={() => setSecureText((prevState) => !prevState)}
+              secureTextEntry={secureText}
             />
-            <AppFormField
-              leftIcon={<MaterialIcons style={styles.iconStyle} name="lock" />}
-              name="password"
-              placeholder="Password"
-              placeholderTextColor={Colors.placeholder}
-              rightIcon={
-                <FontAwesome5
-                  name={secureText ? "eye-slash" : "eye"}
-                  style={styles.iconStyle}
-                  onPress={() => setSecureText((prevState) => !prevState)}
-                  secureTextEntry={secureText}
-                />
-              }
-            />
-            <TouchableOpacity onPress={() => console.log("forget")}>
-              <Text style={styles.forget}>Forget Password ?</Text>
-            </TouchableOpacity>
-            <CustomButton
-              style={styles.btnWrapper}
-              onPress={handleSubmit}
-              bgColor={Colors.primary}
-              color={Colors.white}
-              title="Sign In"
-              isLoading={isLoading}
-            />
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={() => navigation.replace("Signup")}
-            >
-              <Text style={styles.newUser}>
-                New User ?{" "}
-                <Text style={{ color: Colors.primary }}>Sign Up</Text>
-              </Text>
-            </TouchableOpacity>
-          </>
-        )}
-      </Formik>
+          }
+        />
+        <TouchableOpacity onPress={() => console.log("forget")}>
+          <Text style={styles.forget}>Forget Password ?</Text>
+        </TouchableOpacity>
+        <SubmitButton
+          style={styles.btnWrapper}
+          title="Sign In"
+          isLoading={isLoading}
+        />
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => navigation.replace("Signup")}
+        >
+          <Text style={styles.newUser}>
+            New User ? <Text style={{ color: Colors.primary }}>Sign Up</Text>
+          </Text>
+        </TouchableOpacity>
+      </AppForm>
     </View>
   );
 };
@@ -92,7 +85,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginVertical: 10,
   },
-
   iconStyle: {
     fontSize: 20,
     color: Colors.primary,
