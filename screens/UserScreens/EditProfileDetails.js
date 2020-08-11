@@ -1,12 +1,28 @@
-import React, { useContext, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useContext } from "react";
+import { Text, StyleSheet } from "react-native";
+import * as Yup from "yup";
 
 import { Context as UserContext } from "../../context/UserContext";
-import { Input } from "react-native-elements";
-import TwoButtonRow from "../../components/TwoButtonRow";
+import Screen from "../../components/Screen";
+import {
+  AppForm,
+  AppFormField,
+  SubmitButton,
+} from "../../components/forms/index";
+
 import ErrorMsgBox from "../../components/ErrorMsgBox";
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import Colors from "../../constants/colors";
+
+const validationSchema = Yup.object().shape({
+  username: Yup.string().required().label("Name"),
+  useremail: Yup.string().required().email().label("Email"),
+  mobileNumber: Yup.string()
+    .matches(/^[0-9]{10}$/, "Mobile Number is not valid")
+    .required()
+    .label("Mobile Number"),
+  userAddress: Yup.string().nullable().label("Address"),
+});
 
 const EditProfileDetails = ({ navigation }) => {
   const { state, updateProfile, getUserData, clearMessage } = useContext(
@@ -14,124 +30,80 @@ const EditProfileDetails = ({ navigation }) => {
   );
   const { errorMessage, successMessage, isUpdating } = state;
   const { id, name, email, mobileno, address } = state.userData;
-  const [username, setUsername] = useState(name);
-  const [useremail, setUseremail] = useState(email);
-  const [mobileNumber, setMobileNumber] = useState(mobileno);
-  const [userAddress, setUserAddress] = useState(address);
-  const [numError, setNumError] = useState("");
 
-  const validate = async () => {
-    const regx = /^[0-9]{10}$/;
-    if (mobileNumber) {
-      if (regx.test(mobileNumber)) {
-        setNumError("");
-        await updateProfile({
-          id,
-          username,
-          useremail,
-          mobileNumber,
-          userAddress,
-        });
-        getUserData();
-      } else {
-        setNumError("Invalid Mobile Number");
-      }
-    } else {
-      setNumError("Required");
-    }
+  const onSubmit = async (values) => {
+    await updateProfile({
+      id,
+      ...values,
+    });
+    getUserData();
   };
 
   return (
-    <View style={styles.container}>
+    <Screen style={styles.container}>
       <Text style={styles.heading}>Edit Profile</Text>
-      <View style={styles.Form}>
-        <ErrorMsgBox
-          errorMessage={errorMessage}
-          successMessage={successMessage}
-        />
-        <Input
-          keyboardType="default"
-          inputStyle={styles.Input}
-          value={username}
-          onChangeText={setUsername}
-          placeholder="Full Name"
-          autoCapitalize="none"
-          autoCorrect={false}
-          placeholderTextColor={Colors.placeholder}
+
+      <ErrorMsgBox
+        errorMessage={errorMessage}
+        successMessage={successMessage}
+      />
+      <AppForm
+        initialValues={{
+          username: name,
+          useremail: email,
+          mobileNumber: mobileno,
+          userAddress: address,
+        }}
+        onSubmit={onSubmit}
+        validationSchema={validationSchema}
+      >
+        <AppFormField
           leftIcon={<FontAwesome5 name="user-alt" style={styles.iconStyle} />}
+          name="username"
+          placeholder="Full Name"
+          placeholderTextColor={Colors.placeholder}
         />
-        <Input
+        <AppFormField
           keyboardType="email-address"
-          inputStyle={styles.Input}
-          value={useremail}
-          onChangeText={setUseremail}
-          placeholder="Email Address"
-          autoCapitalize="none"
-          autoCorrect={false}
-          placeholderTextColor={Colors.placeholder}
           leftIcon={<MaterialIcons name="email" style={styles.iconStyle} />}
+          name="useremail"
+          placeholder="Email Address"
+          placeholderTextColor={Colors.placeholder}
         />
-        <Input
+        <AppFormField
           keyboardType="numeric"
-          inputStyle={styles.Input}
-          value={mobileNumber}
-          errorMessage={numError}
-          onFocus={() => setNumError("")}
-          onChangeText={setMobileNumber}
-          placeholder="Mobile Number"
-          autoCapitalize="none"
-          autoCorrect={false}
-          placeholderTextColor={Colors.placeholder}
           leftIcon={<FontAwesome5 name="mobile-alt" style={styles.iconStyle} />}
-        />
-        <Input
-          keyboardType="default"
-          inputStyle={styles.Input}
-          value={userAddress}
-          onChangeText={setUserAddress}
-          placeholder="Address"
-          autoCapitalize="none"
-          autoCorrect={false}
-          multiline={true}
-          numberOfLines={2}
+          name="mobileNumber"
+          placeholder="Mobile Number"
           placeholderTextColor={Colors.placeholder}
+        />
+        <AppFormField
           leftIcon={
             <MaterialIcons name="location-on" style={styles.iconStyle} />
           }
+          multiline={true}
+          name="userAddress"
+          numberOfLines={2}
+          placeholder="Address"
+          placeholderTextColor={Colors.placeholder}
         />
-        <TwoButtonRow
-          firstBtnText="Back"
-          onSubmit1st={() => {
-            navigation.goBack();
-          }}
-          secBtnText="Update"
-          onSubmit2nd={() => validate()}
-          isloading={isUpdating}
-        />
-      </View>
-    </View>
+        <SubmitButton title="Update" isLoading={isUpdating} />
+      </AppForm>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    paddingHorizontal: 20,
   },
   heading: {
     fontSize: 20,
     fontFamily: "Roboto-bold",
     color: Colors.primary,
     marginBottom: 15,
-  },
-  Form: {
-    width: "80%",
-    marginVertical: 10,
-  },
-  Input: {
-    fontSize: 16,
-    paddingLeft: 5,
   },
   iconStyle: {
     fontSize: 20,

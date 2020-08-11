@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, CheckBox } from "react-native";
 
 import { Context as UserContext } from "../../context/UserContext";
 
+import Screen from "../../components/Screen";
 import { Input } from "react-native-elements";
 import ErrorMsgBox from "../../components/ErrorMsgBox";
 import TwoButtonRow from "../../components/TwoButtonRow";
@@ -55,7 +56,7 @@ const EditCollegeDetails = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <Screen style={styles.container}>
       <Text style={styles.heading}>
         {!collegeName ? "Add" : "Edit"} College Details
       </Text>
@@ -141,13 +142,12 @@ const EditCollegeDetails = ({ navigation }) => {
           isloading={isUpdating}
         />
       </View>
-    </View>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },

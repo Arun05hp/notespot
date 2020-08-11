@@ -9,6 +9,7 @@ import { Provider as BookProvider } from "./context/BuySellBookContext";
 
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
+import OfflineNotice from "./components/OfflineNotice";
 
 const fetchFonts = async () => {
   await Font.loadAsync({

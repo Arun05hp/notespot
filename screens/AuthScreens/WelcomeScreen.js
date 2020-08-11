@@ -1,10 +1,11 @@
 import React, { useEffect, useContext } from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { Context as AuthContext } from "../../context/AuthContext";
 import AppLogo from "../../components/AppLogo";
 import CustomButton from "../../components/CustomButton";
 import Colors from "../../constants/colors";
+import Screen from "../../components/Screen";
 
 const WelcomeScreen = ({ navigation }) => {
   const { tryLocalSignin } = useContext(AuthContext);
@@ -20,7 +21,7 @@ const WelcomeScreen = ({ navigation }) => {
     getToken();
   }, []);
   return (
-    <View style={styles.container}>
+    <Screen style={styles.container}>
       <AppLogo style={styles.imgBg} />
       <CustomButton
         title="Get Started"
@@ -28,23 +29,17 @@ const WelcomeScreen = ({ navigation }) => {
         color={Colors.primary}
         onPress={() => navigation.navigate("Signin")}
       />
-    </View>
+    </Screen>
   );
-};
-
-WelcomeScreen.navigationOptions = () => {
-  return {
-    headerShown: false,
-  };
 };
 
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     backgroundColor: Colors.primary,
-    flex: 1,
     justifyContent: "space-evenly",
-    paddingTop: 40,
+    padding: 20,
+    width: "100%",
   },
   imgBg: {
     backgroundColor: Colors.white,

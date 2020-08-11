@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 
+import Screen from "../../components/Screen";
 import { Context as AuthContext } from "../../context/AuthContext";
 import { Context as UserContext } from "../../context/UserContext";
 import baseUrl from "../../api/baseUrl";
@@ -56,7 +57,7 @@ const UserProfile = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <Screen style={styles.container}>
       <View style={styles.wrapper}>
         <View style={styles.innerContainer}>
           <View style={styles.imgWrapper}>
@@ -108,7 +109,7 @@ const UserProfile = ({ navigation }) => {
         <Text style={styles.subHeading}>Edit</Text>
         <TouchableOpacity
           style={styles.linkWrapper}
-          onPress={() => navigation.navigate("editProfile")}
+          onPress={() => navigation.navigate("EditProfile")}
         >
           <View style={styles.row}>
             <Text style={styles.text}>Profile Details</Text>
@@ -118,7 +119,7 @@ const UserProfile = ({ navigation }) => {
         {!collegeName ? <Text style={styles.subHeading}>Add</Text> : null}
         <TouchableOpacity
           style={styles.linkWrapper}
-          onPress={() => navigation.navigate("editCollegeDetails")}
+          onPress={() => navigation.navigate("EditCollegeDetails")}
         >
           <View style={styles.row}>
             <Text style={styles.text}>College Details</Text>
@@ -143,7 +144,7 @@ const UserProfile = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       </View>
-    </View>
+    </Screen>
   );
 };
 

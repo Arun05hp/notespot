@@ -3,6 +3,7 @@ import * as Yup from "yup";
 
 import { Context as AuthContext } from "../../context/AuthContext";
 import AuthForm from "../../components/AuthForm";
+import Screen from "../../components/Screen";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label("Name"),
@@ -15,17 +16,19 @@ const SignUpScreen = ({ navigation }) => {
   const { errorMessage, successMessage, isLoading } = state;
 
   return (
-    <AuthForm
-      errorMessage={errorMessage}
-      goTo={() => navigation.replace("Signin")}
-      isSignUpForm={true}
-      initialValues={{ name: "", email: "", password: "" }}
-      isLoading={isLoading}
-      onSubmit={signup}
-      successMessage={successMessage}
-      submitButtonText="Sign Up"
-      validationSchema={validationSchema}
-    />
+    <Screen>
+      <AuthForm
+        errorMessage={errorMessage}
+        goTo={() => navigation.replace("Signin")}
+        isSignUpForm={true}
+        initialValues={{ name: "", email: "", password: "" }}
+        isLoading={isLoading}
+        onSubmit={signup}
+        successMessage={successMessage}
+        submitButtonText="Sign Up"
+        validationSchema={validationSchema}
+      />
+    </Screen>
   );
 };
 

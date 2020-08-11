@@ -64,7 +64,7 @@ const AuthForm = ({
         />
         {isSignUpForm ? null : (
           <TouchableOpacity onPress={() => console.log("forget")}>
-            <Text style={styles.forget}>Forget Password ?</Text>
+            <Text style={styles.forget}>Forget Password</Text>
           </TouchableOpacity>
         )}
         <SubmitButton
@@ -75,18 +75,18 @@ const AuthForm = ({
         <View style={styles.flexBox}>
           {isSignUpForm ? (
             <>
-              <Text style={styles.newUser}>Already Registered ? </Text>
+              <Text style={styles.linkText}>Already Registered ? </Text>
               <TouchableOpacity activeOpacity={1} onPress={goTo}>
-                <Text style={{ ...styles.newUser, color: Colors.primary }}>
+                <Text style={{ ...styles.linkText, color: Colors.primary }}>
                   Sign In
                 </Text>
               </TouchableOpacity>
             </>
           ) : (
             <>
-              <Text style={styles.newUser}>New User ? </Text>
+              <Text style={styles.linkText}>New User ? </Text>
               <TouchableOpacity activeOpacity={1} onPress={goTo}>
-                <Text style={{ ...styles.newUser, color: Colors.primary }}>
+                <Text style={{ ...styles.linkText, color: Colors.primary }}>
                   Sign Up
                 </Text>
               </TouchableOpacity>
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   iconStyle: {
-    fontSize: 20,
+    fontSize: 18,
     color: Colors.primary,
   },
   forget: {
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  newUser: {
+  linkText: {
     fontSize: 14,
     textAlign: "center",
     fontFamily: "Roboto-bold",

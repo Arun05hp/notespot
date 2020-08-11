@@ -92,6 +92,7 @@ const MainNavigator = () => (
     tabBarOptions={{
       activeTintColor: Colors.primary,
       showLabel: false,
+      keyboardHidesTabBar: true,
     }}
   >
     <Tab.Screen
