@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-import AppTextInput from "../../components/AppTextInput";
+import AppFormField from "../../components/AppFormField";
 import { Context as AuthContext } from "../../context/AuthContext";
 import AppLogo from "../../components/AppLogo";
 import CustomButton from "../../components/CustomButton";
@@ -37,20 +37,16 @@ const SignInScreen = ({ navigation }) => {
       >
         {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
           <>
-            <AppTextInput
-              errorMessage={touched.email ? errors.email : ""}
+            <AppFormField
               keyboardType="email-address"
               leftIcon={<MaterialIcons style={styles.iconStyle} name="email" />}
-              onBlur={() => setFieldTouched("email")}
-              onChangeText={handleChange("email")}
+              name="email"
               placeholder="Email"
               placeholderTextColor={Colors.placeholder}
             />
-            <AppTextInput
-              errorMessage={touched.password ? errors.password : ""}
+            <AppFormField
               leftIcon={<MaterialIcons style={styles.iconStyle} name="lock" />}
-              onBlur={() => setFieldTouched("password")}
-              onChangeText={handleChange("password")}
+              name="password"
               placeholder="Password"
               placeholderTextColor={Colors.placeholder}
               rightIcon={
