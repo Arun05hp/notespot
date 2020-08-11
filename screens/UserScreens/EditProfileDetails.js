@@ -24,7 +24,7 @@ const validationSchema = Yup.object().shape({
   userAddress: Yup.string().nullable().label("Address"),
 });
 
-const EditProfileDetails = ({ navigation }) => {
+const EditProfileDetails = () => {
   const { state, updateProfile, getUserData, clearMessage } = useContext(
     UserContext
   );
@@ -32,11 +32,11 @@ const EditProfileDetails = ({ navigation }) => {
   const { id, name, email, mobileno, address } = state.userData;
 
   const onSubmit = async (values) => {
-    await updateProfile({
+    const res = await updateProfile({
       id,
       ...values,
     });
-    getUserData();
+    if (res) getUserData();
   };
 
   return (

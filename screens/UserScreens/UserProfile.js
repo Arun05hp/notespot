@@ -37,8 +37,8 @@ const UserProfile = ({ navigation }) => {
         await uploadImage({ id, imageUrl, profileImg });
         getUserData();
       }
-    } catch (E) {
-      console.log(E);
+    } catch (err) {
+      err = err;
     }
   };
 
@@ -91,7 +91,7 @@ const UserProfile = ({ navigation }) => {
                 marginTop: 5,
               }}
               activeOpacity={0.7}
-              onPress={() => navigation.navigate("editProfile")}
+              onPress={() => navigation.navigate("EditProfile")}
             >
               <Text
                 style={{

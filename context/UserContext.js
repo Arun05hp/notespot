@@ -130,12 +130,14 @@ const updateProfile = (dispatch) => async ({
         payload: { error: response.data.error, success: "" },
       });
       dispatch({ type: "isUpdating", payload: false });
+      return false;
     } else {
       dispatch({
         type: "add_message",
         payload: { error: "", success: response.data.success },
       });
       dispatch({ type: "isUpdating", payload: false });
+      return true;
     }
   } catch (error) {
     dispatch({
@@ -143,6 +145,7 @@ const updateProfile = (dispatch) => async ({
       payload: { error: "Something Went Wrong", success: "" },
     });
     dispatch({ type: "isUpdating", payload: false });
+    return false;
   }
 };
 
@@ -156,12 +159,14 @@ const updateCollegeDetails = (dispatch) => async (data) => {
         payload: { error: response.data.error, success: "" },
       });
       dispatch({ type: "isUpdating", payload: false });
+      return false;
     } else {
       dispatch({
         type: "add_message",
         payload: { error: "", success: response.data.success },
       });
       dispatch({ type: "isUpdating", payload: false });
+      return true;
     }
   } catch (error) {
     dispatch({
@@ -169,6 +174,7 @@ const updateCollegeDetails = (dispatch) => async (data) => {
       payload: { error: "Something Went Wrong", success: "" },
     });
     dispatch({ type: "isUpdating", payload: false });
+    return false;
   }
 };
 

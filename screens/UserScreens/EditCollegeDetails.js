@@ -1,15 +1,25 @@
 import React, { useContext, useState } from "react";
 import { View, Text, StyleSheet, CheckBox } from "react-native";
-
+import * as Yup from "yup";
 import { Context as UserContext } from "../../context/UserContext";
 
+import {
+  AppForm,
+  AppFormField,
+  SubmitButton,
+} from "../../components/forms/index";
 import Screen from "../../components/Screen";
-import { Input } from "react-native-elements";
 import ErrorMsgBox from "../../components/ErrorMsgBox";
-import TwoButtonRow from "../../components/TwoButtonRow";
 import Colors from "../../constants/colors";
 
-const EditCollegeDetails = ({ navigation }) => {
+const validationSchema = Yup.object().shape({
+  collegeName: Yup.string().required().label("College Name"),
+  regNo: Yup.string().required().label("Reg. No."),
+  branch: Yup.string().required().label("Branch Name"),
+  hostelAddress: Yup.string().nullable().label("Address"),
+});
+
+const EditCollegeDetails = () => {
   const {
     state,
     clearMessage,
@@ -26,14 +36,8 @@ const EditCollegeDetails = ({ navigation }) => {
     regNo,
   } = state.collegeData;
   const btnText = !collegeName ? "Save" : "Update";
-  const [uCollegeName, setuCollegeName] = useState(
-    collegeName ? collegeName : ""
-  );
-  const [uRegNo, setuRegNo] = useState(regNo ? regNo : "");
-  const [uBranch, setuBranch] = useState(branch ? branch : "");
-  const [uHostelAddress, setuHostelAddress] = useState(
-    hostelAddress ? hostelAddress : ""
-  );
+
+  const [uHostelAddress, setuHostelAddress] = useState(hostelAddress);
 
   let value = false;
   if (isHosteller) {
@@ -42,17 +46,19 @@ const EditCollegeDetails = ({ navigation }) => {
 
   const [uIsHosteller, setuIsHosteller] = useState(value);
 
-  const update = async () => {
+  const onUpdate = async (values) => {
     const hosteller = uIsHosteller ? "true" : "false";
-    await updateCollegeDetails({
+    const { collegeName, regNo, branch, hostelAddress } = values;
+    let address = uIsHosteller ? hostelAddress : uHostelAddress;
+    const res = await updateCollegeDetails({
       userId: userid,
-      collegeName: uCollegeName,
-      regNo: uRegNo,
-      branch: uBranch,
       isHosteller: hosteller,
-      hostelAddress: uHostelAddress,
+      collegeName,
+      regNo,
+      branch,
+      hostelAddress: address,
     });
-    getCollegeDetails();
+    if (res) getCollegeDetails();
   };
 
   return (
@@ -60,41 +66,31 @@ const EditCollegeDetails = ({ navigation }) => {
       <Text style={styles.heading}>
         {!collegeName ? "Add" : "Edit"} College Details
       </Text>
-      <View style={styles.Form}>
-        <ErrorMsgBox
-          errorMessage={errorMessage}
-          successMessage={successMessage}
-        />
-        <Input
-          keyboardType="default"
-          inputStyle={styles.Input}
-          value={uCollegeName}
-          onChangeText={setuCollegeName}
+      <ErrorMsgBox
+        errorMessage={errorMessage}
+        successMessage={successMessage}
+      />
+      <AppForm
+        initialValues={{
+          collegeName: collegeName,
+          regNo: regNo,
+          branch: branch,
+          hostelAddress: uHostelAddress,
+        }}
+        onSubmit={onUpdate}
+        validationSchema={validationSchema}
+      >
+        <AppFormField
           label="College Name"
           labelStyle={styles.label}
-          autoCapitalize="none"
-          autoCorrect={false}
+          name="collegeName"
         />
-        <Input
-          keyboardType="default"
-          inputStyle={styles.Input}
-          value={uRegNo}
-          onChangeText={setuRegNo}
+        <AppFormField
           label="Roll No. / Reg. No."
           labelStyle={styles.label}
-          autoCapitalize="none"
-          autoCorrect={false}
+          name="regNo"
         />
-        <Input
-          keyboardType="default"
-          inputStyle={styles.Input}
-          value={uBranch}
-          onChangeText={setuBranch}
-          label="Branch"
-          labelStyle={styles.label}
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
+        <AppFormField label="Branch" labelStyle={styles.label} name="branch" />
         <View
           style={{
             flexDirection: "row",
@@ -119,29 +115,16 @@ const EditCollegeDetails = ({ navigation }) => {
         </View>
 
         {uIsHosteller && (
-          <Input
-            keyboardType="default"
-            inputStyle={styles.Input}
-            value={uHostelAddress}
-            onChangeText={setuHostelAddress}
+          <AppFormField
             label="Hostel Address"
             labelStyle={styles.label}
-            autoCapitalize="none"
-            autoCorrect={false}
             multiline={true}
             numberOfLines={2}
+            name="hostelAddress"
           />
         )}
-        <TwoButtonRow
-          firstBtnText="Back"
-          onSubmit1st={() => {
-            navigation.goBack();
-          }}
-          secBtnText={btnText}
-          onSubmit2nd={() => update()}
-          isloading={isUpdating}
-        />
-      </View>
+        <SubmitButton title={btnText} isLoading={isUpdating} />
+      </AppForm>
     </Screen>
   );
 };
@@ -150,20 +133,13 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
+    paddingHorizontal: 20,
   },
   heading: {
     fontSize: 20,
     fontFamily: "Roboto-bold",
     color: Colors.primary,
     marginBottom: 15,
-  },
-  Form: {
-    width: "80%",
-    marginVertical: 10,
-  },
-  Input: {
-    fontSize: 16,
-    paddingLeft: 5,
   },
   label: {
     fontFamily: "Roboto-bold",
