@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import * as Yup from "yup";
 
 import { Context as AuthContext } from "../../context/AuthContext";
@@ -15,6 +15,11 @@ const SignUpScreen = ({ navigation }) => {
   const { state, signup, clearMessage } = useContext(AuthContext);
   const { errorMessage, successMessage, isLoading } = state;
 
+  useEffect(() => {
+    return () => {
+      clearMessage();
+    };
+  }, []);
   return (
     <Screen>
       <AuthForm

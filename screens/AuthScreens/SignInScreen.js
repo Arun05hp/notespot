@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import * as Yup from "yup";
 
 import AuthForm from "../../components/AuthForm";
@@ -13,6 +13,12 @@ const validationSchema = Yup.object().shape({
 const SignInScreen = ({ navigation }) => {
   const { state, signin, clearMessage } = useContext(AuthContext);
   const { errorMessage, successMessage, isLoading } = state;
+
+  useEffect(() => {
+    return () => {
+      clearMessage();
+    };
+  }, []);
 
   return (
     <Screen>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, StyleSheet, CheckBox } from "react-native";
 import * as Yup from "yup";
 import { Context as UserContext } from "../../context/UserContext";
@@ -60,6 +60,12 @@ const EditCollegeDetails = () => {
     });
     if (res) getCollegeDetails();
   };
+
+  useEffect(() => {
+    return () => {
+      clearMessage();
+    };
+  }, []);
 
   return (
     <Screen style={styles.container}>

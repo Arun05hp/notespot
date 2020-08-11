@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Text, StyleSheet } from "react-native";
 import * as Yup from "yup";
 
@@ -38,6 +38,12 @@ const EditProfileDetails = () => {
     });
     if (res) getUserData();
   };
+
+  useEffect(() => {
+    return () => {
+      clearMessage();
+    };
+  }, []);
 
   return (
     <Screen style={styles.container}>
