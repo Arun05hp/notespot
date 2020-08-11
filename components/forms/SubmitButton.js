@@ -1,8 +1,8 @@
 import React from "react";
 import { useFormikContext } from "formik";
 
-import CustomButton from "./CustomButton";
-import Colors from "../constants/colors";
+import CustomButton from "../CustomButton";
+import Colors from "../../constants/colors";
 const SubmitButton = ({ ...otherProps }) => {
   const { handleSubmit } = useFormikContext();
   return (

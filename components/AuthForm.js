@@ -1,83 +1,59 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  Keyboard,
-} from "react-native";
-import { Formik } from "formik";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-import { Input } from "react-native-elements";
-import CustomButton from "../components/CustomButton";
+import AppLogo from "./AppLogo";
+import { AppForm, AppFormField, SubmitButton } from "./forms/index";
 import ErrorMsgBox from "./ErrorMsgBox";
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import Colors from "../constants/colors";
 
 const AuthForm = ({
-  isSignUpForm,
   errorMessage,
-  successMessage,
+  initialValues,
+  isSignUpForm,
   isLoading,
-  submitButtonText,
   navigation,
   onSubmit,
+  successMessage,
+  submitButtonText,
+  validationSchema,
 }) => {
   const [secureText, setSecureText] = useState(true);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   return (
     <View style={styles.container}>
-      <View style={styles.imgWrapper}>
-        <Image
-          source={require("../assets/images/logo.png")}
-          style={styles.imgStyle}
-          resizeMode="contain"
-        />
-      </View>
-      <View style={styles.Form}>
-        <ErrorMsgBox
-          errorMessage={errorMessage}
-          successMessage={successMessage}
-        />
+      <AppLogo style={{ alignSelf: "center" }} />
+      <ErrorMsgBox
+        errorMessage={errorMessage}
+        successMessage={successMessage}
+      />
+
+      <AppForm
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        validationSchema={validationSchema}
+      >
         {isSignUpForm ? (
-          <Input
-            keyboardType="default"
-            inputStyle={styles.Input}
-            value={name}
-            onChangeText={setName}
-            placeholder="Full Name"
-            autoCapitalize="none"
-            autoCorrect={false}
-            placeholderTextColor={Colors.placeholder}
+          <AppFormField
             leftIcon={<FontAwesome5 style={styles.iconStyle} name="user-alt" />}
+            name="name"
+            placeholder="Full Name"
+            placeholderTextColor={Colors.placeholder}
           />
         ) : null}
-        <Input
+        <AppFormField
           keyboardType="email-address"
-          inputStyle={styles.Input}
-          value={email}
-          onChangeText={setEmail}
-          placeholder="Email Address"
-          autoCapitalize="none"
-          autoCorrect={false}
-          placeholderTextColor={Colors.placeholder}
           leftIcon={<MaterialIcons style={styles.iconStyle} name="email" />}
-        />
-        <Input
-          secureTextEntry={secureText}
-          keyboardType="default"
-          inputStyle={styles.Input}
-          value={password}
-          onChangeText={setPassword}
-          placeholder="Password"
-          autoCapitalize="none"
-          autoCorrect={false}
+          name="email"
+          placeholder="Email"
           placeholderTextColor={Colors.placeholder}
+        />
+        <AppFormField
+          secureTextEntry={secureText}
           leftIcon={<MaterialIcons style={styles.iconStyle} name="lock" />}
+          name="password"
+          placeholder="Password"
+          placeholderTextColor={Colors.placeholder}
           rightIcon={
             <FontAwesome5
               name={secureText ? "eye-slash" : "eye"}
@@ -91,20 +67,11 @@ const AuthForm = ({
             <Text style={styles.forget}>Forget Password ?</Text>
           </TouchableOpacity>
         )}
-        <CustomButton
+        <SubmitButton
           style={styles.btnWrapper}
-          onPress={() => {
-            Keyboard.dismiss();
-            isSignUpForm
-              ? onSubmit({ name, email, password })
-              : onSubmit({ email, password });
-          }}
-          bgColor={Colors.primary}
-          color={Colors.white}
           title={submitButtonText}
           isLoading={isLoading}
         />
-
         <TouchableOpacity
           activeOpacity={1}
           onPress={() => navigation.replace(isSignUpForm ? "Signin" : "Signup")}
@@ -120,7 +87,7 @@ const AuthForm = ({
             </Text>
           )}
         </TouchableOpacity>
-      </View>
+      </AppForm>
     </View>
   );
 };
@@ -129,13 +96,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-  },
-  Form: {
-    width: "80%",
+    paddingHorizontal: 20,
     marginVertical: 10,
   },
-
   iconStyle: {
     fontSize: 20,
     color: Colors.primary,
@@ -146,8 +109,8 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-bold",
   },
   btnWrapper: {
-    alignSelf: "center",
     marginVertical: 15,
+    alignSelf: "center",
   },
   newUser: {
     fontSize: 16,
