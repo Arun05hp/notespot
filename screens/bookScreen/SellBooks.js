@@ -1,17 +1,11 @@
 import React, { useContext, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { Input } from "react-native-elements";
-import * as ImagePicker from "expo-image-picker";
+
 import { Context as SellBookContext } from "../../context/BuySellBookContext";
 import { Context as UserContext } from "../../context/UserContext";
 import ErrorMsgBox from "../../components/ErrorMsgBox";
+import ImageInput from "../../components/ImageInput";
 import TwoButtonRow from "../../components/TwoButtonRow";
 import { Entypo } from "@expo/vector-icons";
 import Colors from "../../constants/colors";
@@ -29,29 +23,10 @@ const SellBooks = ({ navigation }) => {
   const [publisherName, setPublisherName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [imgUri, setImgUri] = useState("");
+  const [imgUri, setImgUri] = useState(null);
   const [imgExist, setImgExist] = useState(false);
-  const selectBtnText = imgExist ? "Change Image" : "Select Image";
 
   const [priceError, setPriceError] = useState("");
-
-  const pickImage = async () => {
-    try {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [3, 3],
-        quality: 0.6,
-      });
-      if (!result.cancelled) {
-        const imageUrl = result.uri;
-        setImgUri(imageUrl);
-        setImgExist(true);
-      }
-    } catch (err) {
-      err = err;
-    }
-  };
 
   const validate = async () => {
     if (imgExist) {
@@ -73,7 +48,7 @@ const SellBooks = ({ navigation }) => {
           setPublisherName("");
           setPrice("");
           setImgExist(false);
-          setImgUri("");
+          setImgUri(null);
           setTimeout(function () {
             // navigation.goBack();
           }, 1500);
@@ -89,7 +64,7 @@ const SellBooks = ({ navigation }) => {
       contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
     >
       <View style={styles.contentContainer}>
-        <Text style={styles.heading}>Enter Book Details</Text>
+        <ImageInput imageUri={imgUri} onChangeImage={(uri) => setImgUri(uri)} />
         <View style={styles.container}>
           <Input
             containerStyle={styles.inputContainer}
@@ -142,53 +117,6 @@ const SellBooks = ({ navigation }) => {
             errorMessage={errorMessage}
             successMessage={successMessage}
           />
-          <View>
-            {imgExist && (
-              <View style={styles.showFileContainer}>
-                <View style={styles.imgWrapper}>
-                  <Image
-                    style={{ width: "100%", height: "100%" }}
-                    source={{
-                      uri: imgUri,
-                    }}
-                  />
-                </View>
-                <TouchableOpacity
-                  onPress={() => {
-                    setImgExist(false);
-                    setImgUri("");
-                  }}
-                >
-                  <Entypo
-                    style={{
-                      textAlign: "center",
-                      padding: 5,
-                      borderRadius: 20,
-                      backgroundColor: Colors.white,
-                      borderWidth: 1,
-                      borderColor: "rgba(0,0,0,0.2)",
-                    }}
-                    name="cross"
-                    size={20}
-                    color="#dc3545"
-                  />
-                </TouchableOpacity>
-              </View>
-            )}
-            {!imgExist && (
-              <Text style={{ color: "#ff0011", textAlign: "center" }}>
-                Please Select Image !
-              </Text>
-            )}
-            <TwoButtonRow
-              isImglogo={true}
-              firstBtnText={selectBtnText}
-              secBtnText="Upload"
-              onSubmit1st={pickImage}
-              onSubmit2nd={() => validate()}
-              isloading={isLoading}
-            />
-          </View>
         </View>
       </View>
     </ScrollView>

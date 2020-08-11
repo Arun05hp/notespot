@@ -2,8 +2,8 @@ import React from "react";
 import PDFReader from "rn-pdf-reader-js";
 import baseUrl from "../../api/baseUrl";
 
-const ViewPdf = ({ navigation }) => {
-  const uri = navigation.getParam("uri");
+const ViewPdf = ({ route }) => {
+  const { uri } = route.params;
   const sourceUri = baseUrl + "/" + uri;
 
   return (

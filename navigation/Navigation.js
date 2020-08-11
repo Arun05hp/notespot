@@ -47,10 +47,17 @@ const defaultNavOptions = {
 };
 
 const DashboardNavigator = () => (
-  <DashboardStack.Navigator screenOptions={defaultNavOptions}>
+  <DashboardStack.Navigator
+    initialRouteName="Dashboard"
+    screenOptions={defaultNavOptions}
+  >
     <DashboardStack.Screen name="Dashboard" component={UserDashboard} />
     <DashboardStack.Screen name="Upload" component={UploadPdf} />
-    <DashboardStack.Screen name="Sell" component={SellBooks} />
+    <DashboardStack.Screen
+      name="Sell"
+      component={SellBooks}
+      options={{ title: "Enter Book Details" }}
+    />
     <DashboardStack.Screen name="Buy" component={BuyBook} />
   </DashboardStack.Navigator>
 );
@@ -58,7 +65,11 @@ const DashboardNavigator = () => (
 const PdfNavigator = () => (
   <PdfStack.Navigator screenOptions={defaultNavOptions}>
     <PdfStack.Screen name="PdfLists" component={PdfLists} />
-    <PdfStack.Screen name="ViewPdf" component={ViewPdf} />
+    <PdfStack.Screen
+      name="ViewPdf"
+      component={ViewPdf}
+      options={({ route }) => ({ title: route.params.pdfName })}
+    />
   </PdfStack.Navigator>
 );
 
@@ -94,6 +105,7 @@ const MainNavigator = () => (
       showLabel: false,
       keyboardHidesTabBar: true,
     }}
+    initialRouteName="Dashboard"
   >
     <Tab.Screen
       name="Dashboard"

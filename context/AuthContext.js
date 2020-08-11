@@ -82,7 +82,7 @@ const signin = (dispatch) => async ({ email, password }) => {
       await AsyncStorage.setItem("id", response.data.id.toString());
       dispatch({ type: "signin", payload: response.data });
       dispatch({ type: "isLoading", payload: false });
-      RootNavigation.navigate("Dashboard");
+      RootNavigation.navigate("Main");
     }
   } catch (error) {
     console.log(error);

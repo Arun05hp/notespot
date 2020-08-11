@@ -43,7 +43,7 @@ const PdfLists = ({ navigation }) => {
           <Card style={styles.card}>
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate("viewPdf", {
+                navigation.navigate("ViewPdf", {
                   pdfName: itemData.item.pdfName,
                   uri: itemData.item.pdfLink,
                 })
