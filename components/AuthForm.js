@@ -9,10 +9,10 @@ import Colors from "../constants/colors";
 
 const AuthForm = ({
   errorMessage,
+  goTo,
   initialValues,
   isSignUpForm,
   isLoading,
-  navigation,
   onSubmit,
   successMessage,
   submitButtonText,
@@ -72,21 +72,27 @@ const AuthForm = ({
           title={submitButtonText}
           isLoading={isLoading}
         />
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={() => navigation.replace(isSignUpForm ? "Signin" : "Signup")}
-        >
+        <View style={styles.flexBox}>
           {isSignUpForm ? (
-            <Text style={styles.newUser}>
-              Already Registered ?
-              <Text style={{ color: Colors.primary }}> Sign In</Text>
-            </Text>
+            <>
+              <Text style={styles.newUser}>Already Registered ? </Text>
+              <TouchableOpacity activeOpacity={1} onPress={goTo}>
+                <Text style={{ ...styles.newUser, color: Colors.primary }}>
+                  Sign In
+                </Text>
+              </TouchableOpacity>
+            </>
           ) : (
-            <Text style={styles.newUser}>
-              New User ? <Text style={{ color: Colors.primary }}>Sign Up</Text>
-            </Text>
+            <>
+              <Text style={styles.newUser}>New User ? </Text>
+              <TouchableOpacity activeOpacity={1} onPress={goTo}>
+                <Text style={{ ...styles.newUser, color: Colors.primary }}>
+                  Sign Up
+                </Text>
+              </TouchableOpacity>
+            </>
           )}
-        </TouchableOpacity>
+        </View>
       </AppForm>
     </View>
   );
@@ -112,8 +118,13 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     alignSelf: "center",
   },
+  flexBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   newUser: {
-    fontSize: 16,
+    fontSize: 14,
     textAlign: "center",
     fontFamily: "Roboto-bold",
   },

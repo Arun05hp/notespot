@@ -18,9 +18,9 @@ const SignInScreen = ({ navigation }) => {
   return (
     <AuthForm
       errorMessage={errorMessage}
+      goTo={() => navigation.replace("Signup")}
       initialValues={{ email: "", password: "" }}
       isLoading={isLoading}
-      navigation={navigation}
       onSubmit={signin}
       successMessage={successMessage}
       submitButtonText="Sign In"
