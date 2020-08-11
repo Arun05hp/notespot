@@ -1,7 +1,8 @@
 import React, { useEffect, useContext } from "react";
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 import { Context as AuthContext } from "../../context/AuthContext";
+import AppLogo from "../../components/AppLogo";
 import CustomButton from "../../components/CustomButton";
 import Colors from "../../constants/colors";
 
@@ -20,13 +21,7 @@ const WelcomeScreen = ({ navigation }) => {
   }, []);
   return (
     <View style={styles.container}>
-      <View style={styles.imgWrapper}>
-        <Image
-          source={require("../../assets/images/logo.png")}
-          style={styles.imgStyle}
-          resizeMode="contain"
-        />
-      </View>
+      <AppLogo style={styles.imgBg} />
       <CustomButton
         title="Get Started"
         bgColor={Colors.white}
@@ -45,23 +40,15 @@ WelcomeScreen.navigationOptions = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "space-evenly",
     alignItems: "center",
     backgroundColor: Colors.primary,
+    flex: 1,
+    justifyContent: "space-evenly",
     paddingTop: 40,
   },
-  imgWrapper: {
-    width: 150,
-    height: 150,
-    padding: 20,
+  imgBg: {
     backgroundColor: Colors.white,
     borderRadius: 75,
-    overflow: "hidden",
-  },
-  imgStyle: {
-    width: "100%",
-    height: "100%",
   },
 });
 

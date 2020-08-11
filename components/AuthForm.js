@@ -131,24 +131,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  imgWrapper: {
-    width: 150,
-    height: 150,
-    padding: 20,
-    overflow: "hidden",
-  },
-  imgStyle: {
-    width: "100%",
-    height: "100%",
-  },
   Form: {
     width: "80%",
     marginVertical: 10,
   },
-  Input: {
-    fontSize: 16,
-    paddingLeft: 5,
-  },
+
   iconStyle: {
     fontSize: 20,
     color: Colors.primary,
