@@ -29,11 +29,11 @@ const GridData = [
     navigateScreen: "UploadPdf",
   },
   {
-    id: "favorites",
-    title: "Favorites",
-    icon: <AntDesign name="staro" size={24} color="#F66E50" />,
+    id: "status",
+    title: "Book Status",
+    icon: <MaterialCommunityIcons name="cart" size={24} color="#F66E50" />,
     color: "#F66E50",
-    navigateScreen: "UploadPdf",
+    navigateScreen: "BookStatus",
   },
   {
     id: "buy",

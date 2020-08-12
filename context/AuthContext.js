@@ -70,7 +70,6 @@ const signup = (dispatch) => async ({ name, email, password }) => {
 
 const signin = (dispatch) => async ({ email, password }) => {
   dispatch({ type: "isLoading", payload: true });
-
   try {
     const response = await appApi.post("/user/signin", { email, password });
     if (response.data.error) {
@@ -85,6 +84,7 @@ const signin = (dispatch) => async ({ email, password }) => {
       return true;
     }
   } catch (error) {
+    console.log(error);
     dispatch({ type: "add_error", payload: "Something went Wrong" });
     dispatch({ type: "isLoading", payload: false });
     return false;

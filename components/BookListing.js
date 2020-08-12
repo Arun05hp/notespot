@@ -13,7 +13,7 @@ import baseUrl from "../api/baseUrl";
 import Colors from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 
-const BookListing = ({ bookListData, navigation }) => {
+const BookListing = ({ bookListData, onPress }) => {
   return (
     <View style={styles.container}>
       <FlatList
@@ -22,11 +22,7 @@ const BookListing = ({ bookListData, navigation }) => {
         keyExtractor={(item, index) => item.id.toString()}
         renderItem={(itemData) => (
           <Card style={styles.card}>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("ViewBook", { bookData: itemData.item })
-              }
-            >
+            <TouchableOpacity onPress={() => onPress(itemData.item)}>
               <View style={styles.innerContainer}>
                 <View style={{ width: 100, height: 120 }}>
                   <Image

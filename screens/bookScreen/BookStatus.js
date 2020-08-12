@@ -5,14 +5,13 @@ import { Context as BuyBookContext } from "../../context/BuySellBookContext";
 import { Context as UserContext } from "../../context/UserContext";
 import BookListing from "../../components/BookListing";
 
-const BuyBook = ({ navigation }) => {
+const BookStatus = ({ navigation }) => {
   const { state, getBooks } = useContext(BuyBookContext);
   const { state: user } = useContext(UserContext);
   const { id } = user.userData;
   const bookListData = state.bookLists;
-  const filterBooks = bookListData.filter(
-    (book) => book.buyerId === null && book.sellerId != id
-  );
+  const filterBooks = bookListData.filter((book) => book.buyerId == id);
+
   useEffect(() => {
     getBooks();
   }, []);
@@ -38,4 +37,4 @@ const BuyBook = ({ navigation }) => {
     />
   );
 };
-export default BuyBook;
+export default BookStatus;

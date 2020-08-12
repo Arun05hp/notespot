@@ -7,11 +7,20 @@ import {
   ActivityIndicator,
 } from "react-native";
 
-const CustomButton = ({ title, style, bgColor, color, onPress, isLoading }) => {
+const CustomButton = ({
+  title,
+  style,
+  bgColor,
+  color,
+  onPress,
+  isLoading,
+  isDisabled,
+}) => {
+  const disabled = isLoading ? isLoading : isDisabled;
   return (
     <TouchableOpacity
       onPress={onPress}
-      disabled={isLoading}
+      disabled={disabled}
       activeOpacity={0.6}
       style={{ ...styles.button, ...style, backgroundColor: bgColor }}
     >

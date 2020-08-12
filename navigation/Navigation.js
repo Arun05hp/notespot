@@ -6,7 +6,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import UserDashboard from "../screens/MainScreens/UserDashboard";
 
-import ResolveAuthScreen from "../screens/AuthScreens/ResolveAuthScreen";
 import WelcomeScreen from "../screens/AuthScreens/WelcomeScreen";
 import SignUpScreen from "../screens/AuthScreens/SignUpScreen";
 import SignInScreen from "../screens/AuthScreens/SignInScreen";
@@ -25,7 +24,9 @@ import ViewPdf from "../screens/PdfScreen/ViewPdf";
 
 import { AntDesign } from "@expo/vector-icons";
 import Colors from "../constants/colors";
-import ViewBook from "../screens/BookScreen/ViewBook";
+import BuyerViewBook from "../screens/BookScreen/BuyerViewBook";
+import SellerViewBook from "../screens/BookScreen/SellerViewBook";
+import BookStatus from "../screens/BookScreen/BookStatus";
 
 const DashboardStack = createStackNavigator();
 const PdfStack = createStackNavigator();
@@ -58,10 +59,17 @@ const DashboardNavigator = () => (
     />
     <DashboardStack.Screen name="Buy" component={BuyBook} />
     <DashboardStack.Screen
-      name="ViewBook"
-      component={ViewBook}
+      name="BuyerViewBook"
+      component={BuyerViewBook}
       options={{
         headerShown: false,
+      }}
+    />
+    <DashboardStack.Screen
+      name="BookStatus"
+      component={BookStatus}
+      options={{
+        title: "Book Status",
       }}
     />
   </DashboardStack.Navigator>
@@ -83,8 +91,9 @@ const BookNavigator = () => (
     <BookStack.Screen
       name="UploadedBooks"
       component={UploadedBook}
-      options={{ title: "Sell Book Lists" }}
+      options={{ title: "Selling Books" }}
     />
+    <BookStack.Screen name="SellerViewBook" component={SellerViewBook} />
   </BookStack.Navigator>
 );
 
