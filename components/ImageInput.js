@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Image, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -6,6 +6,13 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Colors from "../constants/colors";
 
 const ImageInput = ({ imageUri, onChangeImage }) => {
+  useEffect(() => {
+    reqPermission();
+  }, []);
+  const reqPermission = async () => {
+    const { granted } = await ImagePicker.requestCameraRollPermissionsAsync();
+    if (!granted) alert("You need to enable permission to the library");
+  };
   const handlePress = () => {
     if (!imageUri) pickImage();
     else

@@ -1,16 +1,31 @@
-import React, { useContext, useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { Input } from "react-native-elements";
-
+import React, { useContext, useEffect } from "react";
+import { View, StyleSheet, ScrollView } from "react-native";
+import * as Yup from "yup";
+import {
+  AppForm,
+  AppFormField,
+  SubmitButton,
+  FormImagePicker,
+} from "../../components/forms/index";
 import { Context as SellBookContext } from "../../context/BuySellBookContext";
 import { Context as UserContext } from "../../context/UserContext";
 import ErrorMsgBox from "../../components/ErrorMsgBox";
-import ImageInput from "../../components/ImageInput";
-import TwoButtonRow from "../../components/TwoButtonRow";
-import { Entypo } from "@expo/vector-icons";
+
 import Colors from "../../constants/colors";
 
-const SellBooks = ({ navigation }) => {
+const validationSchema = Yup.object().shape({
+  bookName: Yup.string().required().label("Book Name"),
+  authorName: Yup.string().required().label("Author Name"),
+  publisherName: Yup.string().required().label("Publisher Name"),
+  description: Yup.string().nullable().label("Description"),
+  price: Yup.string()
+    .matches(/^[0-9]*$/, "Enter Valid Price")
+    .required()
+    .label("Price"),
+  imageUri: Yup.string().nullable().required().label("Image"),
+});
+
+const SellBooks = () => {
   const { sellBook, clearMessage, state: bookState } = useContext(
     SellBookContext
   );
@@ -18,45 +33,18 @@ const SellBooks = ({ navigation }) => {
   const { state } = useContext(UserContext);
   const userId = state.userData.id;
 
-  const [bookName, setBookName] = useState("");
-  const [authorName, setAuthorName] = useState("");
-  const [publisherName, setPublisherName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [imgUri, setImgUri] = useState(null);
-  const [imgExist, setImgExist] = useState(false);
+  useEffect(() => {
+    return () => {
+      clearMessage();
+    };
+  }, []);
 
-  const [priceError, setPriceError] = useState("");
-
-  const validate = async () => {
-    if (imgExist) {
-      const regx = /^[0-9]*$/;
-      if (price && regx.test(price)) {
-        const res = await sellBook({
-          userId,
-          bookName,
-          authorName,
-          publisherName,
-          description,
-          price,
-          imgUri,
-        });
-        if (res) {
-          setBookName("");
-          setAuthorName("");
-          setDescription("");
-          setPublisherName("");
-          setPrice("");
-          setImgExist(false);
-          setImgUri(null);
-          setTimeout(function () {
-            // navigation.goBack();
-          }, 1500);
-        }
-      } else {
-        setPriceError("Number Only");
-      }
-    }
+  const onSubmit = async (values, { resetForm }) => {
+    const res = await sellBook({
+      userId,
+      ...values,
+    });
+    if (res) resetForm();
   };
 
   return (
@@ -64,60 +52,53 @@ const SellBooks = ({ navigation }) => {
       contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
     >
       <View style={styles.contentContainer}>
-        <ImageInput imageUri={imgUri} onChangeImage={(uri) => setImgUri(uri)} />
-        <View style={styles.container}>
-          <Input
-            containerStyle={styles.inputContainer}
-            inputStyle={styles.Input}
-            labelStyle={styles.label}
-            label="Book Name"
-            value={bookName}
-            onChangeText={setBookName}
+        <ErrorMsgBox
+          errorMessage={errorMessage}
+          successMessage={successMessage}
+        />
+        <AppForm
+          initialValues={{
+            bookName: "",
+            authorName: "",
+            publisherName: "",
+            description: "",
+            price: "",
+            imageUri: null,
+          }}
+          onSubmit={onSubmit}
+          validationSchema={validationSchema}
+        >
+          <FormImagePicker name="imageUri" />
+          <AppFormField
+            name="bookName"
+            placeholder="Book Name"
+            placeholderTextColor={Colors.placeholder}
           />
-          <Input
-            containerStyle={styles.inputContainer}
-            inputStyle={styles.Input}
-            labelStyle={styles.label}
-            label="Publisher Name"
-            value={publisherName}
-            onChangeText={setPublisherName}
+          <AppFormField
+            name="authorName"
+            placeholder="Author Name"
+            placeholderTextColor={Colors.placeholder}
           />
-          <Input
-            containerStyle={styles.inputContainer}
-            inputStyle={styles.Input}
-            labelStyle={styles.label}
-            label="Author Name"
-            value={authorName}
-            onChangeText={setAuthorName}
+          <AppFormField
+            name="publisherName"
+            placeholder="Publisher Name"
+            placeholderTextColor={Colors.placeholder}
           />
-          <Input
-            containerStyle={styles.inputContainer}
-            inputStyle={styles.Input}
-            labelStyle={styles.label}
-            label="Description"
-            placeholder="About the book condition"
+
+          <AppFormField
+            name="description"
+            placeholder="Description about book condition"
+            placeholderTextColor={Colors.placeholder}
             multiline={true}
-            value={description}
-            onChangeText={setDescription}
           />
-          <Input
+          <AppFormField
+            name="price"
             keyboardType="numeric"
-            errorMessage={priceError}
-            onFocus={() => setPriceError("")}
-            containerStyle={styles.inputContainer}
-            inputStyle={styles.Input}
-            labelStyle={styles.label}
-            label="Price"
-            placeholder="00"
-            multiline={true}
-            value={price}
-            onChangeText={setPrice}
+            placeholder="Price"
+            placeholderTextColor={Colors.placeholder}
           />
-          <ErrorMsgBox
-            errorMessage={errorMessage}
-            successMessage={successMessage}
-          />
-        </View>
+          <SubmitButton title="Submit" isLoading={isLoading} />
+        </AppForm>
       </View>
     </ScrollView>
   );
@@ -129,44 +110,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: Colors.white,
-    padding: 10,
-  },
-  heading: {
-    fontSize: 20,
-    fontFamily: "Roboto-bold",
-    color: Colors.primary,
-    marginBottom: 15,
-  },
-  container: {
-    width: "90%",
-    padding: 10,
-  },
-  inputContainer: {
-    paddingHorizontal: 0,
-  },
-  Input: {
-    fontSize: 16,
-    minHeight: 30,
-  },
-  label: {
-    fontFamily: "Roboto-bold",
-    color: Colors.primary,
-    padding: 0,
-  },
-  showFileContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  imgWrapper: {
-    padding: 10,
-    borderWidth: 1,
-    borderColor: Colors.primary,
-    width: 140,
-    height: 140,
-    marginBottom: 10,
-  },
-  fileNameText: {
-    paddingLeft: 5,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
 });
 

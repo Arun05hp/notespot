@@ -82,10 +82,9 @@ const signin = (dispatch) => async ({ email, password }) => {
       await AsyncStorage.setItem("id", response.data.id.toString());
       dispatch({ type: "signin", payload: response.data });
       dispatch({ type: "isLoading", payload: false });
-      RootNavigation.navigate("Main");
+      RootNavigation.navigate("Dashboard");
     }
   } catch (error) {
-    console.log(error);
     dispatch({ type: "add_error", payload: "Something went Wrong" });
     dispatch({ type: "isLoading", payload: false });
   }

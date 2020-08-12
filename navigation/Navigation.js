@@ -47,10 +47,7 @@ const defaultNavOptions = {
 };
 
 const DashboardNavigator = () => (
-  <DashboardStack.Navigator
-    initialRouteName="Dashboard"
-    screenOptions={defaultNavOptions}
-  >
+  <DashboardStack.Navigator screenOptions={defaultNavOptions}>
     <DashboardStack.Screen name="Dashboard" component={UserDashboard} />
     <DashboardStack.Screen name="Upload" component={UploadPdf} />
     <DashboardStack.Screen
@@ -105,7 +102,6 @@ const MainNavigator = () => (
       showLabel: false,
       keyboardHidesTabBar: true,
     }}
-    initialRouteName="Dashboard"
   >
     <Tab.Screen
       name="Dashboard"
