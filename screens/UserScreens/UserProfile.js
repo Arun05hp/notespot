@@ -56,6 +56,11 @@ const UserProfile = ({ navigation }) => {
     );
   }
 
+  const handleLogout = async () => {
+    const res = await signout();
+    clearState();
+    if (res) navigation.replace("Auth");
+  };
   return (
     <Screen style={styles.container}>
       <View style={styles.wrapper}>
@@ -131,13 +136,7 @@ const UserProfile = ({ navigation }) => {
         </TouchableOpacity>
 
         <Text style={styles.subHeading}>Account Action</Text>
-        <TouchableOpacity
-          style={styles.linkWrapper}
-          onPress={() => {
-            clearState();
-            signout();
-          }}
-        >
+        <TouchableOpacity style={styles.linkWrapper} onPress={handleLogout}>
           <View style={styles.row}>
             <Text style={styles.text}>Sign Out</Text>
             <AntDesign style={styles.icons} name="logout" />

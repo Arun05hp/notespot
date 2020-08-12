@@ -68,7 +68,10 @@ const SellBooks = () => {
           onSubmit={onSubmit}
           validationSchema={validationSchema}
         >
-          <FormImagePicker name="imageUri" />
+          <View style={styles.picker}>
+            <FormImagePicker name="imageUri" />
+          </View>
+
           <AppFormField
             name="bookName"
             placeholder="Book Name"
@@ -84,18 +87,17 @@ const SellBooks = () => {
             placeholder="Publisher Name"
             placeholderTextColor={Colors.placeholder}
           />
-
-          <AppFormField
-            name="description"
-            placeholder="Description about book condition"
-            placeholderTextColor={Colors.placeholder}
-            multiline={true}
-          />
           <AppFormField
             name="price"
             keyboardType="numeric"
             placeholder="Price"
             placeholderTextColor={Colors.placeholder}
+          />
+          <AppFormField
+            name="description"
+            placeholder="Description about book condition"
+            placeholderTextColor={Colors.placeholder}
+            multiline={true}
           />
           <SubmitButton title="Submit" isLoading={isLoading} />
         </AppForm>
@@ -108,11 +110,11 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
     backgroundColor: Colors.white,
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
+  picker: { marginVertical: 10, alignItems: "center" },
 });
 
 export default SellBooks;

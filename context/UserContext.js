@@ -104,7 +104,7 @@ const uploadImage = (dispatch) => async ({ id, imageUrl, profileImg }) => {
       },
     });
   } catch (error) {
-    console.log(error);
+    err = error;
   }
 };
 

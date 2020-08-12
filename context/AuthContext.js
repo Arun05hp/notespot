@@ -1,7 +1,6 @@
 import { AsyncStorage } from "react-native";
 import appApi from "../api/appApi";
 import createDataContext from "./createDataContext";
-import * as RootNavigation from "../navigation/navigationRef";
 
 const authReducer = (state, action) => {
   switch (action.type) {
@@ -77,24 +76,30 @@ const signin = (dispatch) => async ({ email, password }) => {
     if (response.data.error) {
       dispatch({ type: "add_error", payload: response.data.error });
       dispatch({ type: "isLoading", payload: false });
+      return false;
     } else {
       await AsyncStorage.setItem("token", response.data.token);
       await AsyncStorage.setItem("id", response.data.id.toString());
       dispatch({ type: "signin", payload: response.data });
       dispatch({ type: "isLoading", payload: false });
-      RootNavigation.navigate("Dashboard");
+      return true;
     }
   } catch (error) {
     dispatch({ type: "add_error", payload: "Something went Wrong" });
     dispatch({ type: "isLoading", payload: false });
+    return false;
   }
 };
 
 const signout = (dispatch) => async () => {
-  await AsyncStorage.removeItem("token");
-  await AsyncStorage.removeItem("id");
-  dispatch({ type: "signout" });
-  RootNavigation.navigate("Auth");
+  try {
+    await AsyncStorage.removeItem("token");
+    await AsyncStorage.removeItem("id");
+    dispatch({ type: "signout" });
+    return true;
+  } catch (error) {
+    return false;
+  }
 };
 
 export const { Provider, Context } = createDataContext(

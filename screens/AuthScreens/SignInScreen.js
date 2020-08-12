@@ -19,7 +19,10 @@ const SignInScreen = ({ navigation }) => {
       clearMessage();
     };
   }, []);
-
+  const onSubmit = async (values) => {
+    const res = await signin(values);
+    if (res) navigation.replace("Main");
+  };
   return (
     <Screen>
       <AuthForm
@@ -27,7 +30,7 @@ const SignInScreen = ({ navigation }) => {
         goTo={() => navigation.replace("Signup")}
         initialValues={{ email: "", password: "" }}
         isLoading={isLoading}
-        onSubmit={signin}
+        onSubmit={onSubmit}
         successMessage={successMessage}
         submitButtonText="Sign In"
         validationSchema={validationSchema}

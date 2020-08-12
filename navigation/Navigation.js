@@ -15,7 +15,7 @@ import UserProfile from "../screens/UserScreens/UserProfile";
 import EditProfileDetails from "../screens/UserScreens/EditProfileDetails";
 import EditCollegeDetails from "../screens/UserScreens/EditCollegeDetails";
 
-import BookList from "../screens/BookScreen/BookList";
+import UploadedBook from "../screens/BookScreen/UploadedBook";
 import SellBooks from "../screens/BookScreen/SellBooks";
 import BuyBook from "../screens/BookScreen/BuyBook";
 
@@ -25,6 +25,7 @@ import ViewPdf from "../screens/PdfScreen/ViewPdf";
 
 import { AntDesign } from "@expo/vector-icons";
 import Colors from "../constants/colors";
+import ViewBook from "../screens/BookScreen/ViewBook";
 
 const DashboardStack = createStackNavigator();
 const PdfStack = createStackNavigator();
@@ -56,6 +57,13 @@ const DashboardNavigator = () => (
       options={{ title: "Enter Book Details" }}
     />
     <DashboardStack.Screen name="Buy" component={BuyBook} />
+    <DashboardStack.Screen
+      name="ViewBook"
+      component={ViewBook}
+      options={{
+        headerShown: false,
+      }}
+    />
   </DashboardStack.Navigator>
 );
 
@@ -72,7 +80,11 @@ const PdfNavigator = () => (
 
 const BookNavigator = () => (
   <BookStack.Navigator screenOptions={defaultNavOptions}>
-    <BookStack.Screen name="BookList" ch component={BookList} />
+    <BookStack.Screen
+      name="UploadedBooks"
+      component={UploadedBook}
+      options={{ title: "Sell Book Lists" }}
+    />
   </BookStack.Navigator>
 );
 

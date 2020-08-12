@@ -37,13 +37,6 @@ const uploadPdf = (dispatch) => async ({
   fileName,
   uri,
 }) => {
-  if (!topicName || !category || !fileName || !uri) {
-    dispatch({
-      type: "add_message",
-      payload: { error: "Required Topic Name and Category", success: "" },
-    });
-    return null;
-  }
   try {
     dispatch({ type: "isLoading", payload: true });
     let data = new FormData();

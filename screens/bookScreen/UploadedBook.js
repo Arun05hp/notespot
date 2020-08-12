@@ -4,7 +4,7 @@ import { View, ActivityIndicator } from "react-native";
 import { Context as BuyBookContext } from "../../context/BuySellBookContext";
 import BookListing from "../../components/BookListing";
 
-const BuyBook = ({ navigation }) => {
+const UploadedBook = ({ navigation }) => {
   const { state, getBooks } = useContext(BuyBookContext);
   const bookListData = state.bookLists;
 
@@ -28,4 +28,4 @@ const BuyBook = ({ navigation }) => {
 
   return <BookListing bookListData={bookListData} navigation={navigation} />;
 };
-export default BuyBook;
+export default UploadedBook;

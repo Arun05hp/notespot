@@ -10,7 +10,7 @@ import { Input } from "react-native-elements";
 import * as DocumentPicker from "expo-document-picker";
 
 import ErrorMsgBox from "../../components/ErrorMsgBox";
-import TwoButtonRow from "../../components/TwoButtonRow";
+
 import { Context as PdfContext } from "../../context/PdfContext";
 import { Context as UserContext } from "../../context/UserContext";
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
@@ -52,6 +52,13 @@ const UploadPdf = ({ navigation }) => {
     }
   };
 
+  //   <TwoButtonRow
+  //   firstBtnText={selectBtnText}
+  //   secBtnText="Upload Pdf"
+  //   onSubmit1st={documentSelect}
+  //   onSubmit2nd={() => validatePdf()}
+  //   isloading={isLoading}
+  // />
   const validatePdf = async () => {
     if (fileExists) {
       const res = await uploadPdf({
@@ -152,13 +159,6 @@ const UploadPdf = ({ navigation }) => {
               Please Select File !
             </Text>
           )}
-          <TwoButtonRow
-            firstBtnText={selectBtnText}
-            secBtnText="Upload Pdf"
-            onSubmit1st={documentSelect}
-            onSubmit2nd={() => validatePdf()}
-            isloading={isLoading}
-          />
         </View>
       </View>
     </ScrollView>
