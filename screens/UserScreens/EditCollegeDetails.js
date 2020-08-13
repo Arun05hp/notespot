@@ -6,6 +6,7 @@ import { Context as UserContext } from "../../context/UserContext";
 import {
   AppForm,
   AppFormField,
+  AppPicker,
   SubmitButton,
 } from "../../components/forms/index";
 import Screen from "../../components/Screen";
@@ -18,6 +19,14 @@ const validationSchema = Yup.object().shape({
   branch: Yup.string().required().label("Branch Name"),
   hostelAddress: Yup.string().nullable().label("Address"),
 });
+
+const collegeList = [
+  {
+    name: "Sant Longowal Institute of Engineering and Technology",
+  },
+  { name: "Chandigarh Group of Colleges" },
+  { name: "Panjab University" },
+];
 
 const EditCollegeDetails = () => {
   const {
@@ -86,17 +95,23 @@ const EditCollegeDetails = () => {
         onSubmit={onUpdate}
         validationSchema={validationSchema}
       >
-        <AppFormField
-          label="College Name"
-          labelStyle={styles.label}
+        <AppPicker
+          disabled={!collegeName ? false : true}
+          items={collegeList}
+          placeholder="Select College"
           name="collegeName"
         />
+
         <AppFormField
-          label="Roll No. / Reg. No."
-          labelStyle={styles.label}
+          placeholder="Roll No. / Reg. No."
+          placeholderTextColor={Colors.placeholder}
           name="regNo"
         />
-        <AppFormField label="Branch" labelStyle={styles.label} name="branch" />
+        <AppFormField
+          placeholder="Branch"
+          placeholderTextColor={Colors.placeholder}
+          name="branch"
+        />
         <View
           style={{
             flexDirection: "row",
@@ -122,8 +137,8 @@ const EditCollegeDetails = () => {
 
         {uIsHosteller && (
           <AppFormField
-            label="Hostel Address"
-            labelStyle={styles.label}
+            placeholder="Hostel Address"
+            placeholderTextColor={Colors.placeholder}
             multiline={true}
             numberOfLines={2}
             name="hostelAddress"
