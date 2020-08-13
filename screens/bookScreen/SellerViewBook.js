@@ -25,9 +25,9 @@ const SellerViewBook = ({ route, navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
   const { bookData } = route.params;
   const { id: bookId, buyerId } = bookData;
-  let display = true;
+  let showInfo = false;
   if (bookData.buyerStatus == 1 && bookData.sellerStatus == 1) {
-    display = false;
+    showInfo = true;
   }
 
   const onAccept = async () => {
@@ -62,6 +62,9 @@ const SellerViewBook = ({ route, navigation }) => {
       Alert.alert("Error", "Faild to get Buyer Information", [
         { text: "ok", onPress: () => navigation.goBack() },
       ]);
+    return () => {
+      setBuyerData({});
+    };
   }, [buyerId]);
 
   const getBuyerInfo = async (userId) => {
@@ -86,11 +89,8 @@ const SellerViewBook = ({ route, navigation }) => {
         <ActivityIndicator size="large" color={Colors.green} />
       ) : (
         <>
-          <UserProfileBar
-            name={buyerData.name}
-            profileImg={buyerData.profileImg}
-          />
-          {display && (
+          <UserProfileBar userData={buyerData} showInfo={showInfo} />
+          {!showInfo && (
             <View
               style={{ flexDirection: "row", justifyContent: "space-evenly" }}
             >

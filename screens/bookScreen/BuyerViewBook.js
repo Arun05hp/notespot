@@ -47,6 +47,9 @@ const BuyerViewBook = ({ route, navigation }) => {
       Alert.alert("Error", "Faild to get Buyer Information", [
         { text: "ok", onPress: () => navigation.goBack() },
       ]);
+    return () => {
+      setSellerData({});
+    };
   }, [sellerId]);
 
   const getSellerInfo = async (userId) => {
@@ -69,10 +72,7 @@ const BuyerViewBook = ({ route, navigation }) => {
         <ActivityIndicator size="large" color={Colors.green} />
       ) : (
         <>
-          <UserProfileBar
-            profileImg={sellerData.profileImg}
-            name={sellerData.name}
-          />
+          <UserProfileBar userData={sellerData} />
           <CustomButton
             style={{ alignSelf: "center" }}
             title="Contact Seller"

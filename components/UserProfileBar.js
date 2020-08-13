@@ -4,21 +4,30 @@ import { View, Text, Image, StyleSheet } from "react-native";
 import baseUrl from "../api/baseUrl";
 import Card from "./Card";
 import Colors from "../constants/colors";
+import colors from "../constants/colors";
 
-const UserProfileBar = ({ profileImg, name }) => {
+const UserProfileBar = ({ userData, showInfo }) => {
   return (
     <Card style={styles.container}>
       <View style={styles.profile}>
         <Image
           style={styles.image}
           source={{
-            uri: !profileImg
+            uri: !userData.profileImg
               ? "https://img.icons8.com/ultraviolet/80/000000/user.png"
-              : baseUrl + "/" + profileImg,
+              : baseUrl + "/" + userData.profileImg,
           }}
         />
       </View>
-      <Text style={styles.mTitle}>{name}</Text>
+      <View>
+        <Text style={styles.mTitle}>{userData.name}</Text>
+        {showInfo && (
+          <>
+            <Text style={styles.sTitle}>{userData.mobileno}</Text>
+            <Text style={styles.sTitle}>{userData.email}</Text>
+          </>
+        )}
+      </View>
     </Card>
   );
 };
@@ -31,6 +40,7 @@ const styles = StyleSheet.create({
     elevation: 1,
     flexDirection: "row",
     alignItems: "center",
+    padding: 10,
   },
   profile: {
     width: 50,
@@ -38,7 +48,6 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     backgroundColor: Colors.light,
     overflow: "hidden",
-    margin: 10,
     marginRight: 15,
   },
   image: {
@@ -49,6 +58,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: "Roboto-bold",
     color: Colors.primary,
+  },
+  sTitle: {
+    fontSize: 16,
+    fontFamily: "Roboto-bold",
+    color: colors.medium,
   },
 });
 

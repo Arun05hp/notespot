@@ -14,19 +14,18 @@ const ViewBookStatus = ({ route }) => {
   const { sellerId } = bookData;
   let buyerButtonText = "";
   let buyerButtonBg = Colors.primary;
-  let disabled = false;
+  let showInfo = false;
   if (sellerId) {
     if (!bookData.sellerStatus && bookData.buyerStatus == 1) {
       buyerButtonText = "Requested";
       buyerButtonBg = Colors.yellow;
-      disabled = true;
     } else if (bookData.sellerStatus == 1 && bookData.buyerStatus == 1) {
       buyerButtonText = "Accepted";
-      disabled = true;
+      showInfo = true;
       buyerButtonBg = Colors.secondary;
     } else {
       buyerButtonText = "Purchased";
-      disabled = true;
+      showInfo = true;
       buyerButtonBg = Colors.secondary;
     }
   }
@@ -37,6 +36,9 @@ const ViewBookStatus = ({ route }) => {
       Alert.alert("Error", "Faild to get Buyer Information", [
         { text: "ok", onPress: () => navigation.goBack() },
       ]);
+    return () => {
+      setSellerData({});
+    };
   }, [sellerId]);
 
   const getSellerInfo = async (userId) => {
@@ -58,10 +60,7 @@ const ViewBookStatus = ({ route }) => {
         <ActivityIndicator size="large" color={Colors.green} />
       ) : (
         <>
-          <UserProfileBar
-            profileImg={sellerData.profileImg}
-            name={sellerData.name}
-          />
+          <UserProfileBar userData={sellerData} showInfo={showInfo} />
           <CustomButton
             isDisabled={true}
             style={{ alignSelf: "center" }}

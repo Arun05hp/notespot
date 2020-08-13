@@ -8,4 +8,5 @@ export default {
   medium: "#6e6969",
   danger: "#dc3545",
   yellow: "#fabd2f",
+  card: "#d8ffb1",
 };

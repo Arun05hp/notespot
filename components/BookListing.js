@@ -21,7 +21,7 @@ const BookListing = ({ bookListData, onPress }) => {
         showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) => item.id.toString()}
         renderItem={(itemData) => (
-          <Card style={styles.card}>
+          <Card style={!itemData.item.buyerId ? styles.card : styles.card2}>
             <TouchableOpacity onPress={() => onPress(itemData.item)}>
               <View style={styles.innerContainer}>
                 <View style={{ width: 100, height: 120 }}>
@@ -63,7 +63,13 @@ const styles = StyleSheet.create({
   },
   card: {
     borderRadius: 5,
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
+    marginVertical: 10,
+    elevation: 2,
+  },
+  card2: {
+    borderRadius: 5,
+    backgroundColor: Colors.card,
     marginVertical: 10,
     elevation: 2,
   },
