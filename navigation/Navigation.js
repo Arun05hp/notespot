@@ -27,6 +27,7 @@ import Colors from "../constants/colors";
 import BuyerViewBook from "../screens/BookScreen/BuyerViewBook";
 import SellerViewBook from "../screens/BookScreen/SellerViewBook";
 import BookStatus from "../screens/BookScreen/BookStatus";
+import ViewBookStatus from "../screens/BookScreen/ViewBookStatus";
 
 const DashboardStack = createStackNavigator();
 const PdfStack = createStackNavigator();
@@ -70,6 +71,13 @@ const DashboardNavigator = () => (
       component={BookStatus}
       options={{
         title: "Book Status",
+      }}
+    />
+    <DashboardStack.Screen
+      name="ViewBookStatus"
+      component={ViewBookStatus}
+      options={{
+        title: "View Book Status",
       }}
     />
   </DashboardStack.Navigator>

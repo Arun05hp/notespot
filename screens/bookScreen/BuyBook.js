@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { View, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 
 import { Context as BuyBookContext } from "../../context/BuySellBookContext";
 import { Context as UserContext } from "../../context/UserContext";
@@ -27,6 +27,19 @@ const BuyBook = ({ navigation }) => {
         }}
       >
         <ActivityIndicator size="large" color="red" />
+      </View>
+    );
+  }
+  if (filterBooks.length <= 0) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Text style={{ fontSize: 16 }}>No Books Available</Text>
       </View>
     );
   }

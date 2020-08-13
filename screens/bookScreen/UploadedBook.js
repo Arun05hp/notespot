@@ -11,6 +11,7 @@ const UploadedBook = ({ navigation }) => {
   const { id } = user.userData;
   const bookListData = state.bookLists;
   const filterBooks = bookListData.filter((book) => book.sellerId == id);
+
   useEffect(() => {
     getBooks();
   }, []);

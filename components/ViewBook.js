@@ -2,33 +2,11 @@ import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 
 import baseUrl from "../api/baseUrl";
-import CustomButton from "./CustomButton";
-import Card from "./Card";
 import Screen from "./Screen";
 import Colors from "../constants/colors";
 
-const ViewBook = ({ bookData, isSellerBook, onAccept, sendReq, onReject }) => {
+const ViewBook = ({ bookData, children }) => {
   const uri = baseUrl + "/" + bookData.bookImgLink;
-  const profileImg = "";
-  let buyerButtonText = "Contact Seller";
-  let buyerButtonBg = Colors.primary;
-  let disabled = false;
-  console.log(bookData);
-  if (bookData.sellerId) {
-    if (!bookData.sellerStatus && !bookData.buyerStatus) {
-      buyerButtonText = "Requested";
-      buyerButtonBg = Colors.yellow;
-      disabled = true;
-    } else if (bookData.sellerStatus != null && !bookData.buyerStatus) {
-      buyerButtonText = "Accepted";
-      disabled = true;
-      buyerButtonBg = Colors.secondary;
-    } else {
-      buyerButtonText = "Purchased";
-      disabled = true;
-      buyerButtonBg = Colors.secondary;
-    }
-  }
 
   return (
     <Screen style={{ padding: 20 }}>
@@ -44,46 +22,8 @@ const ViewBook = ({ bookData, isSellerBook, onAccept, sendReq, onReject }) => {
         By {bookData.authorName} (Author) | {bookData.publisherName} (Publisher)
       </Text>
       <Text style={styles.mTitle}>₹ {bookData.price}</Text>
-      <Card style={styles.sellerInfo}>
-        <View style={styles.profile}>
-          <Image
-            style={styles.image}
-            source={{
-              uri: !profileImg
-                ? "https://img.icons8.com/ultraviolet/80/000000/user.png"
-                : baseUrl + "/" + profileImg,
-            }}
-          />
-        </View>
-        <Text style={styles.mTitle}>Arun Kumar </Text>
-      </Card>
-      {isSellerBook ? (
-        <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
-          <CustomButton
-            style={{ width: "40%" }}
-            title="Accept"
-            bgColor={Colors.secondary}
-            color={Colors.white}
-            onPress={onAccept}
-          />
-          <CustomButton
-            style={{ width: "40%" }}
-            title="Reject"
-            bgColor={Colors.danger}
-            color={Colors.white}
-            onPress={onReject}
-          />
-        </View>
-      ) : (
-        <CustomButton
-          isDisabled={disabled}
-          style={{ alignSelf: "center" }}
-          title={buyerButtonText}
-          bgColor={buyerButtonBg}
-          color={Colors.white}
-          onPress={sendReq}
-        />
-      )}
+      {children}
+
       {bookData.description ? (
         <>
           <Text
@@ -109,24 +49,6 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "100%",
-  },
-  sellerInfo: {
-    borderRadius: 25,
-    backgroundColor: Colors.white,
-    marginVertical: 20,
-    elevation: 1,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  profile: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: Colors.light,
-    overflow: "hidden",
-    padding: 5,
-    marginVertical: 5,
-    marginHorizontal: 10,
   },
   title: {
     fontSize: 20,
