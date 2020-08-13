@@ -7,21 +7,52 @@ import CustomButton from "../../components/CustomButton";
 import Colors from "../../constants/colors";
 import UserProfileBar from "../../components/UserProfileBar";
 
+const accept_RejectReq = async (bookId, isRejected) => {
+  try {
+    const response = await appApi.post("/user/accept_RejectReq", {
+      bookId,
+      isRejected,
+    });
+    if (response.data.error) return false;
+    else return true;
+  } catch (error) {
+    return false;
+  }
+};
+
 const SellerViewBook = ({ route, navigation }) => {
   const [buyerData, setBuyerData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const { bookData } = route.params;
-  const { buyerId } = bookData;
+  const { id: bookId, buyerId } = bookData;
+  let display = true;
+  if (bookData.buyerStatus == 1 && bookData.sellerStatus == 1) {
+    display = false;
+  }
 
-  const onAccept = () => {
-    Alert.alert("Accepted", "Request Accepted Successfully", [
-      { text: "ok", onPress: () => navigation.goBack() },
-    ]);
+  const onAccept = async () => {
+    const res = await accept_RejectReq(bookId, false);
+    console.log(res);
+    if (res)
+      Alert.alert("Accepted", "Request Accepted Successfully", [
+        { text: "ok", onPress: () => navigation.goBack() },
+      ]);
+    else
+      Alert.alert("Failed", "Try Again", [
+        { text: "ok", onPress: () => navigation.goBack() },
+      ]);
   };
-  const onReject = () => {
-    Alert.alert("Rejected", "Request Rejected Successfully", [
-      { text: "ok", onPress: () => navigation.goBack() },
-    ]);
+
+  const onReject = async () => {
+    const res = await accept_RejectReq(bookId, true);
+    if (res)
+      Alert.alert("Rejected", "Request Rejected Successfully", [
+        { text: "ok", onPress: () => navigation.goBack() },
+      ]);
+    else
+      Alert.alert("Failed", "Try Again", [
+        { text: "ok", onPress: () => navigation.goBack() },
+      ]);
   };
 
   useEffect(() => {
@@ -59,24 +90,26 @@ const SellerViewBook = ({ route, navigation }) => {
             name={buyerData.name}
             profileImg={buyerData.profileImg}
           />
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-evenly" }}
-          >
-            <CustomButton
-              style={{ width: "40%" }}
-              title="Accept"
-              bgColor={Colors.secondary}
-              color={Colors.white}
-              onPress={onAccept}
-            />
-            <CustomButton
-              style={{ width: "40%" }}
-              title="Reject"
-              bgColor={Colors.danger}
-              color={Colors.white}
-              onPress={onReject}
-            />
-          </View>
+          {display && (
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+            >
+              <CustomButton
+                style={{ width: "40%" }}
+                title="Accept"
+                bgColor={Colors.secondary}
+                color={Colors.white}
+                onPress={onAccept}
+              />
+              <CustomButton
+                style={{ width: "40%" }}
+                title="Reject"
+                bgColor={Colors.danger}
+                color={Colors.white}
+                onPress={onReject}
+              />
+            </View>
+          )}
         </>
       )}
     </ViewBook>
