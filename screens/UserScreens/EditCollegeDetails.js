@@ -102,16 +102,8 @@ const EditCollegeDetails = () => {
           name="collegeName"
         />
 
-        <AppFormField
-          placeholder="Roll No. / Reg. No."
-          placeholderTextColor={Colors.placeholder}
-          name="regNo"
-        />
-        <AppFormField
-          placeholder="Branch"
-          placeholderTextColor={Colors.placeholder}
-          name="branch"
-        />
+        <AppFormField placeholder="Roll No. / Reg. No." name="regNo" />
+        <AppFormField placeholder="Branch" name="branch" />
         <View
           style={{
             flexDirection: "row",
@@ -138,7 +130,6 @@ const EditCollegeDetails = () => {
         {uIsHosteller && (
           <AppFormField
             placeholder="Hostel Address"
-            placeholderTextColor={Colors.placeholder}
             multiline={true}
             numberOfLines={2}
             name="hostelAddress"

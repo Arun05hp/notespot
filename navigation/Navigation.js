@@ -52,11 +52,15 @@ const defaultNavOptions = {
 const DashboardNavigator = () => (
   <DashboardStack.Navigator screenOptions={defaultNavOptions}>
     <DashboardStack.Screen name="Dashboard" component={UserDashboard} />
-    <DashboardStack.Screen name="Upload" component={UploadPdf} />
+    <DashboardStack.Screen
+      name="Upload"
+      component={UploadPdf}
+      options={{ headerShown: false }}
+    />
     <DashboardStack.Screen
       name="Sell"
       component={SellBooks}
-      options={{ title: "Enter Book Details" }}
+      options={{ headerShown: false }}
     />
     <DashboardStack.Screen name="Buy" component={BuyBook} />
     <DashboardStack.Screen

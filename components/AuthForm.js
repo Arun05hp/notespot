@@ -38,7 +38,6 @@ const AuthForm = ({
             leftIcon={<FontAwesome5 style={styles.iconStyle} name="user-alt" />}
             name="name"
             placeholder="Full Name"
-            placeholderTextColor={Colors.placeholder}
           />
         ) : null}
         <AppFormField
@@ -46,14 +45,12 @@ const AuthForm = ({
           leftIcon={<MaterialIcons style={styles.iconStyle} name="email" />}
           name="email"
           placeholder="Email"
-          placeholderTextColor={Colors.placeholder}
         />
         <AppFormField
           secureTextEntry={secureText}
           leftIcon={<MaterialIcons style={styles.iconStyle} name="lock" />}
           name="password"
           placeholder="Password"
-          placeholderTextColor={Colors.placeholder}
           rightIcon={
             <FontAwesome5
               name={secureText ? "eye-slash" : "eye"}

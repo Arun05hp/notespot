@@ -67,21 +67,18 @@ const EditProfileDetails = () => {
           leftIcon={<FontAwesome5 name="user-alt" style={styles.iconStyle} />}
           name="username"
           placeholder="Full Name"
-          placeholderTextColor={Colors.placeholder}
         />
         <AppFormField
           keyboardType="email-address"
           leftIcon={<MaterialIcons name="email" style={styles.iconStyle} />}
           name="useremail"
           placeholder="Email Address"
-          placeholderTextColor={Colors.placeholder}
         />
         <AppFormField
           keyboardType="numeric"
           leftIcon={<FontAwesome5 name="mobile-alt" style={styles.iconStyle} />}
           name="mobileNumber"
           placeholder="Mobile Number"
-          placeholderTextColor={Colors.placeholder}
         />
         <AppFormField
           leftIcon={
@@ -91,7 +88,6 @@ const EditProfileDetails = () => {
           name="userAddress"
           numberOfLines={2}
           placeholder="Address"
-          placeholderTextColor={Colors.placeholder}
         />
         <SubmitButton title="Update" isLoading={isUpdating} />
       </AppForm>

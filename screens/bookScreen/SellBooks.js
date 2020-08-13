@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import * as Yup from "yup";
 import {
   AppForm,
@@ -7,6 +7,8 @@ import {
   SubmitButton,
   FormImagePicker,
 } from "../../components/forms/index";
+
+import Screen from "../../components/Screen";
 import { Context as SellBookContext } from "../../context/BuySellBookContext";
 import { Context as UserContext } from "../../context/UserContext";
 import ErrorMsgBox from "../../components/ErrorMsgBox";
@@ -48,73 +50,60 @@ const SellBooks = () => {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
-    >
-      <View style={styles.contentContainer}>
-        <ErrorMsgBox
-          errorMessage={errorMessage}
-          successMessage={successMessage}
-        />
-        <AppForm
-          initialValues={{
-            bookName: "",
-            authorName: "",
-            publisherName: "",
-            description: "",
-            price: "",
-            imageUri: null,
-          }}
-          onSubmit={onSubmit}
-          validationSchema={validationSchema}
-        >
-          <View style={styles.picker}>
-            <FormImagePicker name="imageUri" />
-          </View>
+    <Screen style={styles.container}>
+      <Text style={styles.heading}>Enter Book Details</Text>
+      <ErrorMsgBox
+        errorMessage={errorMessage}
+        successMessage={successMessage}
+      />
+      <AppForm
+        initialValues={{
+          bookName: "",
+          authorName: "",
+          publisherName: "",
+          description: "",
+          price: "",
+          imageUri: null,
+        }}
+        onSubmit={onSubmit}
+        validationSchema={validationSchema}
+      >
+        <View style={styles.picker}>
+          <FormImagePicker name="imageUri" />
+        </View>
 
-          <AppFormField
-            name="bookName"
-            placeholder="Book Name"
-            placeholderTextColor={Colors.placeholder}
-          />
-          <AppFormField
-            name="authorName"
-            placeholder="Author Name"
-            placeholderTextColor={Colors.placeholder}
-          />
-          <AppFormField
-            name="publisherName"
-            placeholder="Publisher Name"
-            placeholderTextColor={Colors.placeholder}
-          />
-          <AppFormField
-            name="price"
-            keyboardType="numeric"
-            placeholder="Price"
-            placeholderTextColor={Colors.placeholder}
-          />
-          <AppFormField
-            name="description"
-            placeholder="Description about book condition"
-            placeholderTextColor={Colors.placeholder}
-            multiline={true}
-          />
-          <SubmitButton title="Submit" isLoading={isLoading} />
-        </AppForm>
-      </View>
-    </ScrollView>
+        <AppFormField name="bookName" placeholder="Book Name" />
+        <AppFormField name="authorName" placeholder="Author Name" />
+        <AppFormField name="publisherName" placeholder="Publisher Name" />
+        <AppFormField name="price" keyboardType="numeric" placeholder="Price" />
+        <AppFormField
+          name="description"
+          placeholder="Description about book condition"
+          multiline={true}
+        />
+        <SubmitButton title="Submit" isLoading={isLoading} />
+      </AppForm>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
+  container: {
     alignItems: "center",
+    justifyContent: "center",
     backgroundColor: Colors.white,
     paddingHorizontal: 20,
-    paddingVertical: 10,
   },
-  picker: { marginVertical: 10, alignItems: "center" },
+  picker: {
+    marginVertical: 10,
+    alignItems: "center",
+  },
+  heading: {
+    fontSize: 20,
+    fontFamily: "Roboto-bold",
+    color: Colors.primary,
+    marginBottom: 15,
+  },
 });
 
 export default SellBooks;
