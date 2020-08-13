@@ -101,7 +101,11 @@ const BookNavigator = () => (
       component={UploadedBook}
       options={{ title: "Selling Books" }}
     />
-    <BookStack.Screen name="SellerViewBook" component={SellerViewBook} />
+    <BookStack.Screen
+      name="SellerViewBook"
+      component={SellerViewBook}
+      options={{ headerShown: false }}
+    />
   </BookStack.Navigator>
 );
 

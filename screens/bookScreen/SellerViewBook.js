@@ -9,11 +9,10 @@ import UserProfileBar from "../../components/UserProfileBar";
 
 const SellerViewBook = ({ route, navigation }) => {
   const [buyerData, setBuyerData] = useState({});
-
   const [isLoading, setIsLoading] = useState(true);
   const { bookData } = route.params;
   const { buyerId } = bookData;
-  console.log("id", buyerId);
+
   const onAccept = () => {
     Alert.alert("Accepted", "Request Accepted Successfully", [
       { text: "ok", onPress: () => navigation.goBack() },
@@ -24,7 +23,7 @@ const SellerViewBook = ({ route, navigation }) => {
       { text: "ok", onPress: () => navigation.goBack() },
     ]);
   };
-  console.log(buyerData.name);
+
   useEffect(() => {
     const res = getBuyerInfo(buyerId);
     if (res) setIsLoading(false);
@@ -40,7 +39,6 @@ const SellerViewBook = ({ route, navigation }) => {
       if (response.data.error) {
         return false;
       } else {
-        console.log(response.data);
         setBuyerData(response.data);
         return true;
       }
@@ -53,7 +51,7 @@ const SellerViewBook = ({ route, navigation }) => {
     <ViewBook bookData={bookData}>
       {!buyerId ? (
         <Text style={styles.text}>No Buyer Yet</Text>
-      ) : !buyerData.name ? (
+      ) : !buyerData.name && !isLoading ? (
         <ActivityIndicator size="large" color={Colors.green} />
       ) : (
         <>

@@ -105,27 +105,8 @@ const getBooks = (dispatch) => async () => {
   }
 };
 
-const contactReqForSeller = (dispatch) => async (id, bookId) => {
-  dispatch({ type: "isLoading", payload: true });
-  try {
-    const response = await appApi.post("/user/contactReqForSeller", {
-      id,
-      bookId,
-    });
-    if (response.data.error) {
-      dispatch({ type: "isLoading", payload: false });
-      return false;
-    } else {
-      dispatch({ type: "isLoading", payload: false });
-      return true;
-    }
-  } catch (error) {
-    dispatch({ type: "isLoading", payload: false });
-    return false;
-  }
-};
 export const { Provider, Context } = createDataContext(
   buySellBookReducer,
-  { sellBook, getBooks, clearMessage, contactReqForSeller },
+  { sellBook, getBooks, clearMessage },
   { bookLists: [], errorMessage: "", successMessage: "", isLoading: false }
 );
