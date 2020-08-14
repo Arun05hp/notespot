@@ -33,13 +33,21 @@ const SellBooks = () => {
   );
   const { errorMessage, successMessage, isLoading } = bookState;
   const { state } = useContext(UserContext);
-  const userId = state.userData.id;
+  const { id: userId, mobileno } = state.userData;
+  const { collegeName } = state.collegeData;
 
   useEffect(() => {
     return () => {
       clearMessage();
     };
   }, []);
+
+  if (!collegeName || (collegeName == null && !mobileno) || mobileno == null)
+    Alert.alert(
+      "Incomplete Profile and College Details",
+      "Please Complete Your Profile and College Details First",
+      [{ text: "ok", onPress: () => navigation.navigate("Profile") }]
+    );
 
   const onSubmit = async (values, { resetForm }) => {
     const res = await sellBook({

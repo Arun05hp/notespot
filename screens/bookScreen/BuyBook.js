@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator, Alert } from "react-native";
 
 import { Context as BuyBookContext } from "../../context/BuySellBookContext";
 import { Context as UserContext } from "../../context/UserContext";
@@ -10,11 +10,22 @@ const BuyBook = ({ navigation }) => {
   const { state: user } = useContext(UserContext);
   const { id } = user.userData;
   const bookListData = state.bookLists;
+  const { collegeName } = user.collegeData;
+  console.log(!collegeName);
   const filterBooks = bookListData.filter(
-    (book) => book.buyerId === null && book.sellerId != id
+    (book) =>
+      book.buyerId === null &&
+      book.sellerId != id &&
+      book.collegeName == collegeName
   );
   useEffect(() => {
-    getBooks();
+    if (!collegeName || collegeName == null)
+      Alert.alert(
+        "Incomplete Profile and College Details",
+        "Please Complete Your Profile and College Details First",
+        [{ text: "ok", onPress: () => navigation.navigate("Profile") }]
+      );
+    else getBooks();
   }, []);
 
   if (bookListData.length <= 0) {
