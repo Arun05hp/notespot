@@ -28,6 +28,8 @@ import BuyerViewBook from "../screens/BookScreen/BuyerViewBook";
 import SellerViewBook from "../screens/BookScreen/SellerViewBook";
 import BookStatus from "../screens/BookScreen/BookStatus";
 import ViewBookStatus from "../screens/BookScreen/ViewBookStatus";
+import RecentUploads from "../screens/PdfScreen/RecentUploads";
+import SearchPdf from "../screens/PdfScreen/SearchPdf";
 
 const DashboardStack = createStackNavigator();
 const PdfStack = createStackNavigator();
@@ -84,12 +86,35 @@ const DashboardNavigator = () => (
         title: "View Book Status",
       }}
     />
+    <DashboardStack.Screen
+      name="RecentUploads"
+      component={RecentUploads}
+      options={{
+        title: "Uploaded Pdfs",
+      }}
+    />
+    <DashboardStack.Screen
+      name="SearchPdf"
+      component={SearchPdf}
+      options={{
+        headerShown: false,
+      }}
+    />
+    <PdfStack.Screen
+      name="ViewUserPdf"
+      component={ViewPdf}
+      options={({ route }) => ({ title: route.params.pdfName })}
+    />
   </DashboardStack.Navigator>
 );
 
 const PdfNavigator = () => (
   <PdfStack.Navigator screenOptions={defaultNavOptions}>
-    <PdfStack.Screen name="PdfLists" component={PdfLists} />
+    <PdfStack.Screen
+      name="PdfLists"
+      component={PdfLists}
+      options={{ title: "Pdf" }}
+    />
     <PdfStack.Screen
       name="ViewPdf"
       component={ViewPdf}

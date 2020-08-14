@@ -45,7 +45,7 @@ const FileInput = ({ fileData, onChangePdf }) => {
           <MaterialIcons
             name="picture-as-pdf"
             size={30}
-            color={Colors.medium}
+            color={Colors.danger}
           />
         ) : (
           <Text style={styles.text}>{fileData.fileName}</Text>

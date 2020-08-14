@@ -19,14 +19,14 @@ const GridData = [
     title: "Recent Uploads",
     icon: <AntDesign name="clouduploado" size={24} color="#D168F7" />,
     color: "#D168F7",
-    navigateScreen: "pdfFlow",
+    navigateScreen: "RecentUploads",
   },
   {
     id: "search",
     title: "Search Pdf",
     icon: <AntDesign name="search1" size={24} color="#F84772" />,
     color: "#F84772",
-    navigateScreen: "UploadPdf",
+    navigateScreen: "SearchPdf",
   },
   {
     id: "status",
