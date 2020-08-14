@@ -12,8 +12,9 @@ import Screen from "../../components/Screen";
 import { Context as SellBookContext } from "../../context/BuySellBookContext";
 import { Context as UserContext } from "../../context/UserContext";
 import ErrorMsgBox from "../../components/ErrorMsgBox";
-
+import CustomButton from "../../components/CustomButton";
 import Colors from "../../constants/colors";
+import ProfileError from "../../components/ProfileError";
 
 const validationSchema = Yup.object().shape({
   bookName: Yup.string().required().label("Book Name"),
@@ -27,7 +28,7 @@ const validationSchema = Yup.object().shape({
   imageUri: Yup.string().nullable().required().label("Image"),
 });
 
-const SellBooks = () => {
+const SellBooks = ({ navigation }) => {
   const { sellBook, clearMessage, state: bookState } = useContext(
     SellBookContext
   );
@@ -41,13 +42,14 @@ const SellBooks = () => {
       clearMessage();
     };
   }, []);
-
-  if (!collegeName || (collegeName == null && !mobileno) || mobileno == null)
-    Alert.alert(
-      "Incomplete Profile and College Details",
-      "Please Complete Your Profile and College Details First",
-      [{ text: "ok", onPress: () => navigation.navigate("Profile") }]
-    );
+  console.log(collegeName);
+  if (
+    collegeName == "" &&
+    collegeName == null &&
+    (!mobileno || mobileno == null)
+  ) {
+    return <ProfileError onPress={() => navigation.navigate("Profile")} />;
+  }
 
   const onSubmit = async (values, { resetForm }) => {
     const res = await sellBook({
