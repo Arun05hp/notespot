@@ -11,6 +11,7 @@ import {
 import Card from "./Card";
 import baseUrl from "../api/baseUrl";
 import Colors from "../constants/colors";
+import defaultStyles from "../constants/styles";
 import { Ionicons } from "@expo/vector-icons";
 
 const BookListing = ({ bookListData, onPress }) => {
@@ -19,9 +20,15 @@ const BookListing = ({ bookListData, onPress }) => {
       <FlatList
         data={bookListData}
         showsVerticalScrollIndicator={false}
-        keyExtractor={(item, index) => item.id.toString()}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={(itemData) => (
-          <Card style={!itemData.item.buyerId ? styles.card : styles.card2}>
+          <Card
+            style={
+              !itemData.item.buyerId
+                ? { ...styles.card, ...styles.card_bgW }
+                : { ...styles.card, ...styles.card_bgC }
+            }
+          >
             <TouchableOpacity onPress={() => onPress(itemData.item)}>
               <View style={styles.innerContainer}>
                 <View style={{ width: 100, height: 120 }}>
@@ -31,14 +38,18 @@ const BookListing = ({ bookListData, onPress }) => {
                   />
                 </View>
                 <View style={styles.infoBox}>
-                  <Text style={styles.title} numberOfLines={2}>
+                  <Text style={defaultStyles.title} numberOfLines={2}>
                     {itemData.item.bookName}
                   </Text>
-                  <Text style={styles.subTitle}>
+                  <Text style={{ ...defaultStyles.font_RB, color: "#9e9e9e" }}>
                     By {itemData.item.authorName}
                   </Text>
                   <View style={styles.roundWrapper}>
-                    <Text style={styles.price}>₹ {itemData.item.price}</Text>
+                    <Text
+                      style={{ ...defaultStyles.subTitle, color: Colors.white }}
+                    >
+                      ₹ {itemData.item.price}
+                    </Text>
                   </View>
                 </View>
                 <View style={{ justifyContent: "center" }}>
@@ -63,15 +74,14 @@ const styles = StyleSheet.create({
   },
   card: {
     borderRadius: 5,
-    backgroundColor: Colors.white,
-    marginVertical: 10,
     elevation: 2,
+    marginVertical: 10,
   },
-  card2: {
-    borderRadius: 5,
+  card_bgW: {
+    backgroundColor: Colors.white,
+  },
+  card_bgC: {
     backgroundColor: Colors.card,
-    marginVertical: 10,
-    elevation: 2,
   },
   innerContainer: {
     padding: 10,
@@ -88,25 +98,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 15,
     borderRadius: 20,
-  },
-  title: {
-    fontSize: 18,
-    fontFamily: "Roboto-bold",
-    color: "#333333",
-  },
-  price: {
-    fontSize: 16,
-    fontFamily: "Roboto-bold",
-    color: Colors.white,
-  },
-  subTitle: {
-    fontSize: 14,
-    fontFamily: "Roboto-bold",
-    color: "#9e9e9e",
-  },
-  description: {
-    fontSize: 14,
-    fontFamily: "Roboto-regular",
   },
 });
 export default BookListing;

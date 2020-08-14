@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 
+import defaultStyles from "../constants/styles";
 const CustomButton = ({
   title,
   style,
@@ -29,7 +30,7 @@ const CustomButton = ({
           <ActivityIndicator size="small" color={color} />
         </View>
       ) : null}
-      <Text style={{ ...styles.text, color: color }}>{title}</Text>
+      <Text style={{ ...defaultStyles.title, color: color }}>{title}</Text>
     </TouchableOpacity>
   );
 };
@@ -42,10 +43,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 10,
     width: "50%",
-  },
-  text: {
-    fontSize: 18,
-    fontFamily: "Roboto-bold",
   },
 });
 

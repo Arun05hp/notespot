@@ -3,10 +3,11 @@ import { Text, StyleSheet } from "react-native";
 import Screen from "./Screen";
 import CustomButton from "./CustomButton";
 import Colors from "../constants/colors";
+import defaultStyles from "../constants/styles";
 const ProfileError = ({ onPress }) => {
   return (
     <Screen style={styles.container}>
-      <Text style={{ ...styles.mtext, color: Colors.yellow }}>
+      <Text style={{ ...defaultStyles.title, color: Colors.yellow }}>
         Incomplete Profile and College Details
       </Text>
       <CustomButton
@@ -25,11 +26,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: Colors.white,
     paddingHorizontal: 20,
-  },
-  mtext: {
-    fontSize: 18,
-    fontFamily: "Roboto-bold",
-    color: Colors.primary,
   },
 });
 

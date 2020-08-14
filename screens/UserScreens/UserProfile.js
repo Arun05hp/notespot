@@ -118,6 +118,13 @@ const UserProfile = ({ navigation }) => {
         >
           <View style={styles.row}>
             <Text style={styles.text}>Profile Details</Text>
+            {!mobileno ? (
+              <AntDesign
+                name="exclamationcircleo"
+                size={20}
+                color={Colors.yellow}
+              />
+            ) : null}
             <AntDesign style={styles.icons} name="edit" />
           </View>
         </TouchableOpacity>
@@ -128,6 +135,14 @@ const UserProfile = ({ navigation }) => {
         >
           <View style={styles.row}>
             <Text style={styles.text}>College Details</Text>
+            {!collegeName ? (
+              <AntDesign
+                name="exclamationcircleo"
+                size={20}
+                color={Colors.yellow}
+              />
+            ) : null}
+
             <AntDesign
               style={styles.icons}
               name={!collegeName ? "plus" : "edit"}

@@ -10,6 +10,7 @@ import {
 
 import { Context as PdfContext } from "../../context/PdfContext";
 import Card from "../../components/Card";
+import defaultStyles from "../../constants/styles";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const PdfLists = ({ navigation }) => {
@@ -21,13 +22,7 @@ const PdfLists = ({ navigation }) => {
 
   if (pdfListData.length <= 0) {
     return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <View style={defaultStyles.flex_1_center}>
         <ActivityIndicator size="large" color="red" />
       </View>
     );
@@ -56,14 +51,14 @@ const PdfLists = ({ navigation }) => {
                   color="#d21e27"
                 />
                 <View style={{ marginHorizontal: 10 }}>
-                  <Text style={styles.title}>
+                  <Text style={defaultStyles.title}>
                     Title: {itemData.item.pdfName}
                   </Text>
                   <Text style={styles.subTitle}>
                     Category: {itemData.item.category}
                   </Text>
                   {itemData.item.description ? (
-                    <Text style={styles.description} numberOfLines={2}>
+                    <Text style={defaultStyles.sText} numberOfLines={2}>
                       Description: {itemData.item.description}
                     </Text>
                   ) : null}
@@ -89,20 +84,12 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   innerContainer: {
-    padding: 10,
-    flexDirection: "row",
     alignItems: "center",
-  },
-  title: {
-    fontSize: 18,
-    fontFamily: "Roboto-bold",
+    flexDirection: "row",
+    padding: 10,
   },
   subTitle: {
     fontSize: 16,
-    fontFamily: "Roboto-regular",
-  },
-  description: {
-    fontSize: 14,
     fontFamily: "Roboto-regular",
   },
 });

@@ -12,8 +12,8 @@ import Screen from "../../components/Screen";
 import { Context as SellBookContext } from "../../context/BuySellBookContext";
 import { Context as UserContext } from "../../context/UserContext";
 import ErrorMsgBox from "../../components/ErrorMsgBox";
-import CustomButton from "../../components/CustomButton";
 import Colors from "../../constants/colors";
+import defaultStyles from "../../constants/styles";
 import ProfileError from "../../components/ProfileError";
 
 const validationSchema = Yup.object().shape({
@@ -42,12 +42,8 @@ const SellBooks = ({ navigation }) => {
       clearMessage();
     };
   }, []);
-  console.log(collegeName);
-  if (
-    collegeName == "" &&
-    collegeName == null &&
-    (!mobileno || mobileno == null)
-  ) {
+
+  if (collegeName == undefined || mobileno == null) {
     return <ProfileError onPress={() => navigation.navigate("Profile")} />;
   }
 
@@ -60,8 +56,12 @@ const SellBooks = ({ navigation }) => {
   };
 
   return (
-    <Screen style={styles.container}>
-      <Text style={styles.heading}>Enter Book Details</Text>
+    <Screen
+      style={{ ...defaultStyles.container, backgroundColor: Colors.white }}
+    >
+      <Text style={{ ...defaultStyles.heading, marginBottom: 15 }}>
+        Enter Book Details
+      </Text>
       <ErrorMsgBox
         errorMessage={errorMessage}
         successMessage={successMessage}
@@ -98,21 +98,9 @@ const SellBooks = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: Colors.white,
-    paddingHorizontal: 20,
-  },
   picker: {
     marginVertical: 10,
     alignItems: "center",
-  },
-  heading: {
-    fontSize: 20,
-    fontFamily: "Roboto-bold",
-    color: Colors.primary,
-    marginBottom: 15,
   },
 });
 

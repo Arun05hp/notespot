@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { View, Text, StyleSheet, CheckBox } from "react-native";
+import { View, Text, CheckBox } from "react-native";
 import * as Yup from "yup";
 import { Context as UserContext } from "../../context/UserContext";
 
@@ -12,6 +12,7 @@ import {
 import Screen from "../../components/Screen";
 import ErrorMsgBox from "../../components/ErrorMsgBox";
 import Colors from "../../constants/colors";
+import defaultStyles from "../../constants/styles";
 
 const validationSchema = Yup.object().shape({
   collegeName: Yup.string().required().label("College Name"),
@@ -77,8 +78,8 @@ const EditCollegeDetails = () => {
   }, []);
 
   return (
-    <Screen style={styles.container}>
-      <Text style={styles.heading}>
+    <Screen style={defaultStyles.container}>
+      <Text style={{ ...defaultStyles.heading, marginBottom: 15 }}>
         {!collegeName ? "Add" : "Edit"} College Details
       </Text>
       <ErrorMsgBox
@@ -104,15 +105,8 @@ const EditCollegeDetails = () => {
 
         <AppFormField placeholder="Roll No. / Reg. No." name="regNo" />
         <AppFormField placeholder="Branch" name="branch" />
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            marginBottom: 5,
-          }}
-        >
-          <Text style={{ ...styles.Title, color: Colors.primary }}>
+        <View style={{ ...defaultStyles.flexRowCenter, marginBottom: 5 }}>
+          <Text style={{ ...defaultStyles.subTitle, color: Colors.primary }}>
             Are You Hosteller ? Yes
           </Text>
           <CheckBox
@@ -123,7 +117,6 @@ const EditCollegeDetails = () => {
                 setuHostelAddress("");
               }
             }}
-            style={styles.checkbox}
           />
         </View>
 
@@ -140,29 +133,5 @@ const EditCollegeDetails = () => {
     </Screen>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 20,
-  },
-  heading: {
-    fontSize: 20,
-    fontFamily: "Roboto-bold",
-    color: Colors.primary,
-    marginBottom: 15,
-  },
-  label: {
-    fontFamily: "Roboto-bold",
-    color: Colors.primary,
-    padding: 0,
-  },
-  Title: {
-    color: Colors.white,
-    fontFamily: "Roboto-bold",
-    fontSize: 16,
-  },
-});
 
 export default EditCollegeDetails;

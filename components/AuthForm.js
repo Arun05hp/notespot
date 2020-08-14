@@ -6,6 +6,7 @@ import { AppForm, AppFormField, SubmitButton } from "./forms/index";
 import ErrorMsgBox from "./ErrorMsgBox";
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import Colors from "../constants/colors";
+import defaultStyles from "../constants/styles";
 
 const AuthForm = ({
   errorMessage,
@@ -35,26 +36,32 @@ const AuthForm = ({
       >
         {isSignUpForm ? (
           <AppFormField
-            leftIcon={<FontAwesome5 style={styles.iconStyle} name="user-alt" />}
+            leftIcon={
+              <FontAwesome5 style={defaultStyles.iconStyle} name="user-alt" />
+            }
             name="name"
             placeholder="Full Name"
           />
         ) : null}
         <AppFormField
           keyboardType="email-address"
-          leftIcon={<MaterialIcons style={styles.iconStyle} name="email" />}
+          leftIcon={
+            <MaterialIcons style={defaultStyles.iconStyle} name="email" />
+          }
           name="email"
           placeholder="Email"
         />
         <AppFormField
           secureTextEntry={secureText}
-          leftIcon={<MaterialIcons style={styles.iconStyle} name="lock" />}
+          leftIcon={
+            <MaterialIcons style={defaultStyles.iconStyle} name="lock" />
+          }
           name="password"
           placeholder="Password"
           rightIcon={
             <FontAwesome5
               name={secureText ? "eye-slash" : "eye"}
-              style={styles.iconStyle}
+              style={defaultStyles.iconStyle}
               onPress={() => setSecureText((prevState) => !prevState)}
             />
           }
@@ -69,7 +76,7 @@ const AuthForm = ({
           title={submitButtonText}
           isLoading={isLoading}
         />
-        <View style={styles.flexBox}>
+        <View style={defaultStyles.flexRowCenter}>
           {isSignUpForm ? (
             <>
               <Text style={styles.linkText}>Already Registered ? </Text>
@@ -102,10 +109,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginVertical: 10,
   },
-  iconStyle: {
-    fontSize: 18,
-    color: Colors.primary,
-  },
   forget: {
     textAlign: "right",
     color: Colors.primary,
@@ -114,11 +117,6 @@ const styles = StyleSheet.create({
   btnWrapper: {
     marginVertical: 15,
     alignSelf: "center",
-  },
-  flexBox: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
   },
   linkText: {
     fontSize: 14,

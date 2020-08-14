@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Text, StyleSheet } from "react-native";
+import { Text } from "react-native";
 
 import * as Yup from "yup";
 import {
@@ -16,6 +16,7 @@ import ErrorMsgBox from "../../components/ErrorMsgBox";
 import { Context as PdfContext } from "../../context/PdfContext";
 import { Context as UserContext } from "../../context/UserContext";
 import Colors from "../../constants/colors";
+import defaultStyles from "../../constants/styles";
 
 const validationSchema = Yup.object().shape({
   topicName: Yup.string().required().label("Topic Name"),
@@ -80,8 +81,12 @@ const UploadPdf = ({ navigation }) => {
   };
 
   return (
-    <Screen style={styles.container}>
-      <Text style={styles.heading}>Enter Pdf Details</Text>
+    <Screen
+      style={{ ...defaultStyles.container, backgroundColor: Colors.white }}
+    >
+      <Text style={{ ...defaultStyles.heading, marginBottom: 15 }}>
+        Enter Pdf Details
+      </Text>
       <ErrorMsgBox
         errorMessage={errorMessage}
         successMessage={successMessage}
@@ -111,21 +116,5 @@ const UploadPdf = ({ navigation }) => {
     </Screen>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-    paddingHorizontal: 20,
-  },
-  heading: {
-    fontSize: 20,
-    fontFamily: "Roboto-bold",
-    color: Colors.primary,
-    marginBottom: 15,
-  },
-});
 
 export default UploadPdf;

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Text, StyleSheet } from "react-native";
+import { Text } from "react-native";
 import * as Yup from "yup";
 
 import { Context as UserContext } from "../../context/UserContext";
@@ -12,7 +12,7 @@ import {
 
 import ErrorMsgBox from "../../components/ErrorMsgBox";
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
-import Colors from "../../constants/colors";
+import defaultStyles from "../../constants/styles";
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().label("Name"),
@@ -46,8 +46,10 @@ const EditProfileDetails = () => {
   }, []);
 
   return (
-    <Screen style={styles.container}>
-      <Text style={styles.heading}>Edit Profile</Text>
+    <Screen style={defaultStyles.container}>
+      <Text style={{ ...defaultStyles.heading, marginBottom: 15 }}>
+        Edit Profile
+      </Text>
 
       <ErrorMsgBox
         errorMessage={errorMessage}
@@ -64,25 +66,31 @@ const EditProfileDetails = () => {
         validationSchema={validationSchema}
       >
         <AppFormField
-          leftIcon={<FontAwesome5 name="user-alt" style={styles.iconStyle} />}
+          leftIcon={
+            <FontAwesome5 name="user-alt" style={defaultStyles.iconStyle} />
+          }
           name="username"
           placeholder="Full Name"
         />
         <AppFormField
           keyboardType="email-address"
-          leftIcon={<MaterialIcons name="email" style={styles.iconStyle} />}
+          leftIcon={
+            <MaterialIcons name="email" style={defaultStyles.iconStyle} />
+          }
           name="useremail"
           placeholder="Email Address"
         />
         <AppFormField
           keyboardType="numeric"
-          leftIcon={<FontAwesome5 name="mobile-alt" style={styles.iconStyle} />}
+          leftIcon={
+            <FontAwesome5 name="mobile-alt" style={defaultStyles.iconStyle} />
+          }
           name="mobileNumber"
           placeholder="Mobile Number"
         />
         <AppFormField
           leftIcon={
-            <MaterialIcons name="location-on" style={styles.iconStyle} />
+            <MaterialIcons name="location-on" style={defaultStyles.iconStyle} />
           }
           multiline={true}
           name="userAddress"
@@ -94,28 +102,5 @@ const EditProfileDetails = () => {
     </Screen>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 20,
-  },
-  heading: {
-    fontSize: 20,
-    fontFamily: "Roboto-bold",
-    color: Colors.primary,
-    marginBottom: 15,
-  },
-  iconStyle: {
-    fontSize: 20,
-    color: Colors.primary,
-  },
-  btnTitle: {
-    color: Colors.white,
-    fontSize: 16,
-    fontFamily: "Roboto-bold",
-  },
-});
 
 export default EditProfileDetails;

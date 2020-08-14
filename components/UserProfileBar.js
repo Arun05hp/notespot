@@ -4,14 +4,14 @@ import { View, Text, Image, StyleSheet } from "react-native";
 import baseUrl from "../api/baseUrl";
 import Card from "./Card";
 import Colors from "../constants/colors";
-import colors from "../constants/colors";
+import defaultStyles from "../constants/styles";
 
 const UserProfileBar = ({ userData, showInfo }) => {
   return (
     <Card style={styles.container}>
       <View style={styles.profile}>
         <Image
-          style={styles.image}
+          style={defaultStyles.image}
           source={{
             uri: !userData.profileImg
               ? "https://img.icons8.com/ultraviolet/80/000000/user.png"
@@ -20,11 +20,13 @@ const UserProfileBar = ({ userData, showInfo }) => {
         />
       </View>
       <View>
-        <Text style={styles.mTitle}>{userData.name}</Text>
+        <Text style={{ ...defaultStyles.title, color: Colors.primary }}>
+          {userData.name}
+        </Text>
         {showInfo && (
           <>
-            <Text style={styles.sTitle}>{userData.mobileno}</Text>
-            <Text style={styles.sTitle}>{userData.email}</Text>
+            <Text style={defaultStyles.subTitle}>{userData.mobileno}</Text>
+            <Text style={defaultStyles.subTitle}>{userData.email}</Text>
           </>
         )}
       </View>
@@ -34,35 +36,21 @@ const UserProfileBar = ({ userData, showInfo }) => {
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 25,
+    alignItems: "center",
     backgroundColor: Colors.white,
-    marginVertical: 15,
+    borderRadius: 25,
     elevation: 1,
     flexDirection: "row",
-    alignItems: "center",
+    marginVertical: 15,
     padding: 10,
   },
   profile: {
-    width: 50,
-    height: 50,
     borderRadius: 25,
     backgroundColor: Colors.light,
-    overflow: "hidden",
+    height: 50,
     marginRight: 15,
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-  },
-  mTitle: {
-    fontSize: 18,
-    fontFamily: "Roboto-bold",
-    color: Colors.primary,
-  },
-  sTitle: {
-    fontSize: 16,
-    fontFamily: "Roboto-bold",
-    color: colors.medium,
+    overflow: "hidden",
+    width: 50,
   },
 });
 

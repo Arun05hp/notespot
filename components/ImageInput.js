@@ -4,7 +4,7 @@ import * as ImagePicker from "expo-image-picker";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import Colors from "../constants/colors";
-
+import defaultStyles from "../constants/styles";
 const ImageInput = ({ imageUri, onChangeImage }) => {
   useEffect(() => {
     reqPermission();
@@ -51,7 +51,9 @@ const ImageInput = ({ imageUri, onChangeImage }) => {
           />
         )}
 
-        {imageUri && <Image style={styles.img} source={{ uri: imageUri }} />}
+        {imageUri && (
+          <Image style={defaultStyles.image} source={{ uri: imageUri }} />
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -65,10 +67,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     overflow: "hidden",
     width: 100,
-  },
-  img: {
-    height: "100%",
-    width: "100%",
   },
 });
 export default ImageInput;

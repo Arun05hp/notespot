@@ -4,6 +4,7 @@ import { View, Text, ActivityIndicator } from "react-native";
 import { Context as UserContext } from "../../context/UserContext";
 import { Context as BuyBookContext } from "../../context/BuySellBookContext";
 import BookListing from "../../components/BookListing";
+import defaultStyles from "../../constants/styles";
 
 const UploadedBook = ({ navigation }) => {
   const { state, getBooks } = useContext(BuyBookContext);
@@ -18,13 +19,7 @@ const UploadedBook = ({ navigation }) => {
 
   if (bookListData.length <= 0) {
     return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <View style={defaultStyles.flex_1_center}>
         <ActivityIndicator size="large" color="red" />
       </View>
     );
