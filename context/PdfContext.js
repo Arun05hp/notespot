@@ -34,8 +34,7 @@ const uploadPdf = (dispatch) => async ({
   topicName,
   category,
   description,
-  fileName,
-  uri,
+  fileData,
 }) => {
   try {
     dispatch({ type: "isLoading", payload: true });
@@ -45,8 +44,8 @@ const uploadPdf = (dispatch) => async ({
     data.append("category", category);
     data.append("description", description);
     data.append("pdfData", {
-      uri: uri,
-      name: fileName,
+      uri: fileData.uri,
+      name: fileData.fileName,
       type: "application/pdf",
     });
     const response = await appApi.post("/user/pdfupload", data, {

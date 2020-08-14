@@ -1,15 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Text } from "react-native";
 
 import * as Yup from "yup";
 import {
   AppForm,
   AppFormField,
+  FormFilePicker,
   SubmitButton,
 } from "../../components/forms/index";
 
 import Screen from "../../components/Screen";
-import * as DocumentPicker from "expo-document-picker";
 
 import ErrorMsgBox from "../../components/ErrorMsgBox";
 
@@ -22,6 +22,10 @@ const validationSchema = Yup.object().shape({
   topicName: Yup.string().required().label("Topic Name"),
   category: Yup.string().required().label("Category"),
   description: Yup.string().nullable().label("Category"),
+  fileData: Yup.object().shape({
+    fileName: Yup.string().required().label("pdf"),
+    uri: Yup.string().required().label("pdf"),
+  }),
 });
 
 const UploadPdf = ({ navigation }) => {
@@ -29,54 +33,15 @@ const UploadPdf = ({ navigation }) => {
   const { state } = useContext(UserContext);
   const { errorMessage, successMessage, isLoading } = pdfState;
   const userId = state.userData.id;
-  const [pdfFileData, setPdfFileData] = useState({
-    fileName: "",
-    uri: "",
-  });
 
-  const [fileExists, setFileExists] = useState(false);
-
-  const documentSelect = async () => {
-    try {
-      const res = await DocumentPicker.getDocumentAsync({
-        type: "application/pdf",
-        copyToCacheDirectory: false,
-      });
-      if (res.type === "success") {
-        setPdfFileData({
-          fileName: res.name,
-          uri: res.uri,
-        });
-        setFileExists(true);
-      } else {
-        return;
-      }
-    } catch (err) {
-      err = err;
-    }
-  };
-
-  //   <TwoButtonRow
-  //   firstBtnText={selectBtnText}
-  //   secBtnText="Upload Pdf"
-  //   onSubmit1st={documentSelect}
-  //   onSubmit2nd={() => validatePdf()}
-  //   isloading={isLoading}
-  // />
-  const validatePdf = async () => {
-    if (fileExists) {
-      const res = await uploadPdf({
-        userId,
-        topicName,
-        category,
-        description,
-        ...pdfFileData,
-      });
-      if (res) {
-        setTimeout(function () {
-          navigation.goBack();
-        }, 1000);
-      }
+  const onSubmit = async (values, { resetForm }) => {
+    const res = await uploadPdf({ userId, ...values });
+    if (res) {
+      resetForm();
+      setTimeout(function () {
+        navigation.goBack();
+        clearMessage();
+      }, 1000);
     }
   };
 
@@ -96,10 +61,15 @@ const UploadPdf = ({ navigation }) => {
           topicName: "",
           category: "",
           description: "",
+          fileData: {
+            fileName: "",
+            uri: "",
+          },
         }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={onSubmit}
         validationSchema={validationSchema}
       >
+        <FormFilePicker name="fileData" />
         <AppFormField placeholder="Topic Name" name="topicName" />
         <AppFormField placeholder="Category" name="category" />
         <AppFormField

@@ -25,8 +25,8 @@ const UserProfileBar = ({ userData, showInfo }) => {
         </Text>
         {showInfo && (
           <>
-            <Text style={defaultStyles.subTitle}>{userData.mobileno}</Text>
-            <Text style={defaultStyles.subTitle}>{userData.email}</Text>
+            <Text style={defaultStyles.sText}>{userData.mobileno}</Text>
+            <Text style={defaultStyles.sText}>{userData.email}</Text>
           </>
         )}
       </View>

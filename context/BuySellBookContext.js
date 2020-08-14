@@ -83,7 +83,6 @@ const sellBook = (dispatch) => async ({
 };
 
 const getBooks = (dispatch) => async () => {
-  dispatch({ type: "isLoading", payload: true });
   try {
     const response = await appApi.get("/user/getbooksData");
     if (response.data.error) {
@@ -91,17 +90,14 @@ const getBooks = (dispatch) => async () => {
         type: "add_message",
         payload: { error: response.data.error, success: "" },
       });
-      dispatch({ type: "isLoading", payload: false });
     } else {
       dispatch({ type: "get_Books", payload: response.data });
-      dispatch({ type: "isLoading", payload: false });
     }
   } catch (error) {
     dispatch({
       type: "add_message",
       payload: { error: "Something Went Wrong", success: "" },
     });
-    dispatch({ type: "isLoading", payload: false });
   }
 };
 

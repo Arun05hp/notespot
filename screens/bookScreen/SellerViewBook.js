@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { View, Text, Alert, ActivityIndicator, StyleSheet } from "react-native";
 
 import appApi from "../../api/appApi";
+import { Context as BuyBookContext } from "../../context/BuySellBookContext";
 import ViewBook from "../../components/ViewBook";
 import CustomButton from "../../components/CustomButton";
 import Colors from "../../constants/colors";
@@ -21,6 +22,7 @@ const accept_RejectReq = async (bookId, isRejected) => {
 };
 
 const SellerViewBook = ({ route, navigation }) => {
+  const { getBooks } = useContext(BuyBookContext);
   const [buyerData, setBuyerData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const { bookData } = route.params;
@@ -35,7 +37,13 @@ const SellerViewBook = ({ route, navigation }) => {
     console.log(res);
     if (res)
       Alert.alert("Accepted", "Request Accepted Successfully", [
-        { text: "ok", onPress: () => navigation.goBack() },
+        {
+          text: "ok",
+          onPress: () => {
+            navigation.goBack();
+            getBooks();
+          },
+        },
       ]);
     else
       Alert.alert("Failed", "Try Again", [
@@ -47,7 +55,13 @@ const SellerViewBook = ({ route, navigation }) => {
     const res = await accept_RejectReq(bookId, true);
     if (res)
       Alert.alert("Rejected", "Request Rejected Successfully", [
-        { text: "ok", onPress: () => navigation.goBack() },
+        {
+          text: "ok",
+          onPress: () => {
+            navigation.goBack();
+            getBooks();
+          },
+        },
       ]);
     else
       Alert.alert("Failed", "Try Again", [
