@@ -19,7 +19,7 @@ import SellBooks from "../screens/BookScreen/SellBooks";
 import BuyBook from "../screens/BookScreen/BuyBook";
 
 import UploadPdf from "../screens/PdfScreen/UploadPdf";
-import PdfLists from "../screens/PdfScreen/PdfLists";
+import DownloadedPdfs from "../screens/PdfScreen/DownloadedPdfs";
 import ViewPdf from "../screens/PdfScreen/ViewPdf";
 
 import { AntDesign } from "@expo/vector-icons";
@@ -111,9 +111,9 @@ const DashboardNavigator = () => (
 const PdfNavigator = () => (
   <PdfStack.Navigator screenOptions={defaultNavOptions}>
     <PdfStack.Screen
-      name="PdfLists"
-      component={PdfLists}
-      options={{ title: "Pdf" }}
+      name="DownloadedPdfs"
+      component={DownloadedPdfs}
+      options={{ title: "Downloaded Pdf" }}
     />
     <PdfStack.Screen
       name="ViewPdf"

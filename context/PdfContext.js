@@ -78,25 +78,16 @@ const uploadPdf = (dispatch) => async ({
 };
 
 const getPdfs = (dispatch) => async () => {
-  dispatch({ type: "isLoading", payload: true });
   try {
     const response = await appApi.get("/user/getPdfs");
     if (response.data.error) {
-      dispatch({
-        type: "add_message",
-        payload: { error: response.data.error, success: "" },
-      });
-      dispatch({ type: "isLoading", payload: false });
+      return false;
     } else {
       dispatch({ type: "get_pdfs", payload: response.data });
-      dispatch({ type: "isLoading", payload: false });
+      return true;
     }
   } catch (error) {
-    dispatch({
-      type: "add_message",
-      payload: { error: "Something Went Wrong", success: "" },
-    });
-    dispatch({ type: "isLoading", payload: false });
+    return false;
   }
 };
 

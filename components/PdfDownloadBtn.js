@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, Alert } from "react-native";
 import * as FileSystem from "expo-file-system";
 
 import baseUrl from "../api/baseUrl";
@@ -18,8 +18,9 @@ const PdfDownloadBtn = ({ item }) => {
       const res = await FileSystem.makeDirectoryAsync(pdfFolder);
     }
     const fileExists = await FileSystem.getInfoAsync(pdfFolder + pdfName);
+
     if (fileExists.exists) {
-      console.log("presett", fileExists.exists);
+      Alert.alert("Exists", "File Already Exists", [{ text: "ok" }]);
       setstate(false);
       return;
     }
@@ -36,9 +37,14 @@ const PdfDownloadBtn = ({ item }) => {
     try {
       const { uri } = await downloadResumable.downloadAsync();
       console.log("Finished downloading to ", uri);
+      Alert.alert(
+        "Success",
+        "File is downloaded successfully.Go to Pdf tab to see your Downloads",
+        [{ text: "ok" }]
+      );
       setstate(false);
     } catch (e) {
-      err = e;
+      Alert.alert("Error", "Please Try Again Later", [{ text: "ok" }]);
       setstate(false);
     }
   };
@@ -49,9 +55,9 @@ const PdfDownloadBtn = ({ item }) => {
         downloadProgress.totalBytesExpectedToWrite
       ).toFixed(3) * 100
     );
-    console.log(progress);
     setPercentage(progress);
   };
+
   return (
     <TouchableOpacity
       disabled={state}

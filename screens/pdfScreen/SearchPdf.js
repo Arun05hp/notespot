@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 
 import { Context as PdfContext } from "../../context/PdfContext";
 
@@ -10,13 +10,9 @@ import AppTextInput from "../../components/AppTextInput";
 
 const SearchPdf = ({ navigation }) => {
   const { state, getPdfs } = useContext(PdfContext);
-  useEffect(() => {
-    getPdfs();
-  }, []);
-
   const pdfListData = state.pdfLists;
-
-  const [pdfs, setpdfs] = useState(!pdfListData ? [] : pdfListData);
+  const [isLoading, setIsLoading] = useState(true);
+  const [pdfs, setpdfs] = useState([]);
 
   const searchData = (text) => {
     const newData = pdfListData.filter((item) => {
@@ -26,8 +22,17 @@ const SearchPdf = ({ navigation }) => {
     });
     setpdfs(newData);
   };
-
-  if (pdfListData.length <= 0) {
+  const getPdfData = async () => {
+    const res = await getPdfs();
+    if (res) {
+      setpdfs(pdfListData);
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    getPdfData();
+  }, []);
+  if (isLoading) {
     return (
       <View style={defaultStyles.flex_1_center}>
         <ActivityIndicator size="large" color="red" />
@@ -38,7 +43,8 @@ const SearchPdf = ({ navigation }) => {
   return (
     <Screen>
       <AppTextInput
-        placeholder="Search"
+        errorStyle={{ display: "none" }}
+        placeholder="Search Pdf"
         onChangeText={(text) => searchData(text)}
       />
       <PdfListing
