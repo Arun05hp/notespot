@@ -86,18 +86,13 @@ const getBooks = (dispatch) => async () => {
   try {
     const response = await appApi.get("/user/getbooksData");
     if (response.data.error) {
-      dispatch({
-        type: "add_message",
-        payload: { error: response.data.error, success: "" },
-      });
+      return false;
     } else {
       dispatch({ type: "get_Books", payload: response.data });
+      return true;
     }
   } catch (error) {
-    dispatch({
-      type: "add_message",
-      payload: { error: "Something Went Wrong", success: "" },
-    });
+    return false;
   }
 };
 

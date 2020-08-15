@@ -12,39 +12,44 @@ const PdfDownloadBtn = ({ item }) => {
   const [percentage, setPercentage] = useState(1);
 
   const onSubmit = async ({ pdfName, pdfLink }) => {
-    const pdfFolder = FileSystem.documentDirectory + "pdfs/";
-    const folder = await FileSystem.getInfoAsync(pdfFolder);
-    if (!folder.exists) {
-      const res = await FileSystem.makeDirectoryAsync(pdfFolder);
-    }
-    const fileExists = await FileSystem.getInfoAsync(pdfFolder + pdfName);
-
-    if (fileExists.exists) {
-      Alert.alert("Exists", "File Already Exists", [{ text: "ok" }]);
-      setstate(false);
-      return;
-    }
-
-    const sourceUri = baseUrl + "/" + pdfLink;
-
-    const downloadResumable = FileSystem.createDownloadResumable(
-      sourceUri,
-      pdfFolder + pdfName,
-      {},
-      callback
-    );
-
     try {
-      const { uri } = await downloadResumable.downloadAsync();
-      if (uri) {
-        Alert.alert(
-          "Success",
-          "File is downloaded successfully.Go to Pdf tab to see your Downloads",
-          [{ text: "ok" }]
-        );
+      const pdfFolder = FileSystem.documentDirectory + "pdfs/";
+      const folder = await FileSystem.getInfoAsync(pdfFolder);
+      if (!folder.exists) {
+        const res = await FileSystem.makeDirectoryAsync(pdfFolder);
+      }
+      const fileExists = await FileSystem.getInfoAsync(pdfFolder + pdfName);
+
+      if (fileExists.exists) {
+        Alert.alert("Exists", "File Already Exists", [{ text: "ok" }]);
+        setstate(false);
+        return;
+      }
+
+      const sourceUri = baseUrl + "/" + pdfLink;
+
+      const downloadResumable = FileSystem.createDownloadResumable(
+        sourceUri,
+        pdfFolder + pdfName,
+        {},
+        callback
+      );
+
+      try {
+        const { uri } = await downloadResumable.downloadAsync();
+        if (uri) {
+          Alert.alert(
+            "Success",
+            "File is downloaded successfully.Go to Pdf tab to see your Downloads",
+            [{ text: "ok" }]
+          );
+          setstate(false);
+        }
+      } catch (e) {
+        Alert.alert("Error", "Please Try Again Later", [{ text: "ok" }]);
         setstate(false);
       }
-    } catch (e) {
+    } catch (error) {
       Alert.alert("Error", "Please Try Again Later", [{ text: "ok" }]);
       setstate(false);
     }

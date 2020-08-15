@@ -27,11 +27,13 @@ const DownloadedPdfs = ({ navigation }) => {
   }, []);
 
   const getDownloadedPdfs = async () => {
-    const pdfFolder = FileSystem.documentDirectory + "pdfs/";
-    const pdfArray = await FileSystem.readDirectoryAsync(pdfFolder);
-    if (pdfArray) {
-      setPdfs(pdfArray);
-    }
+    try {
+      const pdfFolder = FileSystem.documentDirectory + "pdfs/";
+      const pdfArray = await FileSystem.readDirectoryAsync(pdfFolder);
+      if (pdfArray) {
+        setPdfs(pdfArray);
+      }
+    } catch (error) {}
   };
 
   if (pdfs.length <= 0) {
