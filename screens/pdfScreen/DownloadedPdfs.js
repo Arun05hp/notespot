@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import {
   View,
   StyleSheet,
@@ -16,9 +17,13 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 const DownloadedPdfs = ({ navigation }) => {
   const [pdfs, setPdfs] = useState([]);
-  const [refreshing, setRefreshing] = useState(false);
   useEffect(() => {
-    getDownloadedPdfs();
+    navigation.addListener("focus", () => {
+      getDownloadedPdfs();
+    });
+    return () => {
+      setPdfs([]);
+    };
   }, []);
 
   const getDownloadedPdfs = async () => {
@@ -42,7 +47,6 @@ const DownloadedPdfs = ({ navigation }) => {
     try {
       const { uri } = await FileSystem.getInfoAsync(pdfLink);
       const res = await FileSystem.deleteAsync(uri);
-      console.log(res);
       getDownloadedPdfs();
     } catch (error) {}
   };
@@ -101,10 +105,6 @@ const DownloadedPdfs = ({ navigation }) => {
             </Swipeable>
           </Card>
         )}
-        refreshing={refreshing}
-        onRefresh={() => {
-          getDownloadedPdfs();
-        }}
       />
     </View>
   );

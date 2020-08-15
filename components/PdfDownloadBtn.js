@@ -36,13 +36,14 @@ const PdfDownloadBtn = ({ item }) => {
 
     try {
       const { uri } = await downloadResumable.downloadAsync();
-      console.log("Finished downloading to ", uri);
-      Alert.alert(
-        "Success",
-        "File is downloaded successfully.Go to Pdf tab to see your Downloads",
-        [{ text: "ok" }]
-      );
-      setstate(false);
+      if (uri) {
+        Alert.alert(
+          "Success",
+          "File is downloaded successfully.Go to Pdf tab to see your Downloads",
+          [{ text: "ok" }]
+        );
+        setstate(false);
+      }
     } catch (e) {
       Alert.alert("Error", "Please Try Again Later", [{ text: "ok" }]);
       setstate(false);

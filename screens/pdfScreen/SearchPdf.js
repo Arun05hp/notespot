@@ -10,18 +10,10 @@ import AppTextInput from "../../components/AppTextInput";
 
 const SearchPdf = ({ navigation }) => {
   const { state, getPdfs } = useContext(PdfContext);
-  const pdfListData = state.pdfLists;
+  let pdfListData = state.pdfLists;
   const [isLoading, setIsLoading] = useState(true);
-  const [pdfs, setpdfs] = useState([]);
+  const [pdfs, setpdfs] = useState(pdfListData);
 
-  const searchData = (text) => {
-    const newData = pdfListData.filter((item) => {
-      const itemData = item.pdfName.toUpperCase();
-      const textData = text.toUpperCase();
-      return itemData.indexOf(textData) > -1;
-    });
-    setpdfs(newData);
-  };
   const getPdfData = async () => {
     const res = await getPdfs();
     if (res) {
@@ -32,6 +24,15 @@ const SearchPdf = ({ navigation }) => {
   useEffect(() => {
     getPdfData();
   }, []);
+
+  const searchData = (text) => {
+    const newData = pdfListData.filter((item) => {
+      const itemData = item.pdfName.toUpperCase();
+      const textData = text.toUpperCase();
+      return itemData.indexOf(textData) > -1;
+    });
+    setpdfs(newData);
+  };
   if (isLoading) {
     return (
       <View style={defaultStyles.flex_1_center}>
@@ -47,15 +48,17 @@ const SearchPdf = ({ navigation }) => {
         placeholder="Search Pdf"
         onChangeText={(text) => searchData(text)}
       />
-      <PdfListing
-        pdfListData={pdfs}
-        onPress={(item) =>
-          navigation.navigate("ViewUserPdf", {
-            pdfName: item.pdfName,
-            uri: item.pdfLink,
-          })
-        }
-      />
+      {pdfs.length <= 0 ? null : (
+        <PdfListing
+          pdfListData={pdfs}
+          onPress={(item) =>
+            navigation.navigate("ViewUserPdf", {
+              pdfName: item.pdfName,
+              uri: item.pdfLink,
+            })
+          }
+        />
+      )}
     </Screen>
   );
 };
