@@ -28,7 +28,7 @@ const validationSchema = Yup.object().shape({
   }),
 });
 
-const UploadPdf = ({ navigation }) => {
+const UploadPdf = () => {
   const { uploadPdf, state: pdfState, clearMessage } = useContext(PdfContext);
   const { state } = useContext(UserContext);
   const { errorMessage, successMessage, isLoading } = pdfState;
@@ -39,7 +39,6 @@ const UploadPdf = ({ navigation }) => {
     if (res) {
       resetForm();
       setTimeout(function () {
-        navigation.goBack();
         clearMessage();
       }, 1000);
     }

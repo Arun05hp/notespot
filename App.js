@@ -26,7 +26,6 @@ export default () => {
       <AppLoading
         startAsync={fetchFonts}
         onFinish={() => setFontLoaded(true)}
-        onError={console.warn}
       />
     );
   }

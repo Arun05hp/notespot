@@ -10,7 +10,7 @@ import UserProfileBar from "../../components/UserProfileBar";
 
 const accept_RejectReq = async (bookId, isRejected) => {
   try {
-    const response = await appApi.post("/user/accept_RejectReq", {
+    const response = await appApi.post("/user/app/accept_RejectReq", {
       bookId,
       isRejected,
     });
@@ -34,7 +34,6 @@ const SellerViewBook = ({ route, navigation }) => {
 
   const onAccept = async () => {
     const res = await accept_RejectReq(bookId, false);
-    console.log(res);
     if (res)
       Alert.alert("Accepted", "Request Accepted Successfully", [
         {
@@ -83,7 +82,7 @@ const SellerViewBook = ({ route, navigation }) => {
 
   const getBuyerInfo = async (userId) => {
     try {
-      const response = await appApi.post("/user/profile", { userId });
+      const response = await appApi.post("/user/app/profile", { userId });
       if (response.data.error) {
         return false;
       } else {

@@ -19,7 +19,7 @@ const ViewBook = ({ bookData, children }) => {
         />
       </View>
       <Text style={defaultStyles.heading}>{bookData.bookName}</Text>
-      <Text style={styles.sTitle}>
+      <Text style={{ ...defaultStyles.sTitle, marginVertical: 10 }}>
         By {bookData.authorName} (Author) | {bookData.publisherName} (Publisher)
       </Text>
       <Text style={{ ...defaultStyles.title, color: Colors.primary }}>

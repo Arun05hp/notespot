@@ -10,7 +10,7 @@ import UserProfileBar from "../../components/UserProfileBar";
 
 const contactReqForSeller = async (id, bookId) => {
   try {
-    const response = await appApi.post("/user/contactReqForSeller", {
+    const response = await appApi.post("/user/app/contactReqForSeller", {
       id,
       bookId,
     });
@@ -54,7 +54,7 @@ const BuyerViewBook = ({ route, navigation }) => {
 
   const getSellerInfo = async (userId) => {
     try {
-      const response = await appApi.post("/user/profile", { userId });
+      const response = await appApi.post("/user/app/profile", { userId });
       if (response.data.error) {
         return false;
       } else {

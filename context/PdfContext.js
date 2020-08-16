@@ -48,7 +48,7 @@ const uploadPdf = (dispatch) => async ({
       name: fileData.fileName,
       type: "application/pdf",
     });
-    const response = await appApi.post("/user/pdfupload", data, {
+    const response = await appApi.post("/user/app/pdfupload", data, {
       headers: {
         Accept: "application/json",
         "Content-Type": "multipart/form-data",
@@ -79,7 +79,7 @@ const uploadPdf = (dispatch) => async ({
 
 const getPdfs = (dispatch) => async () => {
   try {
-    const response = await appApi.get("/user/getPdfs");
+    const response = await appApi.get("/user/app/getPdfs");
     if (response.data.error) {
       return false;
     } else {

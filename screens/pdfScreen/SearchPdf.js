@@ -12,7 +12,7 @@ const SearchPdf = ({ navigation }) => {
   const { state, getPdfs } = useContext(PdfContext);
   let pdfListData = state.pdfLists;
   const [isLoading, setIsLoading] = useState(true);
-  const [pdfs, setpdfs] = useState(pdfListData);
+  const [pdfs, setpdfs] = useState(pdfListData.length <= 0 ? [] : pdfListData);
 
   const getPdfData = async () => {
     const res = await getPdfs();
@@ -26,6 +26,10 @@ const SearchPdf = ({ navigation }) => {
   }, []);
 
   const searchData = (text) => {
+    if (pdfListData.length <= 0) {
+      setpdfs([]);
+      return;
+    }
     const newData = pdfListData.filter((item) => {
       const itemData = item.pdfName.toUpperCase();
       const textData = text.toUpperCase();
@@ -48,7 +52,11 @@ const SearchPdf = ({ navigation }) => {
         placeholder="Search Pdf"
         onChangeText={(text) => searchData(text)}
       />
-      {pdfs.length <= 0 ? null : (
+      {pdfs.length <= 0 ? (
+        <View style={defaultStyles.flex_1_center}>
+          <Text style={defaultStyles.subTitle}>No Pdf</Text>
+        </View>
+      ) : (
         <PdfListing
           pdfListData={pdfs}
           onPress={(item) =>

@@ -14,16 +14,15 @@ const BookStatus = ({ navigation }) => {
   const bookListData = state.bookLists;
   let filterBooks = [];
 
-  if (bookListData > 0) {
+  if (bookListData.length > 0) {
     filterBooks = bookListData.filter((book) => book.buyerId == id);
   }
 
   const getBooksData = async () => {
     const res = await getBooks();
-    if (res) {
-      setIsLoading(false);
-    }
+    if (res) setIsLoading(false);
   };
+
   useEffect(() => {
     getBooksData();
   }, []);
@@ -38,14 +37,8 @@ const BookStatus = ({ navigation }) => {
 
   if (filterBooks.length <= 0 || bookListData.length <= 0) {
     return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Text style={{ fontSize: 16 }}>No Books </Text>
+      <View style={defaultStyles.flex_1_center}>
+        <Text style={defaultStyles.subTitle}>No Books </Text>
       </View>
     );
   }

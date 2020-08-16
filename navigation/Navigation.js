@@ -1,5 +1,4 @@
 import React from "react";
-import { navigationRef } from "./navigationRef";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -212,7 +211,7 @@ const SwitchNavigator = () => (
 );
 
 const AppNavigator = () => (
-  <NavigationContainer ref={navigationRef}>
+  <NavigationContainer>
     <SwitchNavigator />
   </NavigationContainer>
 );

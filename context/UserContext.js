@@ -50,7 +50,7 @@ const clearState = (dispatch) => () => {
 const getUserData = (dispatch) => async () => {
   const userId = await AsyncStorage.getItem("id");
   try {
-    const response = await appApi.post("/user/profile", { userId });
+    const response = await appApi.post("/user/app/profile", { userId });
     if (response.data.error) {
       dispatch({
         type: "add_message",
@@ -70,7 +70,7 @@ const getUserData = (dispatch) => async () => {
 const getCollegeDetails = (dispatch) => async () => {
   const userId = await AsyncStorage.getItem("id");
   try {
-    const response = await appApi.post("/user/getCollegeData", { userId });
+    const response = await appApi.post("/user/app/getCollegeData", { userId });
     if (response.data.error) {
       dispatch({
         type: "add_message",
@@ -97,7 +97,7 @@ const uploadImage = (dispatch) => async ({ id, imageUrl, profileImg }) => {
       type: "image/jpeg",
     });
     data.append("profileImg", profileImg);
-    const response = await appApi.post("/user/imgupload", data, {
+    const response = await appApi.post("/user/app/imgupload", data, {
       headers: {
         Accept: "application/json",
         "Content-Type": "multipart/form-data",
@@ -117,7 +117,7 @@ const updateProfile = (dispatch) => async ({
 }) => {
   dispatch({ type: "isUpdating", payload: true });
   try {
-    const response = await appApi.post("/user/updateprofile", {
+    const response = await appApi.post("/user/app/updateprofile", {
       id,
       username,
       useremail,
@@ -152,7 +152,7 @@ const updateProfile = (dispatch) => async ({
 const updateCollegeDetails = (dispatch) => async (data) => {
   dispatch({ type: "isUpdating", payload: true });
   try {
-    const response = await appApi.post("/user/updateCollegeDetails", data);
+    const response = await appApi.post("/user/app/updateCollegeDetails", data);
     if (response.data.error) {
       dispatch({
         type: "add_message",

@@ -53,7 +53,7 @@ const sellBook = (dispatch) => async ({
       type: "application/pdf",
       type: "image/jpeg",
     });
-    const response = await appApi.post("/user/sellBook", data, {
+    const response = await appApi.post("/user/app/sellBook", data, {
       headers: {
         Accept: "application/json",
         "Content-Type": "multipart/form-data",
@@ -84,7 +84,7 @@ const sellBook = (dispatch) => async ({
 
 const getBooks = (dispatch) => async () => {
   try {
-    const response = await appApi.get("/user/getbooksData");
+    const response = await appApi.get("/user/app/getbooksData");
     if (response.data.error) {
       return false;
     } else {

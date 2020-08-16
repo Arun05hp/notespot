@@ -84,7 +84,6 @@ const signin = (dispatch) => async ({ email, password }) => {
       return true;
     }
   } catch (error) {
-    console.log(error);
     dispatch({ type: "add_error", payload: "Something went Wrong" });
     dispatch({ type: "isLoading", payload: false });
     return false;

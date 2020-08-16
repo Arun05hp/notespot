@@ -43,7 +43,7 @@ const ViewBookStatus = ({ route }) => {
 
   const getSellerInfo = async (userId) => {
     try {
-      const response = await appApi.post("/user/profile", { userId });
+      const response = await appApi.post("/user/app/profile", { userId });
       if (response.data.error) {
         return false;
       } else {

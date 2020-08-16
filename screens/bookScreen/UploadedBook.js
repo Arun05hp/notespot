@@ -15,7 +15,7 @@ const UploadedBook = ({ navigation }) => {
 
   let filterBooks = [];
 
-  if (bookListData > 0) {
+  if (bookListData.length > 0) {
     filterBooks = bookListData.filter((book) => book.sellerId == id);
   }
 
@@ -39,15 +39,9 @@ const UploadedBook = ({ navigation }) => {
 
   if (filterBooks.length <= 0 || bookListData.length <= 0) {
     return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Text style={{ fontSize: 16 }}>No Books For Selling </Text>
-        <Text style={{ fontSize: 16 }}>First Sell Some Books </Text>
+      <View style={defaultStyles.flex_1_center}>
+        <Text style={defaultStyles.subTitle}>No Books For Selling </Text>
+        <Text style={defaultStyles.subTitle}>First Sell Some Books </Text>
       </View>
     );
   }
