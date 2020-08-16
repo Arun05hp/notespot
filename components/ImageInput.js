@@ -7,11 +7,18 @@ import Colors from "../constants/colors";
 import defaultStyles from "../constants/styles";
 const ImageInput = ({ imageUri, onChangeImage }) => {
   useEffect(() => {
-    reqPermission();
+    setTimeout(() => {
+      reqPermission();
+    }, 1500);
   }, []);
   const reqPermission = async () => {
     const { granted } = await ImagePicker.requestCameraRollPermissionsAsync();
-    if (!granted) alert("You need to enable permission to the library");
+    if (!granted) {
+      alert("You need to enable permission to the library");
+      setTimeout(() => {
+        reqPermission();
+      }, 1000);
+    }
   };
   const handlePress = () => {
     if (!imageUri) pickImage();
